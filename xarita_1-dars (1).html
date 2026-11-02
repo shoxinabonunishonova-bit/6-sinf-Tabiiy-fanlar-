@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Xarita nima?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: o'qituvchi uchun uzun varaq (6 bo'lim), telefonda bir ustun. Dengiz xaritasi uslubi: sovuq kulrang qog'oz, to'q yashil-ko'k aksent, to'q sariq doira belgilari. */
+:root{
+  --bg:#EDF1F2; --surface:#FFFFFF; --fg:#12262C; --muted:#51656B; --line:#CBD6D9;
+  --accent:#0B6E6A; --accent-ink:#FFFFFF; --accent-soft:#D5EAE8;
+  --circle:#D2571F; --sea:#CFE3E8; --grid:#6F8F98;
+  --ok:#1B7F4B; --ok-soft:#D7EFE0; --bad:#B3342B; --bad-soft:#F6DAD6;
+  --f-display:"Bricolage Grotesque","Onest",system-ui,sans-serif;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1B1F; --surface:#15282D; --fg:#E6EEF0; --muted:#9BB0B5; --line:#2B434A;
+    --accent:#4FC3B8; --accent-ink:#06211F; --accent-soft:#193A3C;
+    --circle:#FF9A5C; --sea:#1B3A44; --grid:#6FA0AB;
+    --ok:#5FD08E; --ok-soft:#173A29; --bad:#FF8A80; --bad-soft:#47201E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1B1F; --surface:#15282D; --fg:#E6EEF0; --muted:#9BB0B5; --line:#2B434A;
+  --accent:#4FC3B8; --accent-ink:#06211F; --accent-soft:#193A3C;
+  --circle:#FF9A5C; --sea:#1B3A44; --grid:#6FA0AB;
+  --ok:#5FD08E; --ok-soft:#173A29; --bad:#FF8A80; --bad-soft:#47201E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,8vw,3rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:800}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.lead{color:var(--muted);font-size:1.05rem;max-width:60ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.85rem;color:var(--muted)}
+button.chip{font:inherit;font-size:.85rem;cursor:pointer;color:var(--fg);min-height:40px}
+button.chip:active{background:var(--accent-soft)}
+.head{display:flex;flex-direction:column;gap:12px}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+.sh{display:flex;align-items:center;gap:12px}
+.num{flex:none;width:36px;height:36px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:800}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+ul.plain{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.lab{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+/* bosqichlar */
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%}
+.bar i:nth-child(1){background:#7FB7B2;flex:5}.bar i:nth-child(2){background:var(--accent);flex:15}
+.bar i:nth-child(3){background:#E0A24A;flex:10}.bar i:nth-child(4){background:var(--circle);flex:10}.bar i:nth-child(5){background:#8A9AA0;flex:5}
+.stage{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:start}
+.min{font-family:var(--f-display);font-weight:800;font-size:1.5rem;line-height:1;color:var(--accent)}
+.min small{display:block;font-family:var(--f-body);font-weight:500;font-size:.75rem;color:var(--muted);margin-top:4px}
+.stage h3{margin-bottom:4px}
+.stage p,.stage li{color:var(--muted);font-size:.95rem}
+/* tushunchalar */
+dl{margin:0;display:flex;flex-direction:column;gap:12px}
+dt{font-weight:600}
+dd{margin:2px 0 0;color:var(--muted)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:.92rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* simulyatsiya */
+canvas{display:block;width:100%;max-width:440px;aspect-ratio:340/400;margin:0 auto;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.ctl{display:flex;flex-direction:column;gap:12px}
+.btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.btn{font:inherit;font-weight:600;min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;padding:8px 10px}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:active{transform:translateY(1px)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+input[type=range]{width:100%;height:44px;accent-color:var(--accent);margin:0}
+.read{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.read div{background:var(--accent-soft);border-radius:10px;padding:8px;text-align:center;font-size:.8rem;color:var(--muted)}
+.read b{display:block;font-family:var(--f-display);font-size:1.35rem;color:var(--fg);font-variant-numeric:tabular-nums}
+.cmp{display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.cmp .row{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:center}
+.cmp .track{background:var(--accent-soft);border-radius:6px;height:22px;position:relative}
+.cmp .fill{height:100%;border-radius:6px;background:var(--accent);min-width:3px}
+.cmp .fill.g{background:var(--circle)}
+.cmp span.v{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.82rem}
+details{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+summary{cursor:pointer;padding:12px 14px;font-weight:600;min-height:44px}
+details .in{padding:0 14px 14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+ol.q{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+/* test */
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lvl{font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.qtext{font-weight:600}
+.opt{font:inherit;text-align:left;min-height:52px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+.opt b{flex:none;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:.8rem}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad)}
+.exp{font-size:.92rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px}
+.score{background:var(--accent);color:var(--accent-ink);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.score b{font-family:var(--f-display);font-size:1.6rem}
+/* o'yin */
+.gstats{display:flex;justify-content:space-between;gap:8px;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.gboard{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gcol{display:flex;flex-direction:column;gap:8px;min-width:0}
+.card{font:inherit;font-size:.9rem;min-height:64px;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;text-align:center;overflow-wrap:anywhere}
+.card.term{font-weight:600}
+.card.sel{border-color:var(--accent);background:var(--accent-soft)}
+.card.done{border-color:var(--ok);background:var(--ok-soft);cursor:default}
+.card.shake{border-color:var(--bad);background:var(--bad-soft)}
+.mark{margin-top:2px}
+.foot{font-size:.85rem;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+</style>
+<style>:root{color-scheme:light}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark}}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="head">
+  <div class="eyebrow">6-sinf · Tabiiy fanlar · Geografik xaritalar · 1-dars</div>
+  <h1>Xarita nima?</h1>
+  <p class="lead">Xarita turlari, ahamiyati va globusdan farqi. 45 daqiqalik dars rejasi, simulyatsiya, test va o'yin bir joyda.</p>
+  <div class="chips">
+    <span class="chip">45 daqiqa</span><span class="chip">Juftlik va guruh ishi</span><span class="chip">11–12 yosh</span>
+  </div>
+  <div class="chips" aria-label="Bo'limlarga o'tish">
+    <button class="chip" data-go="s1">1 Maqsad</button>
+    <button class="chip" data-go="s2">2 Bosqichlar</button>
+    <button class="chip" data-go="s3">3 Tushunchalar</button>
+    <button class="chip" data-go="s4">4 Simulyatsiya</button>
+    <button class="chip" data-go="s5">5 Test</button>
+    <button class="chip" data-go="s6">6 O'yin</button>
+    <button class="chip" data-go="s7">Maslahat</button>
+  </div>
+</header>
+
+<section id="s1">
+  <div class="sh"><div class="num">1</div><h2>Mavzu, maqsad, natijalar</h2></div>
+  <div class="panel">
+    <div class="lab">Dars mavzusi</div>
+    <p><b>Xarita nima? Xarita turlari va ahamiyati. Xarita va globus farqi.</b></p>
+    <div class="lab">Maqsad</div>
+    <ul class="plain">
+      <li><b>Bilim:</b> xarita va globusni ta'riflash, xarita turlarini sanash.</li>
+      <li><b>Ko'nikma:</b> xarita va globusni solishtirish, masalaga mos xaritani tanlash.</li>
+      <li><b>Qadriyat:</b> xaritadan kundalik hayotda foydalanishga qiziqish uyg'otish.</li>
+    </ul>
+    <div class="lab">Kutilgan natijalar. Dars oxirida o'quvchi:</div>
+    <ul class="plain">
+      <li>xaritaga o'z so'zi bilan ta'rif beradi;</li>
+      <li>globus va xaritaning kamida 3 ta farqini aytadi;</li>
+      <li>siyosiy, fizik va tematik xaritani bir-biridan ajratadi;</li>
+      <li>xaritada nega o'lchamlar buzilishini oddiy misolda (Grenlandiya) tushuntiradi.</li>
+    </ul>
+    <div class="lab">Jihozlar</div>
+    <p>Globus, devor xaritasi (dunyo va O'zbekiston), atlas, proyektor yoki telefonlar, o'yin kartochkalari (6 juft).</p>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sh"><div class="num">2</div><h2>Dars bosqichlari</h2></div>
+  <div class="bar" role="img" aria-label="Vaqt taqsimoti: 5, 15, 10, 10, 5 daqiqa"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="panel">
+    <div class="stage"><div class="min">5<small>daqiqa</small></div><div>
+      <h3>Motivatsiya: «Yo'lni chiz»</h3>
+      <p>Juftlikda: qo'shni sinfdan kelgan mehmonga maktabdan bog'gacha yo'lni so'zsiz, faqat chizma bilan tushuntiring (2 daqiqa). Keyin 2–3 juft chizmasini ko'rsatadi. Savollar: nima chizdingiz? Belgilar nima uchun kerak? Yer yuzasi uchun ham shunday chizma bormi?</p></div></div>
+  </div>
+  <div class="panel">
+    <div class="stage"><div class="min">15<small>daqiqa</small></div><div>
+      <h3>Yangi mavzu</h3>
+      <ul class="plain">
+        <li>6 daq. o'qituvchi suhbati: xarita, globus, xarita turlari (3-bo'lim).</li>
+        <li>5 daq. simulyatsiya: globusdan xaritaga (4-bo'lim), juftlikda.</li>
+        <li>4 daq. kuzatish savollarini muhokama qilish.</li>
+      </ul></div></div>
+  </div>
+  <div class="panel">
+    <div class="stage"><div class="min">10<small>daqiqa</small></div><div>
+      <h3>Mustahkamlash: «Xarita turini top»</h3>
+      <p>4 kishilik guruhlarda juftlashtirish o'yini (6-bo'lim): 7 daqiqa o'yin, 3 daqiqa javoblarni tekshirish.</p></div></div>
+  </div>
+  <div class="panel">
+    <div class="stage"><div class="min">10<small>daqiqa</small></div><div>
+      <h3>Baholash</h3>
+      <p>8 savollik test (5-bo'lim): 8 daqiqa yakka ishlash, 2 daqiqa tekshirish. Baholash mezonlari oxirida.</p></div></div>
+  </div>
+  <div class="panel">
+    <div class="stage"><div class="min">5<small>daqiqa</small></div><div>
+      <h3>Uy vazifasi</h3>
+      <ul class="plain">
+        <li>Majburiy: maktabdan uygacha yo'lning oddiy xaritasini chizing, kamida 4 ta shartli belgi qo'ying.</li>
+        <li>Qo'shimcha: uyingizdagi 3 xil xaritani (atlas, navigator, hudud xaritasi) toping va qaysi turga kirishini yozing.</li>
+      </ul></div></div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sh"><div class="num">3</div><h2>Asosiy tushunchalar</h2></div>
+  <div class="panel">
+    <dl>
+      <div><dt>Xarita</dt><dd>Yer yuzasining butun yoki bir qismining tekislikda kichraytirib, shartli belgilar yordamida tasvirlanishi.</dd></div>
+      <div><dt>Globus</dt><dd>Yerning kichraytirilgan, shar shaklidagi hajmli modeli.</dd></div>
+      <div><dt>Atlas</dt><dd>Xaritalar to'plami (kitob ko'rinishida).</dd></div>
+      <div><dt>Shartli belgi</dt><dd>Xaritada narsani ko'rsatuvchi rasm yoki rang. Masalan, ko'k rang suv, nuqta shahar.</dd></div>
+    </dl>
+  </div>
+  <div class="panel">
+    <h3>Xarita turlari</h3>
+    <div class="lab">Mazmuniga ko'ra</div>
+    <ul class="plain">
+      <li><b>Siyosiy:</b> davlatlar chegarasi, poytaxt va shaharlar. Masalan, O'zbekiston xaritasida Toshkent, Samarqand, Nukus, Termiz.</li>
+      <li><b>Fizik (tabiiy):</b> tog'lar, tekisliklar, daryolar, dengizlar. Masalan, Orol dengizi, Qizilqum.</li>
+      <li><b>Tematik (mavzuli):</b> bitta mavzuni ko'rsatadi: iqlim, aholi zichligi, yo'llar, tuproq.</li>
+      <li><b>Konturli:</b> faqat chiziqlar bor, o'quvchi o'zi to'ldiradi.</li>
+    </ul>
+    <div class="lab">Qamroviga ko'ra</div>
+    <p>Dunyo xaritasi, materik xaritasi, davlat xaritasi (O'zbekiston), viloyat va shahar rejasi.</p>
+  </div>
+  <div class="panel">
+    <h3>Xaritaning ahamiyati</h3>
+    <ul class="plain">
+      <li>Yo'lni topish va safarni rejalashtirish (Toshkent–Nukus yo'li).</li>
+      <li>Davlatlar, tabiat va aholini o'rganish.</li>
+      <li>Qurilish, qishloq xo'jaligi, ob-havo kuzatuvi uchun kerak.</li>
+      <li>Tabiatdagi o'zgarishlarni kuzatish (masalan, Orol dengizi hududi).</li>
+    </ul>
+  </div>
+  <div class="panel">
+    <h3>Globus va xarita farqi</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th></th><th>Globus</th><th>Xarita</th></tr></thead>
+        <tbody>
+          <tr><td><b>Shakli</b></td><td>Shar, hajmli</td><td>Tekis (qog'oz, ekran)</td></tr>
+          <tr><td><b>Buzilish</b></td><td>Deyarli yo'q</td><td>Bor, qutblarga yaqin joylarda ko'proq</td></tr>
+          <tr><td><b>Ko'rinish</b></td><td>Bir vaqtda Yerning faqat yarmi</td><td>Butun Yer bir qarashda</td></tr>
+          <tr><td><b>Qulaylik</b></td><td>Katta, olib yurish noqulay</td><td>Yengil, olib yurish oson</td></tr>
+          <tr><td><b>Batafsillik</b></td><td>Kam</td><td>Istalgan hudud juda batafsil chizilishi mumkin</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sh"><div class="num">4</div><h2>Simulyatsiya: globusdan xaritaga</h2></div>
+  <p class="lead">Slayderni suring yoki «Animatsiya» tugmasini bosing. Globus tekislikka yoyilganda 9 ta bir xil doira qanday o'zgarishini kuzating.</p>
+  <canvas id="sim" aria-label="Globusdan xaritaga o'tish: bir xil doiralar xaritada kattalashadi"></canvas>
+  <div class="ctl">
+    <input type="range" id="sl" min="0" max="100" value="0" aria-label="Globus (0) dan xarita (100) gacha">
+    <div class="btns">
+      <button class="btn" id="bGlobe">Globus</button>
+      <button class="btn pri" id="bPlay">Animatsiya</button>
+      <button class="btn" id="bMap">Xarita</button>
+    </div>
+    <div class="lab">Doiraning chiziqli kattalashishi (xaritada)</div>
+    <div class="read">
+      <div>Ekvator, 0°<b id="r0">×1.00</b></div>
+      <div>30° kenglik<b id="r30">×1.00</b></div>
+      <div>60° kenglik<b id="r60">×1.00</b></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Haqiqiy yuzalar</h3>
+    <div class="cmp">
+      <div class="row"><span>Afrika</span><div class="track"><div class="fill" style="width:100%"></div></div></div>
+      <div class="row"><span></span><span class="v">taxminan 30,4 mln km²</span></div>
+      <div class="row"><span>Grenlandiya</span><div class="track"><div class="fill g" style="width:7.2%"></div></div></div>
+      <div class="row"><span></span><span class="v">taxminan 2,2 mln km². Afrikadan deyarli 14 marta kichik.</span></div>
+    </div>
+    <p class="foot">Dunyo xaritasining ko'pchiligida (Merkator usuli) Grenlandiya Afrikaga yaqin kattalikda ko'rinadi. Sababi shu simulyatsiyada ko'rinib turibdi.</p>
+  </div>
+  <div class="panel">
+    <h3>Kuzatish savollari</h3>
+    <ol class="q">
+      <li>Slayderni «Xarita» tomon surganda ekvatordagi doira o'zgardimi? Qutbga yaqin doirachi?</li>
+      <li>Qaysi doiralar eng ko'p kattalashdi? Nima uchun deb o'ylaysiz?</li>
+      <li>Xaritada ikki joyning kattaligini solishtirmoqchi bo'lsangiz, nimani tekshirib olish kerak?</li>
+    </ol>
+    <details><summary>Javoblar (o'qituvchi uchun)</summary><div class="in">
+      <p>1. Ekvatorda deyarli o'zgarmadi, 60° kenglikda kattalashib ketdi.</p>
+      <p>2. Qutblarga yaqin doiralar. Shar sirtini tekislikka yoyganda parallellar uzunligi bir xil bo'lib qoladi, aslida esa qutbga borgan sari qisqaradi. Shuning uchun u joylar cho'ziladi.</p>
+      <p>3. Haqiqiy yuzani (raqamlar, atlas jadvali) yoki globusni tekshirish kerak. Xaritadagi ko'rinishga ishonib bo'lmaydi.</p>
+    </div></details>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sh"><div class="num">5</div><h2>Mustahkamlash testi</h2></div>
+  <p class="lead">8 ta savol: 3 ta oson, 3 ta o'rta, 2 ta qiyin. Javobni bosing, izoh darhol chiqadi.</p>
+  <div id="quiz" style="display:flex;flex-direction:column;gap:12px"></div>
+  <div id="qres"></div>
+</section>
+
+<section id="s6">
+  <div class="sh"><div class="num">6</div><h2>Mantiqiy o'yin: «Xarita turini top»</h2></div>
+  <div class="panel">
+    <div class="lab">Qoidalar</div>
+    <ul class="plain">
+      <li>Chap ustundan atamani, o'ng ustundan unga mos izohni bosing.</li>
+      <li>To'g'ri juft yashil bo'lib qoladi. Xato bo'lsa qizarib, qayta tanlanadi.</li>
+      <li>Maqsad: 6 juftni eng kam xato va eng tez topish.</li>
+    </ul>
+    <p class="foot"><b>Sinfda:</b> 4 kishilik guruh, 12 ta qog'oz kartochka (6 atama + 6 izoh), vaqt 7 daqiqa. Eng kam xato qilgan guruh g'olib, xato teng bo'lsa tezroq tugatgani.</p>
+  </div>
+  <div class="gstats"><span>Topildi: <b id="gFound">0</b>/6</span><span>Xato: <b id="gErr">0</b></span><span>Vaqt: <b id="gTime">0</b> s</span></div>
+  <div class="gboard" id="gboard"></div>
+  <div id="gres"></div>
+  <button class="btn" id="gReset">Qaytadan boshlash</button>
+  <details><summary>Javoblar (o'qituvchi uchun)</summary><div class="in">
+    <p>Siyosiy xarita: davlatlar chegarasi va poytaxtlar.</p>
+    <p>Fizik xarita: tog'lar, tekisliklar va dengizlar.</p>
+    <p>Iqlim xaritasi: harorat va yog'in miqdori.</p>
+    <p>Yo'llar xaritasi: Toshkent–Samarqand avtomagistrali.</p>
+    <p>Globus: Yerning shar shaklidagi modeli.</p>
+    <p>Konturli xarita: faqat chiziqlar bor, o'zing to'ldirasan.</p>
+  </div></details>
+</section>
+
+<section id="s7">
+  <div class="sh"><div class="num">+</div><h2>O'qituvchi uchun maslahatlar</h2></div>
+  <div class="panel">
+    <ul class="plain">
+      <li>Telefon yetmasa, simulyatsiyani proyektorda ko'rsating, juftlar kuzatish savollarini daftarda yozsin.</li>
+      <li>Grenlandiya misolini globusda ham ko'rsating: ip bilan Grenlandiya va Afrika kengligini o'lchatsa, farq yaqqol bo'ladi.</li>
+      <li>Motivatsiyadagi chizmalarni doskaga osib qo'ying, dars oxirida «bizning belgilarimiz» bilan xaritaning shartli belgilarini solishtiring.</li>
+      <li>Guruhlarni aralash tuzing: kuchli va sust o'quvchi bir guruhda bo'lsin, har kim bir marta kartochka tanlasin.</li>
+      <li>Tezroq tugatganlarga qo'shimcha topshiriq: O'zbekiston siyosiy xaritasida 5 ta shaharni topib yozish.</li>
+    </ul>
+  </div>
+  <div class="panel">
+    <h3>Baholash mezonlari</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Test (8 savol)</th><th>Baho</th></tr></thead>
+        <tbody>
+          <tr><td>7–8 to'g'ri</td><td>5</td></tr>
+          <tr><td>5–6 to'g'ri</td><td>4</td></tr>
+          <tr><td>4 to'g'ri</td><td>3</td></tr>
+          <tr><td>0–3 to'g'ri</td><td>2 (mavzuni takrorlash tavsiya etiladi)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Guruh ishi</th><th>Yuqori</th><th>O'rta</th><th>Past</th></tr></thead>
+        <tbody>
+          <tr><td>Faollik</td><td>Hamma qatnashdi</td><td>Ko'pchilik</td><td>Bir-ikki kishi</td></tr>
+          <tr><td>Hamkorlik</td><td>Maslahatlashdi, tinglashdi</td><td>Qisman</td><td>Alohida ishladi</td></tr>
+          <tr><td>Aniqlik</td><td>0–1 xato</td><td>2–3 xato</td><td>4 va undan ko'p</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot">Simulyatsiya muhokamasi va chizma ishi alohida ball bilan rag'batlantirilishi mumkin. Mezonlar taklif sifatida berilgan, maktabingiz tizimiga moslang.</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var reduce=false; try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+  /* navigatsiya */
+  document.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var el=document.getElementById(b.getAttribute('data-go'));
+      if(el) el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    });
+  });
+
+  /* ---------- SIMULYATSIYA ---------- */
+  var cv=document.getElementById('sim'),ctx=cv.getContext('2d');
+  var W=340,H=400,CX=W/2,CY=H/2,R=150,S=R/(Math.PI/2),PH0=15*Math.PI/180;
+  var dpr=Math.min(window.devicePixelRatio||1,3);
+  cv.width=W*dpr;cv.height=H*dpr;
+  var t=0,raf=0;
+  var ease=function(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2};
+  function col(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+  function P(lon,lat,e){
+    var l=lon*Math.PI/180,p=lat*Math.PI/180;
+    var gx=R*Math.cos(p)*Math.sin(l);
+    var gy=R*(Math.cos(PH0)*Math.sin(p)-Math.sin(PH0)*Math.cos(p)*Math.cos(l));
+    var vis=Math.sin(PH0)*Math.sin(p)+Math.cos(PH0)*Math.cos(p)*Math.cos(l);
+    var mx=S*l,my=S*Math.log(Math.tan(Math.PI/4+p/2));
+    return {x:CX+gx+(mx-gx)*e,y:CY-(gy+(my-gy)*e),v:(vis>=-0.02||e>=0.5)};
+  }
+  function line(pts){
+    var open=false;ctx.beginPath();
+    pts.forEach(function(q){
+      if(!q.v){open=false;return}
+      if(!open){ctx.moveTo(q.x,q.y);open=true}else ctx.lineTo(q.x,q.y);
+    });
+    ctx.stroke();
+  }
+  function circlePts(lon,lat,rad,e){
+    var out=[],p0=lat*Math.PI/180,l0=lon*Math.PI/180,d=rad*Math.PI/180;
+    for(var i=0;i<=36;i++){
+      var b=i/36*2*Math.PI;
+      var p1=Math.asin(Math.sin(p0)*Math.cos(d)+Math.cos(p0)*Math.sin(d)*Math.cos(b));
+      var l1=l0+Math.atan2(Math.sin(b)*Math.sin(d)*Math.cos(p0),Math.cos(d)-Math.sin(p0)*Math.sin(p1));
+      out.push(P(l1*180/Math.PI,p1*180/Math.PI,e));
+    }
+    return out;
+  }
+  function label(txt,lon,lat,e,dx,dy){
+    var q=P(lon,lat,e);if(!q.v)return;
+    ctx.font='600 12px Onest, system-ui, sans-serif';ctx.lineWidth=3;ctx.strokeStyle=col('--surface');
+    ctx.strokeText(txt,q.x+dx,q.y+dy);ctx.fillStyle=col('--fg');ctx.fillText(txt,q.x+dx,q.y+dy);
+  }
+  function draw(){
+    var e=ease(t),i,j;
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+    ctx.fillStyle=col('--sea');
+    ctx.globalAlpha=1-e;ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);ctx.fill();
+    var yt=S*Math.log(Math.tan(Math.PI/4+35*Math.PI/180));
+    ctx.globalAlpha=e;ctx.fillRect(CX-R,CY-yt,2*R,2*yt);
+    ctx.globalAlpha=1;
+    ctx.strokeStyle=col('--grid');ctx.lineWidth=1;ctx.globalAlpha=.55;
+    for(i=-90;i<=90;i+=30){var m=[];for(j=-70;j<=70;j+=5)m.push(P(i,j,e));line(m)}
+    for(i=-60;i<=60;i+=30){var pr=[];for(j=-90;j<=90;j+=5)pr.push(P(j,i,e));line(pr)}
+    ctx.globalAlpha=1;
+    var eq=[];for(j=-90;j<=90;j+=5)eq.push(P(j,0,e));
+    ctx.strokeStyle=col('--accent');ctx.lineWidth=2.2;line(eq);
+    var cs=[[-45,0],[0,0],[45,0],[-45,30],[0,30],[45,30],[-45,60],[0,60],[45,60]];
+    ctx.lineWidth=1.6;
+    cs.forEach(function(c){
+      var pts=circlePts(c[0],c[1],7,e);
+      if(!pts.every(function(q){return q.v}))return;
+      ctx.beginPath();pts.forEach(function(q,k){k?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y)});ctx.closePath();
+      ctx.fillStyle=col('--circle');ctx.globalAlpha=.5;ctx.fill();ctx.globalAlpha=1;
+      ctx.strokeStyle=col('--circle');ctx.stroke();
+    });
+    ctx.strokeStyle=col('--grid');ctx.lineWidth=1.5;
+    if(e<.99){ctx.globalAlpha=1-e;ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);ctx.stroke()}
+    ctx.globalAlpha=e;ctx.strokeRect(CX-R,CY-yt,2*R,2*yt);ctx.globalAlpha=1;
+    ctx.textAlign='left';
+    label('Afrika',20,-14,e,-18,4);
+    label('Grenlandiya',-42,68,e,-30,-4);
+    var tk=P(69.3,41.3,e);
+    if(tk.v){ctx.fillStyle=col('--accent');ctx.beginPath();ctx.arc(tk.x,tk.y,4,0,Math.PI*2);ctx.fill();label('Toshkent',69.3,41.3,e,-50,-8)}
+    label('Ekvator',-88,0,e,2,-5);
+    [0,30,60].forEach(function(l){
+      var f=1+e*(1/Math.cos(l*Math.PI/180)-1);
+      document.getElementById('r'+l).textContent='×'+f.toFixed(2);
+    });
+  }
+  var sl=document.getElementById('sl');
+  sl.addEventListener('input',function(){cancelAnimationFrame(raf);t=sl.value/100;draw()});
+  function go(target){
+    cancelAnimationFrame(raf);
+    if(reduce){t=target;sl.value=t*100;draw();return}
+    var from=t,t0=performance.now(),dur=Math.max(400,2600*Math.abs(target-from));
+    (function step(now){
+      var k=Math.min(1,(now-t0)/dur);
+      t=from+(target-from)*k;sl.value=t*100;draw();
+      if(k<1)raf=requestAnimationFrame(step);
+    })(t0);
+  }
+  document.getElementById('bGlobe').addEventListener('click',function(){go(0)});
+  document.getElementById('bMap').addEventListener('click',function(){go(1)});
+  document.getElementById('bPlay').addEventListener('click',function(){go(t<0.5?1:0)});
+  draw();
+  try{document.fonts.ready.then(draw)}catch(e){}
+  try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw)}catch(e){}
+  try{new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']})}catch(e){}
+
+  /* ---------- TEST ---------- */
+  var Q=[
+    {l:'Oson',q:"Xarita nima?",o:["Yerning shar shaklidagi kichraytirilgan modeli","Yer yuzasining tekislikda kichraytirib, shartli belgilar bilan tasviri","Faqat okeanlarning rasmi","Shahar ko'chalarining ro'yxati"],a:1,e:"Xarita Yer yuzasini tekislikda kichraytirib, shartli belgilar bilan ko'rsatadi. Birinchi variant globusga tegishli."},
+    {l:'Oson',q:"Yerning kichraytirilgan hajmli modeli nima deb ataladi?",o:["Plan","Atlas","Globus","Kompas"],a:2,e:"Globus shar shaklida. Atlas esa xaritalar to'plami, kompas yo'nalish ko'rsatadigan asbob."},
+    {l:'Oson',q:"Davlatlar chegarasi va poytaxtlari ko'rsatilgan xarita qaysi?",o:["Siyosiy xarita","Fizik xarita","Iqlim xaritasi","Tuproq xaritasi"],a:0,e:"Siyosiy xaritada davlatlar, chegaralar, poytaxt va shaharlar bor. Masalan, O'zbekiston xaritasida Toshkent."},
+    {l:"O'rta",q:"Tog'lar, tekisliklar va dengizlarni rang bilan ko'rsatadigan xarita qaysi?",o:["Siyosiy xarita","Yo'llar xaritasi","Aholi zichligi xaritasi","Fizik (tabiiy) xarita"],a:3,e:"Fizik xarita relyef va suv obyektlarini ko'rsatadi. Orol dengizi va Qizilqum shunday xaritada ko'rinadi."},
+    {l:"O'rta",q:"Xaritaning globusdan afzalligi qaysi?",o:["Yer shaklini umuman buzmaydi","Butun Yerni bir qarashda ko'rsatadi va olib yurish oson","Har doim globusdan aniqroq","Faqat okeanlarni ko'rsatadi"],a:1,e:"Globusda bir vaqtda Yerning faqat yarmini ko'ramiz. Xaritada hammasi bir tekislikda, lekin shakl biroz buziladi."},
+    {l:"O'rta",q:"Iqlim xaritasi qaysi guruhga kiradi?",o:["Konturli xaritalar","Siyosiy xaritalar","Tematik (mavzuli) xaritalar","Globuslar"],a:2,e:"Tematik xaritalar bitta mavzuni ko'rsatadi: iqlim, aholi, yo'llar, tuproq va hokazo."},
+    {l:'Qiyin',q:"Dunyo xaritasida Grenlandiya nega Afrikadek katta ko'rinadi?",o:["Sharni tekislikka yoyganda qutblarga yaqin joylar cho'zilib kattalashadi","Grenlandiya haqiqatan Afrika bilan teng","Xarita chizuvchilar adashgan","Afrika xaritada ataylab kichraytirib chizilgan"],a:0,e:"Afrika taxminan 30,4 mln km², Grenlandiya taxminan 2,2 mln km², ya'ni deyarli 14 marta kichik. Ko'rinishdagi farq tekislikka yoyishdan kelib chiqadi."},
+    {l:'Qiyin',q:"Haydovchi Toshkentdan Nukusga yo'lni rejalashtirmoqda. Unga qaysi xarita eng qulay?",o:["Iqlim xaritasi","Tuproq xaritasi","Dunyoning fizik xaritasi","Avtomobil yo'llari xaritasi"],a:3,e:"Yo'llar xaritasi tematik xarita bo'lib, avtomagistral va yo'llarni ko'rsatadi. Qolganlari boshqa mavzuga bag'ishlangan."}
+  ];
+  var quiz=document.getElementById('quiz'),qres=document.getElementById('qres');
+  var score,answered;
+  function buildQuiz(){
+    quiz.innerHTML='';qres.innerHTML='';score=0;answered=0;
+    Q.forEach(function(it,qi){
+      var c=document.createElement('div');c.className='qcard';
+      var top=document.createElement('div');top.className='qtop';
+      top.innerHTML='<span class="lab">Savol '+(qi+1)+'/8</span><span class="lvl">'+it.l+'</span>';
+      var tx=document.createElement('div');tx.className='qtext';tx.textContent=it.q;
+      c.appendChild(top);c.appendChild(tx);
+      var done=false;
+      it.o.forEach(function(o,oi){
+        var b=document.createElement('button');b.className='opt';b.type='button';
+        var k=document.createElement('b');k.textContent='ABCD'.charAt(oi);
+        var s=document.createElement('span');s.textContent=o;
+        b.appendChild(k);b.appendChild(s);
+        b.addEventListener('click',function(){
+          if(done)return;done=true;answered++;
+          var btns=c.querySelectorAll('.opt');
+          btns[it.a].classList.add('ok');
+          if(oi===it.a){score++}else{b.classList.add('bad')}
+          var ex=document.createElement('div');ex.className='exp';
+          ex.textContent=(oi===it.a?"To'g'ri. ":"Noto'g'ri. ")+it.e;c.appendChild(ex);
+          if(answered===Q.length)showRes();
+        });
+        c.appendChild(b);
+      });
+      quiz.appendChild(c);
+    });
+  }
+  function showRes(){
+    var g=score>=7?5:score>=5?4:score>=4?3:2;
+    qres.innerHTML='';
+    var d=document.createElement('div');d.className='score';
+    d.innerHTML='<b>'+score+' / 8</b><span>Taklif etilgan baho: '+g+'. '+(g>=4?"Juda yaxshi, mavzu o'zlashtirilgan.":"Mavzuni yana bir bor ko'rib chiqing.")+'</span>';
+    var r=document.createElement('button');r.className='btn';r.type='button';r.textContent='Testni qayta ishlash';
+    r.style.marginTop='8px';r.addEventListener('click',function(){buildQuiz();document.getElementById('s5').scrollIntoView({behavior:reduce?'auto':'smooth'})});
+    d.appendChild(r);qres.appendChild(d);
+    d.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});
+  }
+  buildQuiz();
+
+  /* ---------- O'YIN ---------- */
+  var PAIRS=[
+    ["Siyosiy xarita","Davlatlar chegarasi va poytaxtlar"],
+    ["Fizik xarita","Tog'lar, tekisliklar va dengizlar"],
+    ["Iqlim xaritasi","Harorat va yog'in miqdori"],
+    ["Yo'llar xaritasi","Toshkent–Samarqand avtomagistrali"],
+    ["Globus","Yerning shar shaklidagi modeli"],
+    ["Konturli xarita","Faqat chiziqlar bor, o'zing to'ldirasan"]
+  ];
+  var gb=document.getElementById('gboard'),gres=document.getElementById('gres');
+  var gF=document.getElementById('gFound'),gE=document.getElementById('gErr'),gT=document.getElementById('gTime');
+  var sel,found,errs,t0g,timer,locked;
+  function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
+  function buildGame(){
+    clearInterval(timer);timer=null;sel=null;found=0;errs=0;t0g=0;locked=false;
+    gF.textContent='0';gE.textContent='0';gT.textContent='0';gres.innerHTML='';gb.innerHTML='';
+    var L=document.createElement('div'),Rr=document.createElement('div');L.className='gcol';Rr.className='gcol';
+    shuf(PAIRS.map(function(p,i){return {i:i,t:p[0]}})).forEach(function(o){L.appendChild(mk(o,'term'))});
+    shuf(PAIRS.map(function(p,i){return {i:i,t:p[1]}})).forEach(function(o){Rr.appendChild(mk(o,'desc'))});
+    gb.appendChild(L);gb.appendChild(Rr);
+  }
+  function mk(o,side){
+    var b=document.createElement('button');b.type='button';b.className='card '+side;b.textContent=o.t;
+    b.dataset.i=o.i;b.dataset.side=side;
+    b.addEventListener('click',function(){pick(b)});return b;
+  }
+  function pick(b){
+    if(locked||b.classList.contains('done'))return;
+    if(!t0g){t0g=Date.now();timer=setInterval(function(){gT.textContent=Math.round((Date.now()-t0g)/1000)},500)}
+    if(!sel){sel=b;b.classList.add('sel');return}
+    if(sel===b){b.classList.remove('sel');sel=null;return}
+    if(sel.dataset.side===b.dataset.side){sel.classList.remove('sel');sel=b;b.classList.add('sel');return}
+    if(sel.dataset.i===b.dataset.i){
+      sel.classList.remove('sel');sel.classList.add('done');b.classList.add('done');sel=null;found++;gF.textContent=found;
+      if(found===PAIRS.length)finish();
+    }else{
+      errs++;gE.textContent=errs;locked=true;var a=sel;a.classList.add('shake');b.classList.add('shake');
+      setTimeout(function(){a.classList.remove('shake','sel');b.classList.remove('shake');sel=null;locked=false},700);
+    }
+  }
+  function finish(){
+    clearInterval(timer);var s=Math.round((Date.now()-t0g)/1000);gT.textContent=s;
+    var m=errs===0?"Mukammal! Birorta ham xato yo'q.":errs<=2?"Juda yaxshi natija.":"Yaxshi urinish. Yana bir bor sinab ko'ring.";
+    gres.innerHTML='<div class="score"><b>'+s+' soniya, '+errs+' xato</b><span>'+m+'</span></div>';
+  }
+  document.getElementById('gReset').addEventListener('click',buildGame);
+  buildGame();
+})();
+</script>
+</body>
+</html>
