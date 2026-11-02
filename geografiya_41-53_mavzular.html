@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geografiya darslari: 41–53-mavzular</title>
+<style>
+:root{--bg:#edf1f2;--surface:#fff;--fg:#14282d;--muted:#53666b;--line:#cbd6d9;--accent:#0b6e6a;--soft:#d5eae8;--orange:#d2571f;--good:#d7efe0;--bad:#f6dad6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;padding:18px}
+.wrap{max-width:920px;margin:auto;display:flex;flex-direction:column;gap:22px}header,.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+.eyebrow{color:var(--accent);font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}h1,h2,h3{line-height:1.2;margin:0 0 10px}h1{font-size:clamp(2rem,7vw,3.4rem)}h2{font-size:clamp(1.5rem,5vw,2rem)}h3{font-size:1.1rem}.lead{color:var(--muted);font-size:1.05rem}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}button,select,input{font:inherit}button,.pill{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:11px;padding:9px 12px;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}.pill.active,.btn{background:var(--accent);color:white;border-color:var(--accent)}
+.lesson{display:flex;flex-direction:column;gap:14px;scroll-margin-top:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel ul{margin:6px 0 0;padding-left:22px}.term{padding:8px 0;border-bottom:1px solid var(--line)}.term:last-child{border:0}.term p{margin:3px 0;color:var(--muted)}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-items:end;margin-top:12px}.controls label{display:flex;flex-direction:column;gap:5px;font-size:.9rem;color:var(--muted)}input,select{width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--fg)}output{display:block;background:var(--soft);padding:12px;border-radius:10px;font-weight:700;grid-column:1/-1}
+.quiz{display:flex;flex-direction:column;gap:12px}.question{padding:12px;border:1px solid var(--line);border-radius:12px}.question p{font-weight:700;margin:0 0 8px}.answers{display:grid;gap:7px}.answers button{text-align:left}.answers button.correct{background:var(--good);border-color:#1b7f4b}.answers button.wrong{background:var(--bad);border-color:#b3342b}.feedback{margin-top:7px;color:var(--muted);font-size:.9rem}.score{font-weight:800;color:var(--accent)}
+details{border:1px solid var(--line);border-radius:12px;background:var(--surface)}summary{padding:14px;cursor:pointer;font-weight:700}details p{padding:0 14px 14px;margin:0;color:var(--muted)}
+.coordgrid{height:160px;border:1px solid var(--line);border-radius:12px;position:relative;background:repeating-linear-gradient(0deg,transparent 0 31px,#cbd6d9 32px),repeating-linear-gradient(90deg,transparent 0 31px,#cbd6d9 32px)}.coordgrid i{position:absolute;left:69%;top:27%;width:12px;height:12px;border-radius:50%;background:var(--orange);transform:translate(-50%,-50%)}
+.plates{display:flex;align-items:center;justify-content:center;gap:16px;padding:18px;background:var(--soft);border-radius:12px;font-weight:800}.plates div{padding:20px 10px;background:var(--surface);border:1px solid var(--line);border-radius:8px}.plates span{font-size:2rem;color:var(--orange)}
+.watercycle{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.watercycle span{background:var(--soft);padding:8px;border-radius:8px}.watercycle b{color:var(--accent)}.watercycle:not(.active){opacity:.45}
+.layers{display:grid;gap:5px}.layer{padding:10px;background:var(--soft);border-radius:7px;cursor:pointer}.layer:nth-child(2){margin-left:8%}.layer:nth-child(3){margin-left:16%}.layer:nth-child(4){margin-left:24%}.layer:nth-child(5){margin-left:32%}
+.thermometer{height:18px;background:var(--line);border-radius:20px;overflow:hidden;grid-column:1/-1}.thermometer div{height:100%;width:60%;background:var(--orange);transition:width .2s}
+.eco{display:flex;flex-wrap:wrap;gap:8px}.eco button{flex:1}.foot{color:var(--muted);font-size:.85rem;text-align:center}
+@media(max-width:640px){body{padding:10px}.grid{grid-template-columns:1fr}header,.panel{padding:15px}.plates{gap:7px}.plates div{padding:14px 6px}}
+@media print{body{background:white;padding:0}.wrap{max-width:none}.lesson{break-before:page}nav,.simulation button{display:none}.panel,header{break-inside:avoid}}
+</style></head><body><main class="wrap">
+<header><div class="eyebrow">Geografiya · 7-bob va 8-bob</div><h1>Geografiya darslari: 41–53-mavzular</h1>
+<p class="lead">Siz yuborgan mundarijadagi barcha mavzular uchun moslashtirilgan interaktiv HTML qo‘llanma. Har bir mavzuda maqsadlar, asosiy tushunchalar, topshiriq, interaktiv model va test mavjud.</p>
+<p><b>Qanday foydalaniladi:</b> yuqoridagi mavzu tugmasini bosing. Simulyatsiyadagi qiymatlarni o‘zgartiring, test savollariga javob bering. Internet talab qilmaydi.</p>
+<nav id="nav"><button class="pill" data-target="topic-41">41. Geografik xaritalar</button><button class="pill" data-target="topic-42">42. Amaliy mashg‘ulot: Masshtab</button><button class="pill" data-target="topic-43">43. Geografik koordinatalar</button><button class="pill" data-target="topic-44">44. Joy balandligini o‘lchash</button><button class="pill" data-target="topic-45">45. Amaliy mashg‘ulot: Relyefni…</button><button class="pill" data-target="topic-46">46. Litosfera plitalari</button><button class="pill" data-target="topic-47">47. Amaliy mashg‘ulot: Vaqt min…</button><button class="pill" data-target="topic-48">48. Gidrosfera va uning qismlar…</button><button class="pill" data-target="topic-49">49. Atmosfera tuzilishi</button><button class="pill" data-target="topic-50">50. Havo bosimi</button><button class="pill" data-target="topic-51">51. Havo harorati</button><button class="pill" data-target="topic-52">52. Amaliy mashg‘ulot: Havo har…</button><button class="pill" data-target="topic-53">53. Biosfera</button></nav></header>
+
+    <article class="lesson" id="topic-41">
+      <div class="eyebrow">41-mavzu · Nazariy dars</div>
+      <h2>Geografik xaritalar</h2>
+      <p class="lead">Geografik xarita — Yer yuzasi yoki uning bir qismini kichraytirib, shartli belgilar va ma’lum masshtab asosida tekislikda tasvirlashdir.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Xarita, masshtab, legenda va shartli belgilarni tushuntirish</li><li>Siyosiy, fizik va mavzuli xaritalarni farqlash</li><li>Xaritadan geografik ma’lumot topish</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Xarita</b><p>Yer yuzasining kichraytirilgan, umumlashtirilgan tasviri.</p></div><div class='term'><b>Masshtab</b><p>Xaritadagi masofa bilan joydagi haqiqiy masofa nisbatini ko‘rsatadi.</p></div><div class='term'><b>Legenda</b><p>Xaritadagi shartli belgilar ma’nosi tushuntirilgan qism.</p></div><div class='term'><b>Fizik xarita</b><p>Tog‘, tekislik, daryo, ko‘l va boshqa tabiiy obyektlarni ko‘rsatadi.</p></div><div class='term'><b>Mavzuli xarita</b><p>Bitta hodisa yoki mavzuni, masalan, iqlim yoki aholi zichligini ko‘rsatadi.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Atlasdan O‘zbekistonning fizik va siyosiy xaritalarini toping. Har biridan 3 ta obyektni aniqlang va belgilarini izohlang.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Xarita masshtabi va masofani o‘rganish</h3><p>Haqiqiy masofa = xaritadagi masofa × masshtab maxraji. Quyida xaritadagi masofa va masshtabni o‘zgartirib, natijani kuzating.</p>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Xaritadagi masofa va haqiqiy masofa nisbatini nima ko‘rsatadi?&quot;, &quot;o&quot;: [&quot;Legenda&quot;, &quot;Masshtab&quot;, &quot;Meridian&quot;, &quot;Relyef&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Tog‘lar va daryolarni ko‘rsatadigan xarita qaysi?&quot;, &quot;o&quot;: [&quot;Siyosiy&quot;, &quot;Fizik&quot;, &quot;Aholi&quot;, &quot;Sanoat&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Shartli belgilar izohi qayerda beriladi?&quot;, &quot;o&quot;: [&quot;Sarlavhada&quot;, &quot;Leg endada&quot;, &quot;Masshtabda&quot;, &quot;Ramkada&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-42">
+      <div class="eyebrow">42-mavzu · Amaliy mashg‘ulot</div>
+      <h2>Amaliy mashg‘ulot: Masshtab</h2>
+      <p class="lead">Masshtab xaritadagi masofani haqiqiy masofaga aylantirishga yordam beradi. U sonli, nomli yoki chiziqli ko‘rinishda berilishi mumkin.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Masshtab turlarini ajratish</li><li>Xaritadagi masofani haqiqiy masofaga hisoblash</li><li>Kilometr va santimetr birliklarini to‘g‘ri aylantirish</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Sonli masshtab</b><p>Masalan, 1:100 000 — xaritadagi 1 sm joyda 100 000 sm, ya’ni 1 km.</p></div><div class='term'><b>Nomli masshtab</b><p>Masalan, 1 sm da 2 km.</p></div><div class='term'><b>Chiziqli masshtab</b><p>Masofani chiziq va bo‘linmalar yordamida o‘lchash usuli.</p></div><div class='term'><b>Haqiqiy masofa</b><p>Yer yuzasidagi ikki nuqta orasidagi masofa.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Mashq: 1:200 000 masshtabli xaritada ikki qishloq orasidagi masofa 4 sm. Haqiqiy masofani hisoblang. So‘ng 1:500 000 masshtabda 3 sm uchun hisobni takrorlang.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Masshtab kalkulyatori</h3><p>Xaritadagi masofani santimetrda kiriting va sonli masshtab maxrajini tanlang. Natija kilometrda hisoblanadi.</p>
+        <div class="controls"><label>Xaritadagi masofa (sm) <input id="mapdist-42" type="number" min="0" value="4" step="0.5"></label><label>Masshtab maxraji <select id="scale-42"><option>100000</option><option selected>200000</option><option>500000</option><option>1000000</option></select></label><output id="out-42">Haqiqiy masofa: 8 km</output></div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;1:100 000 masshtabda xaritadagi 1 sm necha km?&quot;, &quot;o&quot;: [&quot;0,1 km&quot;, &quot;1 km&quot;, &quot;10 km&quot;, &quot;100 km&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;1:200 000 masshtabda 4 sm haqiqiy masofaga teng?&quot;, &quot;o&quot;: [&quot;2 km&quot;, &quot;4 km&quot;, &quot;8 km&quot;, &quot;80 km&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Masshtab nimani ifodalaydi?&quot;, &quot;o&quot;: [&quot;Balandlikni&quot;, &quot;Masofalar nisbatini&quot;, &quot;Haroratni&quot;, &quot;Yo‘nalishni&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-43">
+      <div class="eyebrow">43-mavzu · Nazariy dars</div>
+      <h2>Geografik koordinatalar</h2>
+      <p class="lead">Geografik koordinatalar — Yer yuzasidagi nuqtaning geografik kenglik va geografik uzunlik orqali aniqlanadigan o‘rnidir.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Ekvator va bosh meridianni aniqlash</li><li>Kenglik va uzunlikni farqlash</li><li>Koordinatalar yordamida nuqta o‘rnini topish</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Geografik kenglik</b><p>Nuqtaning ekvatordan shimol yoki janubga tomon burchak masofasi.</p></div><div class='term'><b>Geografik uzunlik</b><p>Nuqtaning bosh meridiandan sharq yoki g‘arbga tomon burchak masofasi.</p></div><div class='term'><b>Ekvator</b><p>Yer sharini Shimoliy va Janubiy yarimsharlarga ajratuvchi 0° kenglik chizig‘i.</p></div><div class='term'><b>Bosh meridian</b><p>0° uzunlik meridiani; Grinvich orqali o‘tadi.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Atlasdan Toshkent shahrining taxminiy koordinatalarini toping. So‘ng ekvatorga va bosh meridianga nisbatan qaysi tomonda ekanini yozing.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Koordinatalar tekisligi</h3><p>Kenglik va uzunlik qiymatlarini o‘zgartiring. Nuqta xarita panjarasida joyini o‘zgartiradi.</p>
+        
+        <div class="controls"><label>Kenglik (°) <input id="lat-43" type="range" min="-90" max="90" value="41"></label><label>Uzunlik (°) <input id="lon-43" type="range" min="-180" max="180" value="69"></label><output id="coordout-43">41° kenglik, 69° uzunlik</output><div class="coordgrid" id="coordgrid-43"><span>90°</span><span>0°</span><span>−90°</span><i></i></div></div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Geografik kenglik qaysi chiziqdan hisoblanadi?&quot;, &quot;o&quot;: [&quot;Bosh meridian&quot;, &quot;Ekvator&quot;, &quot;Qutb doirasi&quot;, &quot;Tropik&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;0° geografik uzunlik nima deyiladi?&quot;, &quot;o&quot;: [&quot;Ekvator&quot;, &quot;Bosh meridian&quot;, &quot;Tropik&quot;, &quot;Parallel&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;40° shimoliy kenglikdagi nuqta qayerda?&quot;, &quot;o&quot;: [&quot;Janubiy yarimsharda&quot;, &quot;Shimoliy yarimsharda&quot;, &quot;Ekvatorning o‘zida&quot;, &quot;Faqat okeanda&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-44">
+      <div class="eyebrow">44-mavzu · Nazariy dars</div>
+      <h2>Joy balandligini o‘lchash</h2>
+      <p class="lead">Joy balandligi odatda dengiz sathiga nisbatan aniqlanadi. Mutlaq balandlik va nisbiy balandlik bir-biridan farq qiladi.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Mutlaq va nisbiy balandlikni izohlash</li><li>Gorizontallarni xaritada tanish</li><li>Balandlik belgilaridan foydalanish</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Mutlaq balandlik</b><p>Nuqtaning o‘rtacha dengiz sathidan balandligi.</p></div><div class='term'><b>Nisbiy balandlik</b><p>Ikki nuqta balandliklari orasidagi farq.</p></div><div class='term'><b>Gorizontallar</b><p>Bir xil mutlaq balandlikdagi nuqtalarni birlashtiruvchi chiziqlar.</p></div><div class='term'><b>Balandlik shkalasi</b><p>Ranglar yoki belgilar orqali balandlikni ko‘rsatish usuli.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Topografik xaritadagi ikki nuqtaning balandligini o‘qing. Masalan, A nuqta 250 m, B nuqta 430 m bo‘lsa, nisbiy balandlikni hisoblang.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Balandlik farqini hisoblash</h3><p>Ikki nuqtaning balandligini o‘zgartirib, nisbiy balandlikni hisoblang.</p>
+        
+        
+        <div class="controls"><label>A nuqta balandligi (m) <input id="altA-44" type="number" value="250"></label><label>B nuqta balandligi (m) <input id="altB-44" type="number" value="430"></label><output id="altout-44">Nisbiy balandlik: 180 m</output></div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Dengiz sathiga nisbatan balandlik nima?&quot;, &quot;o&quot;: [&quot;Nisbiy balandlik&quot;, &quot;Mutlaq balandlik&quot;, &quot;Masshtab&quot;, &quot;Kenglik&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;A=250 m, B=430 m. B nuqta A dan necha metr baland?&quot;, &quot;o&quot;: [&quot;180 m&quot;, &quot;250 m&quot;, &quot;430 m&quot;, &quot;680 m&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;Bir xil balandlikdagi nuqtalarni nima birlashtiradi?&quot;, &quot;o&quot;: [&quot;Meridianlar&quot;, &quot;Gorizontallar&quot;, &quot;Parallellar&quot;, &quot;Izobarlar&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-45">
+      <div class="eyebrow">45-mavzu · Amaliy mashg‘ulot</div>
+      <h2>Amaliy mashg‘ulot: Relyefning xaritalarda gorizontallar bilan tasvirlanishi</h2>
+      <p class="lead">Gorizontallar yordamida tepalik, vodiy va yonbag‘irlarning shakli hamda nishabligini xaritada ifodalash mumkin.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Gorizontallarni o‘qish</li><li>Chiziqlar oralig‘idan yonbag‘ir tikligini aniqlash</li><li>Relyef shakllarini sxemada ko‘rsatish</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Gorizontallar oralig‘i</b><p>Ketma-ket gorizontallar orasidagi balandlik farqi.</p></div><div class='term'><b>Tik yonbag‘ir</b><p>Gorizontallar bir-biriga yaqin joylashgan hudud.</p></div><div class='term'><b>Yotiq yonbag‘ir</b><p>Gorizontallar orasidagi masofa kattaroq bo‘lgan hudud.</p></div><div class='term'><b>Relyef</b><p>Yer yuzasidagi notekisliklar majmui.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Daftarda 100, 120, 140 va 160 m balandlikdagi yopiq gorizontallarni chizing. Markazga qarab balandlik ortsa, tepalik; kamaysa, botiq shaklini ko‘rsating.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Gorizontallar modeli</h3><p>Balandlik va yonbag‘ir tikligini o‘zgartirib, sxemadagi gorizontallar oralig‘ini kuzating.</p>
+        
+        
+        
+        <div class="controls"><label>Yonbag‘ir tikligi <input id="slope-45" type="range" min="1" max="10" value="5"></label><output id="slopeout-45">Gorizontallar: o‘rtacha zich</output><svg id="contour-45" viewBox="0 0 320 150" role="img" aria-label="Gorizontallar chizmasi"></svg></div>
+        
+        
+        
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Gorizontallar bir-biriga juda yaqin bo‘lsa, yonbag‘ir qanday?&quot;, &quot;o&quot;: [&quot;Yotiq&quot;, &quot;Tik&quot;, &quot;Mutlaqo tekis&quot;, &quot;Suvli&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Gorizontallar nimani birlashtiradi?&quot;, &quot;o&quot;: [&quot;Bir xil haroratli nuqtalarni&quot;, &quot;Bir xil balandlikli nuqtalarni&quot;, &quot;Bir xil bosimli nuqtalarni&quot;, &quot;Bir xil kenglikni&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Relyef nima?&quot;, &quot;o&quot;: [&quot;Havo tarkibi&quot;, &quot;Yer yuzasi notekisliklari&quot;, &quot;Daryo oqimi&quot;, &quot;Yog‘in turi&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-46">
+      <div class="eyebrow">46-mavzu · Nazariy dars</div>
+      <h2>Litosfera plitalari</h2>
+      <p class="lead">Litosfera Yer po‘stining va yuqori mantiyaning qattiq qismidan tashkil topgan bo‘lib, yirik plitalarga bo‘lingan. Plitalarning harakati ko‘plab geologik jarayonlarga sabab bo‘ladi.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Litosfera va plita tushunchalarini ta’riflash</li><li>Plitalar chegaralarining asosiy turlarini bilish</li><li>Zilzila va vulqonlarning tarqalishini plitalar bilan bog‘lash</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Litosfera</b><p>Yer po‘sti va yuqori mantiyaning qattiq qismi.</p></div><div class='term'><b>Litosfera plitasi</b><p>Litosferaning katta, nisbatan yaxlit bo‘lagi.</p></div><div class='term'><b>Divergent chegara</b><p>Plitalar bir-biridan uzoqlashadigan chegara.</p></div><div class='term'><b>Konvergent chegara</b><p>Plitalar bir-biriga yaqinlashadigan chegara.</p></div><div class='term'><b>Transform chegara</b><p>Plitalar yonma-yon siljiydigan chegara.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Dunyo xaritasidan Tinch okeani atrofidagi seysmik faol hududlarni toping va ularning plita chegaralariga yaqinligini kuzating.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Plitalar harakati modeli</h3><p>Harakat turini tanlang: uzoqlashish, yaqinlashish yoki yonma-yon siljish. Sxema plitalar yo‘nalishini ko‘rsatadi.</p>
+        
+        
+        
+        
+        <div class="controls"><label>Plitalar harakati <select id="plate-46"><option value="div">Uzoqlashish</option><option value="conv">Yaqinlashish</option><option value="trans">Yonma-yon siljish</option></select></label><div class="plates" id="plates-46"><div>PLITA A</div><span>↔</span><div>PLITA B</div></div><output id="plateout-46">Plitalar bir-biridan uzoqlashadi.</output></div>
+        
+        
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Litosfera nimalardan tashkil topgan?&quot;, &quot;o&quot;: [&quot;Faqat atmosfera&quot;, &quot;Yer po‘sti va yuqori mantiyaning qattiq qismi&quot;, &quot;Faqat yadro&quot;, &quot;Faqat okean suvi&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Plitalar bir-biridan uzoqlashadigan chegara?&quot;, &quot;o&quot;: [&quot;Konvergent&quot;, &quot;Divergent&quot;, &quot;Transform&quot;, &quot;Tinch&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Zilzilalar ko‘pincha qayerlarda sodir bo‘ladi?&quot;, &quot;o&quot;: [&quot;Faqat tekislik markazida&quot;, &quot;Plitalar chegaralari yaqinida&quot;, &quot;Faqat qutblarda&quot;, &quot;Faqat cho‘llarda&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-47">
+      <div class="eyebrow">47-mavzu · Amaliy mashg‘ulot</div>
+      <h2>Amaliy mashg‘ulot: Vaqt mintaqalarini yasash</h2>
+      <p class="lead">Yer o‘z o‘qi atrofida aylangani sababli turli meridianlarda mahalliy vaqt farq qiladi. Vaqt mintaqalari bu farqni qulay tartibga solish uchun qo‘llanadi.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Yerning aylanishi va vaqt farqi bog‘liqligini tushuntirish</li><li>15° uzunlik taxminan 1 soatga mos kelishini qo‘llash</li><li>Oddiy vaqt mintaqasi modelini yasash</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Vaqt mintaqasi</b><p>Bir xil standart vaqt qabul qilingan hudud.</p></div><div class='term'><b>Bosh meridian</b><p>Vaqt hisobida boshlang‘ich meridian sifatida olinadigan 0° meridian.</p></div><div class='term'><b>UTC</b><p>Xalqaro muvofiqlashtirilgan vaqt.</p></div><div class='term'><b>Mahalliy vaqt</b><p>Meridianga qarab aniqlanadigan vaqt.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Qog‘oz doirani 24 bo‘lakka ajrating va har biriga bir soatlik mintaqa sifatida belgi qo‘ying. Sharq tomonga har 15° da vaqt bir soat oldinga, g‘arb tomonga bir soat orqaga siljishini ko‘rsating.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Vaqt farqi kalkulyatori</h3><p>Boshlang‘ich vaqt va ikki hudud orasidagi soat farqini kiriting. Natijada ikkinchi hudud vaqti hisoblanadi.</p>
+        
+        
+        
+        
+        
+        <div class="controls"><label>Boshlang‘ich vaqt <input id="time-47" type="time" value="12:00"></label><label>Vaqt farqi (soat, −12 dan +14 gacha) <input id="offset-47" type="number" min="-12" max="14" value="5"></label><output id="timeout-47">Yangi hudud vaqti: 17:00</output></div>
+        
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Yer 360° ni taxminan necha soatda aylanadi?&quot;, &quot;o&quot;: [&quot;12&quot;, &quot;24&quot;, &quot;36&quot;, &quot;48&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;15° uzunlik farqi taxminan qancha vaqtga teng?&quot;, &quot;o&quot;: [&quot;15 daqiqa&quot;, &quot;30 daqiqa&quot;, &quot;1 soat&quot;, &quot;6 soat&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Sharqqa tomon vaqt odatda qanday o‘zgaradi?&quot;, &quot;o&quot;: [&quot;Oldinga siljiydi&quot;, &quot;Orqaga siljiydi&quot;, &quot;O‘zgarmaydi&quot;, &quot;Faqat yozda o‘zgaradi&quot;], &quot;a&quot;: 0}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-48">
+      <div class="eyebrow">48-mavzu · Nazariy dars</div>
+      <h2>Gidrosfera va uning qismlari</h2>
+      <p class="lead">Gidrosfera — Yerning suv qobig‘i. U okean va dengizlar, daryo va ko‘llar, muzliklar, yerosti suvlari hamda atmosfera namligini o‘z ichiga oladi.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Gidrosferaning tarkibiy qismlarini sanash</li><li>Suv aylanishi bosqichlarini tushuntirish</li><li>Chuchuk va sho‘r suvni farqlash</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Gidrosfera</b><p>Yer yuzasi, yer osti va atmosferadagi suvlar majmui.</p></div><div class='term'><b>Okean</b><p>Yer yuzasidagi eng katta uzluksiz sho‘r suv havzasi.</p></div><div class='term'><b>Yerosti suvlari</b><p>Tog‘ jinslari orasida va yer qatlamlarida joylashgan suvlar.</p></div><div class='term'><b>Suv aylanishi</b><p>Suvning bug‘lanish, kondensatsiya va yog‘in orqali uzluksiz harakati.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Suv aylanishini strelkalar bilan chizing: okean → bug‘lanish → bulut → yog‘in → daryo va yerosti suvlari → okean.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Suv aylanishi ketma-ketligi</h3><p>Bosqichlarni tanlab, suvning tabiatdagi aylanish yo‘lini ko‘rib chiqing.</p>
+        
+        
+        
+        
+        
+        
+        <div class="watercycle"><span>Okean</span><b>→</b><span>Bug‘lanish</span><b>→</b><span>Bulut</span><b>→</b><span>Yog‘in</span><b>→</b><span>Daryo</span></div><button class="btn" onclick="this.previousElementSibling.classList.toggle('active')">Suv aylanishini ko‘rsatish/yashirish</button>
+        
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Yerning suv qobig‘i nima deyiladi?&quot;, &quot;o&quot;: [&quot;Atmosfera&quot;, &quot;Litosfera&quot;, &quot;Gidrosfera&quot;, &quot;Biosfera&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Suv bug‘ining sovib tomchilarga aylanishi?&quot;, &quot;o&quot;: [&quot;Bug‘lanish&quot;, &quot;Kondensatsiya&quot;, &quot;Oqim&quot;, &quot;Muzlash&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Dengiz va okean suvi odatda qanday?&quot;, &quot;o&quot;: [&quot;Chuchuk&quot;, &quot;Sho‘r&quot;, &quot;Distillangan&quot;, &quot;Suvsiz&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-49">
+      <div class="eyebrow">49-mavzu · Nazariy dars</div>
+      <h2>Atmosfera tuzilishi</h2>
+      <p class="lead">Atmosfera — Yerni o‘rab turgan gaz qobig‘i. U bir necha qatlamdan iborat bo‘lib, ob-havo hodisalari asosan troposferada kechadi.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Atmosferaning vazifalarini tushuntirish</li><li>Asosiy qatlamlarni ketma-ket aytish</li><li>Ob-havo hodisalari sodir bo‘ladigan qatlamni aniqlash</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Atmosfera</b><p>Yerni o‘rab turgan gaz qobig‘i.</p></div><div class='term'><b>Troposfera</b><p>Atmosferaning eng quyi qatlami; bulut, yog‘in va ko‘plab ob-havo hodisalari shu yerda yuz beradi.</p></div><div class='term'><b>Stratosfera</b><p>Troposferaning ustidagi qatlam; unda ozon qatlami joylashgan.</p></div><div class='term'><b>Ozon qatlami</b><p>Quyoshning zararli ultrabinafsha nurlarining katta qismini yutadi.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Atmosfera qatlamlarini pastdan yuqoriga qarab chizing va har bir qatlamga bittadan xususiyat yozing.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Atmosfera qatlamlari</h3><p>Qatlamni tanlang va uning balandlikdagi o‘rni hamda asosiy xususiyatini ko‘ring.</p>
+        
+        
+        
+        
+        
+        
+        
+        <div class="layers"><div class="layer" data-layer="0">Troposfera</div><div class="layer" data-layer="1">Stratosfera</div><div class="layer" data-layer="2">Mezosfera</div><div class="layer" data-layer="3">Termosfera</div><div class="layer" data-layer="4">Ekzosfera</div></div><p id="layerinfo-49">Qatlam ustiga bosing.</p>
+        
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Ob-havo hodisalari asosan qaysi qatlamda sodir bo‘ladi?&quot;, &quot;o&quot;: [&quot;Troposfera&quot;, &quot;Mezosfera&quot;, &quot;Termosfera&quot;, &quot;Ekzosfera&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;Yerni o‘rab turgan gaz qobig‘i?&quot;, &quot;o&quot;: [&quot;Gidrosfera&quot;, &quot;Atmosfera&quot;, &quot;Litosfera&quot;, &quot;Biosfera&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Ozon qatlami nimadan himoya qilishga yordam beradi?&quot;, &quot;o&quot;: [&quot;Zilziladan&quot;, &quot;Ultrabinafsha nurlardan&quot;, &quot;Shamoldan&quot;, &quot;Yomg‘irdan&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-50">
+      <div class="eyebrow">50-mavzu · Nazariy dars</div>
+      <h2>Havo bosimi</h2>
+      <p class="lead">Havo bosimi — atmosfera havosining Yer yuzasi va jismlarga ko‘rsatadigan bosimidir. Balandlik oshgan sari havo bosimi odatda kamayadi.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Havo bosimi tushunchasini izohlash</li><li>Balandlik va bosim orasidagi bog‘lanishni tushuntirish</li><li>Barometrning vazifasini bilish</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Havo bosimi</b><p>Havoning og‘irligi va harakati tufayli yuzaga keladigan bosim.</p></div><div class='term'><b>Barometr</b><p>Atmosfera bosimini o‘lchaydigan asbob.</p></div><div class='term'><b>Millibar/gektopaskal</b><p>Atmosfera bosimini ifodalashda ishlatiladigan birliklar.</p></div><div class='term'><b>Balandlik</b><p>Dengiz sathidan yuqoriga ko‘tarilgan masofa.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Tog‘ etagi va cho‘qqisidagi bosim farqini muhokama qiling. Nima uchun baland tog‘larda nafas olish qiyinlashishi mumkinligini tushuntiring.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Balandlik va havo bosimi</h3><p>Balandlikni oshirib, bosim ko‘rsatkichining kamayishini kuzating. Model soddalashtirilgan va taxminiydir.</p>
+        
+        
+        
+        
+        
+        
+        
+        
+        <div class="controls"><label>Balandlik (m) <input id="height-50" type="range" min="0" max="5000" step="100" value="0"></label><output id="pressureout-50">Taxminiy bosim: 1013 hPa</output></div>
+        
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Havo bosimini o‘lchaydigan asbob?&quot;, &quot;o&quot;: [&quot;Termometr&quot;, &quot;Barometr&quot;, &quot;Anemometr&quot;, &quot;Gigrometr&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Balandlik oshganda havo bosimi odatda...&quot;, &quot;o&quot;: [&quot;oshadi&quot;, &quot;kamayadi&quot;, &quot;o‘zgarmaydi&quot;, &quot;nolga teng bo‘ladi&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Havo bosimi qaysi qobiq bilan bog‘liq?&quot;, &quot;o&quot;: [&quot;Gidrosfera&quot;, &quot;Atmosfera&quot;, &quot;Biosfera&quot;, &quot;Litosfera&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-51">
+      <div class="eyebrow">51-mavzu · Nazariy dars</div>
+      <h2>Havo harorati</h2>
+      <p class="lead">Havo harorati havoning qanchalik issiq yoki sovuqligini bildiradi. U termometr bilan o‘lchanadi va quyosh nuri, balandlik, fasl hamda joyning xususiyatlariga bog‘liq.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Havo haroratini o‘lchash usulini bilish</li><li>Kunlik harorat o‘zgarishini tushuntirish</li><li>Haroratga ta’sir etuvchi omillarni sanash</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Havo harorati</b><p>Havoning issiqlik holatini ifodalovchi kattalik.</p></div><div class='term'><b>Termometr</b><p>Haroratni o‘lchaydigan asbob.</p></div><div class='term'><b>Sutkalik amplituda</b><p>Bir sutkadagi eng yuqori va eng past harorat farqi.</p></div><div class='term'><b>Izoterma</b><p>Xaritada bir xil haroratli nuqtalarni birlashtiruvchi chiziq.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Bir kun davomida ertalab, tushda va kechqurun haroratni yozib boring. Eng yuqori va eng past qiymatlar farqini toping.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Sutkalik harorat grafigi</h3><p>Kun vaqtini va harorat qiymatlarini o‘zgartirib, haroratning kun davomida qanday o‘zgarishini kuzating.</p>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div class="controls"><label>Soat <input id="hour-51" type="range" min="0" max="23" value="14"></label><label>Harorat (°C) <input id="temp-51" type="range" min="-10" max="40" value="24"></label><output id="tempout-51">Soat 14:00 · 24°C</output><div class="thermometer"><div id="thermofill-51"></div></div></div>
+        
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Haroratni qaysi asbob o‘lchaydi?&quot;, &quot;o&quot;: [&quot;Barometr&quot;, &quot;Termometr&quot;, &quot;Kompas&quot;, &quot;Flyuger&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Eng yuqori va eng past harorat farqi nima?&quot;, &quot;o&quot;: [&quot;Bosim&quot;, &quot;Sutkalik amplituda&quot;, &quot;Namlik&quot;, &quot;Masshtab&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Bir xil haroratli nuqtalarni xaritada nima birlashtiradi?&quot;, &quot;o&quot;: [&quot;Izobaralar&quot;, &quot;Izotermalar&quot;, &quot;Gorizontallar&quot;, &quot;Meridianlar&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-52">
+      <div class="eyebrow">52-mavzu · Amaliy mashg‘ulot</div>
+      <h2>Amaliy mashg‘ulot: Havo haroratining sutkalik va yillik amplitudasini aniqlash</h2>
+      <p class="lead">Harorat amplitudasi eng yuqori va eng past harorat orasidagi farqdir. Sutkalik amplituda bir sutkada, yillik amplituda esa yil davomida aniqlanadi.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Sutkalik amplitudani hisoblash</li><li>Yillik amplitudani oylik ko‘rsatkichlardan aniqlash</li><li>Natijani jadval yoki grafikda ifodalash</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Sutkalik amplituda</b><p>Bir sutkadagi maksimal va minimal harorat farqi.</p></div><div class='term'><b>Yillik amplituda</b><p>Yilning eng issiq va eng sovuq oylari o‘rtacha haroratlari farqi.</p></div><div class='term'><b>Maksimal harorat</b><p>Kuzatilgan eng yuqori harorat.</p></div><div class='term'><b>Minimal harorat</b><p>Kuzatilgan eng past harorat.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Sutkalik kuzatuv: maksimal +18°C, minimal +7°C. Amplitudani hisoblang. Yillik misol: iyul +30°C, yanvar −2°C. Yillik amplitudani toping.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Amplituda kalkulyatori</h3><p>Maksimal va minimal haroratlarni kiriting. Amplituda ularning ayirmasining musbat qiymati sifatida hisoblanadi.</p>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div class="controls"><label>Maksimal harorat (°C) <input id="maxT-52" type="number" value="18"></label><label>Minimal harorat (°C) <input id="minT-52" type="number" value="7"></label><output id="ampout-52">Amplituda: 11°C</output></div>
+        
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Maksimal +18°C, minimal +7°C. Amplituda?&quot;, &quot;o&quot;: [&quot;7°C&quot;, &quot;11°C&quot;, &quot;18°C&quot;, &quot;25°C&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Iyul +30°C, yanvar −2°C. Yillik amplituda?&quot;, &quot;o&quot;: [&quot;28°C&quot;, &quot;30°C&quot;, &quot;32°C&quot;, &quot;−32°C&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Amplituda qanday hisoblanadi?&quot;, &quot;o&quot;: [&quot;Maksimal + minimal&quot;, &quot;Maksimal − minimal&quot;, &quot;Minimal − 0&quot;, &quot;Bosim × vaqt&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+
+    <article class="lesson" id="topic-53">
+      <div class="eyebrow">53-mavzu · Nazariy dars</div>
+      <h2>Biosfera</h2>
+      <p class="lead">Biosfera — tirik organizmlar yashaydigan Yer qobig‘i. U atmosfera, gidrosfera va litosferaning hayot mavjud bo‘lgan qismlari bilan chambarchas bog‘liq.</p>
+      <div class="grid">
+        <section class="panel"><h3>Dars maqsadlari</h3><ul><li>Biosfera tushunchasini ta’riflash</li><li>Tirik organizmlar va tabiiy qobiqlar aloqasini tushuntirish</li><li>Insonning biosferaga ta’siriga misollar keltirish</li></ul></section>
+        <section class="panel"><h3>Asosiy tushunchalar</h3><div class='term'><b>Biosfera</b><p>Tirik organizmlar tarqalgan Yer qobig‘i.</p></div><div class='term'><b>Ekotizim</b><p>Organizmlar va ular yashaydigan muhitning o‘zaro bog‘langan tizimi.</p></div><div class='term'><b>Biologik xilma-xillik</b><p>Tirik organizmlar turlari va ularning xilma-xilligi.</p></div><div class='term'><b>Tabiatni muhofaza qilish</b><p>Tabiiy muhit va tirik organizmlarni asrashga qaratilgan faoliyat.</p></div></section>
+      </div>
+      <section class="panel"><h3>Amaliy topshiriq</h3><p>Mahalliy hududdagi ekotizimni tanlang (bog‘, daryo bo‘yi yoki dala). Undagi tirik organizmlar, suv, tuproq va havo o‘rtasidagi bog‘lanishni sxemada ko‘rsating.</p></section>
+      <section class="panel simulation">
+        <h3>Interaktiv model: Ekotizimdagi o‘zaro bog‘liqlik</h3><p>O‘simlik, hayvon, suv va tuproq omillarini faollashtirib, ekotizim tarkibiy qismlari bir-biriga bog‘liqligini kuzating.</p>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div class="eco"><button data-eco="plant">O‘simlik</button><button data-eco="water">Suv</button><button data-eco="animal">Hayvon</button><button data-eco="soil">Tuproq</button></div><p id="ecoout-53">Ekotizim tarkibiy qismini tanlang.</p>
+      </section>
+      <section class="panel"><h3>Mustahkamlash testi</h3><div class="quiz" data-quiz='[{&quot;q&quot;: &quot;Tirik organizmlar tarqalgan Yer qobig‘i?&quot;, &quot;o&quot;: [&quot;Atmosfera&quot;, &quot;Biosfera&quot;, &quot;Litosfera&quot;, &quot;Stratosfera&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Organizmlar va yashash muhiti birligi?&quot;, &quot;o&quot;: [&quot;Masshtab&quot;, &quot;Ekotizim&quot;, &quot;Meridian&quot;, &quot;Barometr&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Biosferani asrashga qaysi ish yordam beradi?&quot;, &quot;o&quot;: [&quot;Chiqindini daryoga tashlash&quot;, &quot;Daraxtlarni asrash va chiqindini saralash&quot;, &quot;Suvni behuda oqizish&quot;, &quot;Yovvoyi hayvonlarni bezovta qilish&quot;], &quot;a&quot;: 1}]'></div></section>
+      <details class="teacher"><summary>O‘qituvchi uchun tavsiya</summary><p>Darsni qisqa savol-javob bilan boshlang. Asosiy tushunchalarni xarita, chizma yoki kundalik hayotdan olingan misol bilan tushuntiring. Amaliy topshiriqni juftlikda bajartiring, so‘ng test natijalarini birgalikda muhokama qiling.</p></details>
+    </article>
+<footer class="foot">O‘quv qo‘llanma sifatida tayyorlangan. Mavzular mazmuni maktab darsligi va o‘qituvchi rejasiga mos ravishda tekshirib, to‘ldirilishi mumkin.</footer>
+</main>
+<script>
+document.querySelectorAll('[data-target]').forEach(b=>b.addEventListener('click',()=>{document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth'});document.querySelectorAll('[data-target]').forEach(x=>x.classList.toggle('active',x===b))}));
+document.querySelectorAll('.quiz').forEach(box=>{
+ const qs=JSON.parse(box.dataset.quiz);let score=0,done=0;
+ qs.forEach((q,i)=>{const card=document.createElement('div');card.className='question';const p=document.createElement('p');p.textContent=(i+1)+'. '+q.q;card.appendChild(p);const opts=document.createElement('div');opts.className='answers';const fb=document.createElement('div');fb.className='feedback';
+ q.o.forEach((o,j)=>{const b=document.createElement('button');b.textContent=String.fromCharCode(65+j)+'. '+o;b.addEventListener('click',()=>{if(card.dataset.done)return;card.dataset.done='1';done++;if(j===q.a){score++;b.classList.add('correct');fb.textContent='To‘g‘ri javob!'}else{b.classList.add('wrong');opts.children[q.a].classList.add('correct');fb.textContent='To‘g‘ri javob: '+q.o[q.a]}if(done===qs.length){const s=document.createElement('p');s.className='score';s.textContent='Natija: '+score+' / '+qs.length;box.appendChild(s)}});opts.appendChild(b)});card.appendChild(opts);card.appendChild(fb);box.appendChild(card)});
+ const reset=document.createElement('button');reset.textContent='Testni qayta ishlash';reset.className='btn';reset.addEventListener('click',()=>{box.innerHTML='';box.dataset.quiz=JSON.stringify(qs);box.dispatchEvent(new Event('resetquiz'))});
+ // Reset by reloading the page to guarantee a clean quiz state
+ reset.addEventListener('click',()=>location.reload());box.appendChild(reset);
+});
+function val(id){return document.getElementById(id)}
+// Masshtab
+(function(){let n=42,a=val('mapdist-'+n),s=val('scale-'+n),o=val('out-'+n);function f(){o.textContent='Haqiqiy masofa: '+(Math.max(0,+a.value)*+s.value/100000).toLocaleString('uz-UZ')+' km'}a.addEventListener('input',f);s.addEventListener('change',f);f()})();
+// Koordinatalar
+(function(){let n=43,la=val('lat-'+43),lo=val('lon-'+43),o=val('coordout-'+43),dot=val('coordgrid-'+43).querySelector('i');function f(){o.textContent=Math.abs(la.value)+'° '+(la.value<0?'janubiy':'shimoliy')+' kenglik, '+Math.abs(lo.value)+'° '+(lo.value<0?'g‘arbiy':'sharqiy')+' uzunlik';dot.style.left=((+lo.value+180)/360*100)+'%';dot.style.top=((90-(+la.value))/180*100)+'%'}la.addEventListener('input',f);lo.addEventListener('input',f);f()})();
+// Balandlik
+(function(){let n=44,a=val('altA-44'),b=val('altB-44'),o=val('altout-44');function f(){o.textContent='Nisbiy balandlik: '+Math.abs(+a.value-(+b.value))+' m'}a.addEventListener('input',f);b.addEventListener('input',f);f()})();
+// Gorizontallar
+(function(){let n=45,r=val('slope-45'),o=val('slopeout-45'),svg=val('contour-45');function f(){let v=+r.value;o.textContent='Gorizontallar: '+(v>=7?'juda zich — tik yonbag‘ir':v>=4?'o‘rtacha zich':'siyrak — yotiq yonbag‘ir');svg.innerHTML='';for(let i=0;i<7;i++){let e=document.createElementNS('http://www.w3.org/2000/svg','ellipse');e.setAttribute('cx','160');e.setAttribute('cy','75');e.setAttribute('rx',25+i*(v*2.1));e.setAttribute('ry',10+i*(v*.9));e.setAttribute('fill','none');e.setAttribute('stroke','#0b6e6a');e.setAttribute('stroke-width','2');svg.appendChild(e)}}r.addEventListener('input',f);f()})();
+// Plitalar
+(function(){let s=val('plate-46'),p=val('plates-46'),o=val('plateout-46');function f(){let v=s.value;p.children[1].textContent=v==='div'?'←   →':v==='conv'?'→   ←':'↑   ↓';o.textContent=v==='div'?'Plitalar bir-biridan uzoqlashadi.':v==='conv'?'Plitalar bir-biriga yaqinlashadi.':'Plitalar yonma-yon siljiydi.'}s.addEventListener('change',f);f()})();
+// Vaqt
+(function(){let t=val('time-47'),d=val('offset-47'),o=val('timeout-47');function f(){let [h,m]=t.value.split(':').map(Number);let total=(h*60+m+(+d.value)*60+1440*4)%1440;o.textContent='Yangi hudud vaqti: '+String(Math.floor(total/60)).padStart(2,'0')+':'+String(total%60).padStart(2,'0')}t.addEventListener('input',f);d.addEventListener('input',f);f()})();
+// Atmosfera qatlamlari
+document.querySelectorAll('.layer').forEach(el=>el.addEventListener('click',()=>{const infos=['Eng quyi qatlam; ob-havo hodisalari asosan shu yerda sodir bo‘ladi.','Ozon qatlami joylashgan qatlam.','Ko‘plab meteorlar shu qatlamda yonib ketadi.','Qutb yog‘dusi kuzatilishi mumkin bo‘lgan yuqori qatlam.','Atmosferaning eng tashqi, siyrak qatlami.'];document.getElementById('layerinfo-49').textContent=el.textContent+': '+infos[+el.dataset.layer]}));
+// Bosim
+(function(){let h=val('height-50'),o=val('pressureout-50');function f(){let p=1013*Math.exp(-(+h.value)/8400);o.textContent='Taxminiy bosim: '+Math.round(p)+' hPa'}h.addEventListener('input',f);f()})();
+// Harorat
+(function(){let h=val('hour-51'),t=val('temp-51'),o=val('tempout-51'),fill=val('thermofill-51');function f(){o.textContent='Soat '+String(h.value).padStart(2,'0')+':00 · '+t.value+'°C';fill.style.width=((+t.value+10)/50*100)+'%'}h.addEventListener('input',f);t.addEventListener('input',f);f()})();
+// Amplituda
+(function(){let a=val('maxT-52'),b=val('minT-52'),o=val('ampout-52');function f(){o.textContent='Amplituda: '+Math.abs(+a.value-(+b.value))+'°C'}a.addEventListener('input',f);b.addEventListener('input',f);f()})();
+// Ekotizim
+document.querySelectorAll('[data-eco]').forEach(b=>b.addEventListener('click',()=>{const m={plant:'O‘simliklar quyosh energiyasidan foydalanib organik modda hosil qiladi.',water:'Suv barcha tirik organizmlar hayoti uchun zarur muhit va resursdir.',animal:'Hayvonlar oziq zanjirida iste’molchi sifatida qatnashadi.',soil:'Tuproq o‘simliklarni oziqa va tayanch bilan ta’minlaydi.'};document.getElementById('ecoout-53').textContent=m[b.dataset.eco]}));
+</script></body></html>
