@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iqlim va Ekologiya Interaktiv Laboratoriyasi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Header section -->
+  <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 text-white shadow-lg border-b border-indigo-900/50 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex items-center space-x-3">
+          <div class="p-2.5 bg-blue-500/20 rounded-xl border border-blue-400/30 backdrop-blur-md">
+            <span class="text-3xl">🌍</span>
+          </div>
+          <div>
+            <h1 class="text-xl sm:text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-blue-300">
+              Iqlim va Ekologiya Laboratoriyasi
+            </h1>
+            <p class="text-xs sm:text-sm text-blue-200/80">
+              6-sinf Tabiiy fanlar va Geografiya bo'yicha interaktiv simulyatsiyalar hamda CHSB portali
+            </p>
+          </div>
+        </div>
+        
+        <!-- Quick stats & info -->
+        <div class="flex items-center gap-3 text-xs sm:text-sm">
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            10 ta interaktiv modul
+          </span>
+          <button onclick="toggleInfoModal()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition border border-white/10">
+            ℹ️ Yo'riqnoma
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+    
+    <!-- Controls & Search -->
+    <div class="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+      <div class="relative w-full sm:w-96">
+        <input 
+          type="text" 
+          id="searchInput" 
+          onkeyup="filterModules()" 
+          placeholder="Modul yoki mavzuni izlash..." 
+          class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+        />
+        <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </div>
+
+      <!-- Filter Tags -->
+      <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 custom-scrollbar">
+        <button onclick="filterCategory('all')" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white transition">Barchasi</button>
+        <button onclick="filterCategory('iqlim')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Iqlim</button>
+        <button onclick="filterCategory('ekologiya')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Ekologiya</button>
+        <button onclick="filterCategory('amaliy')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Suv & Amaliy</button>
+        <button onclick="filterCategory('chsb')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">CHSB & Test</button>
+      </div>
+    </div>
+
+    <!-- Modules Grid -->
+    <div id="modulesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Card 1 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="iqlim" data-title="iqlim laboratoriyasi harorat yogin bosim">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">Modul 1</span>
+            <span class="text-xl">🌡️</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">1. Iqlim laboratoriyasi</h3>
+          <p class="text-slate-600 text-sm mb-4">Iqlim ko'rsatkichlari (harorat, yog'in va bosim) o'rtasidagi bog'liqlikni tajribalar va grafiklar orqali o'rganing.</p>
+        </div>
+        <button onclick="openModule('index (1).html', '1. Iqlim laboratoriyasi')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="iqlim" data-title="iqlimga tasir etuvchi omillar kenglik balandlik shamollar">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">Modul 2</span>
+            <span class="text-xl">☀️</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">2. Iqlim omillari</h3>
+          <p class="text-slate-600 text-sm mb-4">Geografik kenglik, balandlik va okean oqimlarining hudud iqlimini shakllantirishdagi rolini simulyatsiya qiling.</p>
+        </div>
+        <button onclick="openModule('index-1 (1).html', '2. Iqlimga ta’sir etuvchi omillar')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="iqlim ekologiya" data-title="iqlim ozgarishi muzliklar global isish tabiat">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">Modul 3</span>
+            <span class="text-xl">🧊</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">3. Iqlim o‘zgarishi va Tabiat</h3>
+          <p class="text-slate-600 text-sm mb-4">Global harorat ko'tarilishi, muzliklarning erishi hamda suv resurslariga ta'sirini modellashtiring.</p>
+        </div>
+        <button onclick="openModule('index-2 (1).html', '3. Iqlim o‘zgarishi oqibatlari')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="ekologiya" data-title="ekosistemalardagi ozaro munosabatlar oziq zanjiri populyatsiya">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">Modul 4</span>
+            <span class="text-xl">🦊</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">4. Ekosistema munosabatlari</h3>
+          <p class="text-slate-600 text-sm mb-4">Oziq to'ri, yirtqich-o'lja muvozanati hamda populyatsiyalar dinamikasini kuzating.</p>
+        </div>
+        <button onclick="openModule('Ekosistemalardagi_o_zaro_munosabatlar (1).html', '4. Ekosistemalardagi o‘zaro munosabatlar')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="ekologiya" data-title="energiya oqimi trofik darajalar piramida">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">Modul 5</span>
+            <span class="text-xl">⚡</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">5. Energiya oqimi</h3>
+          <p class="text-slate-600 text-sm mb-4">Quyosh energiyasining trofik darajalar bo'ylab taqsimlanishi va energiya yo'qotilish qonuniyatlari.</p>
+        </div>
+        <button onclick="openModule('energiya-oqimi (1).html', '5. Ekosistemada energiya oqimi')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="amaliy" data-title="toza ichimlik suvini olish filtrlash tindirish">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-100">Modul 6</span>
+            <span class="text-xl">💧</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">6. Toza suv olish</h3>
+          <p class="text-slate-600 text-sm mb-4">6-sinf Tabiiy fanlar uchun suvni tindirish, filtrlash va xavfsiz tozalash dars interaktiv materiallari.</p>
+        </div>
+        <button onclick="openModule('toza_suv_dars_materiallari-1 (1).html', '6. Toza ichimlik suvini olish')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-cyan-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="amaliy" data-title="suv tozalash dars ishlanmasi topshiriqlar metodu">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-100">Modul 7</span>
+            <span class="text-xl">🚰</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">7. Suv tozalash dars ishlanmasi</h3>
+          <p class="text-slate-600 text-sm mb-4">O'qituvchilar va o'quvchilar uchun 45 daqiqalik dars ishlanmasi va interaktiv metodik topshiriqlar.</p>
+        </div>
+        <button onclick="openModule('suv_tozalash_dars_ishlanmasi (1).html', '7. Suvni tozalash dars ishlanmasi')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-cyan-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="ekologiya chsb" data-title="ekologiya barqaror rivojlanish 1 modul test owoy krossvord">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">Modul 8</span>
+            <span class="text-xl">🌱</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">8. Barqaror rivojlanish (1-modul)</h3>
+          <p class="text-slate-600 text-sm mb-4">Ekologiya va barqaror rivojlanish bo'yicha interaktiv laboratoriya, testlar hamda krossvordlar to'plami.</p>
+        </div>
+        <button onclick="openModule('index-3 (1).html', '8. Ekologiya va barqaror rivojlanish (1-modul)')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-indigo-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="ekologiya chsb" data-title="ekologiya barqaror rivojlanish 2 modul bsb topshiriqlar">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">Modul 9</span>
+            <span class="text-xl">♻️</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">9. Barqaror rivojlanish (2-modul)</h3>
+          <p class="text-slate-600 text-sm mb-4">BSB topshiriqlari, simulyatsiyalar, mustahkamlash savollari hamda amaliy ekologik mashqlar.</p>
+        </div>
+        <button onclick="openModule('Ekologiya_va_barqaror_rivojlanish (1).html', '9. Ekologiya va barqaror rivojlanish (2-modul)')" class="w-full py-2.5 px-4 bg-slate-900 hover:bg-indigo-600 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="module-card bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between ring-2 ring-indigo-500/20" data-category="chsb ekologiya" data-title="chsb ekologiya barqaror rivojlanish simulyatsiyalar 40 ball javoblar">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">Modul 10 • CHSB</span>
+            <span class="text-xl">📝</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">10. CHSB va Simulyatsiyalar</h3>
+          <p class="text-slate-600 text-sm mb-4">6-sinf CHSB varianti (40 ball), baholash mezonlari, javoblar kaliti va 6 ta integratsiyalashgan simulyatsiya.</p>
+        </div>
+        <button onclick="openModule('Ekologiya_va_barqaror_rivojlanish_CHSB_va_simulyatsiyalar (1)_2.html', '10. CHSB va Interaktiv Simulyatsiyalar')" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 group">
+          CHSB va Simulyatsiyani ochish 
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Viewer Modal (Full Screen Iframe Container) -->
+  <div id="viewerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex-col transition-opacity">
+    
+    <!-- Modal Header Toolbar -->
+    <div class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between text-white">
+      <div class="flex items-center space-x-3">
+        <button onclick="closeViewer()" class="p-2 hover:bg-slate-800 rounded-lg text-slate-300 hover:text-white transition flex items-center gap-1.5 text-sm font-medium">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span class="hidden sm:inline">Menyuga qaytish</span>
+        </button>
+        <span class="h-4 w-px bg-slate-700"></span>
+        <h2 id="currentModuleTitle" class="text-sm sm:text-base font-semibold text-slate-100 truncate max-w-xs sm:max-w-md md:max-w-xl">
+          Simulyatsiya
+        </h2>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <button onclick="reloadIframe()" title="Qayta yuklash" class="p-2 hover:bg-slate-800 rounded-lg text-slate-300 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </button>
+        <button onclick="toggleFullscreen()" title="To'liq ekran" class="p-2 hover:bg-slate-800 rounded-lg text-slate-300 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+          </svg>
+        </button>
+        <button onclick="closeViewer()" title="Yopish" class="p-2 bg-red-600/80 hover:bg-red-600 rounded-lg text-white transition ml-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Body (Iframe) -->
+    <div class="flex-grow w-full h-full relative bg-white">
+      <iframe id="moduleIframe" class="w-full h-full border-0" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <!-- Instruction Info Modal -->
+  <div id="infoModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <span>ℹ️</span> GitHub Pages uchun ko'rsatma
+        </h3>
+        <button onclick="toggleInfoModal()" class="text-slate-400 hover:text-slate-600">✖</button>
+      </div>
+      <div class="space-y-3 text-sm text-slate-600">
+        <p>1. Ushbu <strong>index.html</strong> fayli bilan birga barcha 10 ta HTML modullarini bitta papkaga joylashtiring.</p>
+        <p>2. GitHub repository ochib, barcha fayllarni birga yuklang (Upload files).</p>
+        <p>3. Repository sozlamalaridan <strong>GitHub Pages</strong> xizmatini <code>main</code> branch uchun yoqing.</p>
+        <p class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs font-medium">
+          ⚠️ <b>Eslatma:</b> Barcha HTML fayl nomlari kod ichida ko'rsatilgan nomlarga to'liq mos kelishi kerak.
+        </p>
+      </div>
+      <button onclick="toggleInfoModal()" class="mt-6 w-full py-2.5 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 transition">
+        Tushundim
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    <p>© 2026 Iqlim va Ekologiya Interaktiv Laboratoriyasi • 6-sinf Tabiiy fanlar ta'lim resursi</p>
+  </footer>
+
+  <script>
+    // Module Viewer Handler
+    function openModule(fileName, title) {
+      const viewer = document.getElementById('viewerModal');
+      const iframe = document.getElementById('moduleIframe');
+      const moduleTitle = document.getElementById('currentModuleTitle');
+
+      moduleTitle.textContent = title;
+      iframe.src = fileName;
+      
+      viewer.classList.remove('hidden');
+      viewer.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeViewer() {
+      const viewer = document.getElementById('viewerModal');
+      const iframe = document.getElementById('moduleIframe');
+
+      viewer.classList.add('hidden');
+      viewer.classList.remove('flex');
+      iframe.src = 'about:blank';
+      document.body.style.overflow = 'auto';
+    }
+
+    function reloadIframe() {
+      const iframe = document.getElementById('moduleIframe');
+      iframe.src = iframe.src;
+    }
+
+    function toggleFullscreen() {
+      const viewer = document.getElementById('viewerModal');
+      if (!document.fullscreenElement) {
+        viewer.requestFullscreen().catch(err => {
+          console.error(`Fullscreen Error: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Filter and Search Functions
+    function filterModules() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.module-card');
+
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        if (title.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function filterCategory(cat) {
+      const cards = document.querySelectorAll('.module-card');
+      const buttons = document.querySelectorAll('.cat-btn');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('bg-slate-100', 'text-slate-600');
+      });
+
+      event.target.classList.remove('bg-slate-100', 'text-slate-600');
+      event.target.classList.add('bg-blue-600', 'text-white');
+
+      cards.forEach(card => {
+        const categories = card.getAttribute('data-category');
+        if (cat === 'all' || categories.includes(cat)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleInfoModal() {
+      const modal = document.getElementById('infoModal');
+      if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+  </script>
+</body>
+</html>
