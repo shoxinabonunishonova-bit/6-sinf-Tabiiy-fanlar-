@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6-sinf Tabiiy fanlar • 1–2-boblar • Interaktiv</title>
+<style>
+:root{--g:#0f5132;--g2:#2e8b57;--bg:#f2f7f3;--card:#fff;--line:#dde8e0;--warn:#fff4d6;--ok:#d9f2e2;--bad:#fde0e0;--ink:#1c2b22}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{background:var(--g);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:17px}
+header small{opacity:.85}
+.layout{display:flex;gap:14px;max-width:1240px;margin:0 auto;padding:0 12px;align-items:flex-start}
+main{flex:1;min-width:0;order:1;padding:0 0 12px}
+aside{order:2;flex:0 0 290px;width:290px;position:sticky;top:78px;max-height:calc(100vh - 92px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:12px}
+aside .ttl{font-weight:700;color:var(--g);padding:4px 8px 8px;font-size:16px}
+aside .lbl{font-size:12px;font-weight:700;color:#fff;background:var(--g);border-radius:8px;padding:5px 10px;margin:10px 0 4px}
+.tp{display:flex;gap:8px;width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:14px;color:var(--ink);line-height:1.3}
+.tp i{font-style:normal;font-weight:700;color:var(--g2);min-width:22px}
+.tp:hover{background:#eef6f0}
+.tp.on{background:var(--g2);color:#fff}.tp.on i{color:#fff}
+@media(max-width:800px){.layout{flex-direction:column;gap:0}aside{order:0;flex:none;width:100%;position:static;max-height:230px}main{order:1}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+h2{margin:0 0 4px;color:var(--g);font-size:22px}
+h3{margin:0 0 8px;color:var(--g);font-size:17px}
+.tag{font-size:12px;color:#5b6f62}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.plan div{background:#f6faf7;border:1px solid var(--line);border-radius:10px;padding:10px}
+.plan b{color:var(--g)}
+.note{background:var(--warn);border-left:4px solid #e8a317;padding:8px 10px;border-radius:6px;margin-top:10px;font-size:14px}
+.safe{background:#fdeceb;border-left:4px solid #d9534f;padding:8px 10px;border-radius:6px;margin-top:10px;font-size:14px}
+button.b{background:var(--g2);color:#fff;border:0;border-radius:8px;padding:8px 12px;margin:3px 3px 3px 0;cursor:pointer;font-size:14px}
+button.b.alt{background:#fff;color:var(--g);border:1px solid var(--g2)}
+button.b.on{background:var(--g);color:#fff}
+canvas{width:100%;border:1px solid var(--line);border-radius:10px;background:#fbfdfc;display:block}
+input[type=range]{width:100%}
+select,textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}
+textarea{min-height:60px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{border:1px solid var(--line);padding:5px 8px;text-align:left}
+th{background:#eef6f0}
+.q{margin:10px 0}
+.q .opts button{display:block;width:100%;text-align:left;margin:4px 0;padding:10px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:15px;cursor:pointer}
+.q .opts button.ok{background:var(--ok);border-color:#3a9d62}
+.q .opts button.no{background:var(--bad);border-color:#d9534f}
+.res{padding:8px 10px;border-radius:8px;margin-top:8px;font-size:14px;background:#eef6f0}
+.res.ok{background:var(--ok)}.res.bad{background:var(--bad)}.res.part{background:var(--warn)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row>*{flex:1 1 140px}
+.nav{display:flex;justify-content:space-between;gap:8px;margin:16px 0 40px}
+.items .it{display:flex;justify-content:space-between;align-items:center;gap:6px;border-bottom:1px solid var(--line);padding:5px 0}
+.it.ok{background:var(--ok)}.it.no{background:var(--bad)}
+.score{font-weight:700;color:var(--g)}
+ol.rev li{margin:6px 0}
+</style>
+</head>
+<body>
+<header><h1>6-sinf • Tabiiy fanlar • 1–2-boblar</h1><small>Interaktiv simulyatsiyalar, testlar va kuzatuv kundaligi</small></header>
+<div class="layout">
+<aside id="chips"></aside>
+<main id="app"></main>
+</div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+let cleanups=[];
+function loop(fn){let on=true;(function f(){if(!on)return;fn();requestAnimationFrame(f)})();cleanups.push(()=>{on=false})}
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- Zarrachalar dvigateli ---------- */
+function particleBox(cv,getState,N=60,color="#2e8b57"){
+  const ctx=cv.getContext("2d"),W=cv.width,H=cv.height;
+  const ps=[];
+  for(let i=0;i<N;i++){const a=rnd(0,6.28);ps.push({x:rnd(0,W),y:rnd(0,H),vx:Math.cos(a),vy:Math.sin(a),c:i%10,r:Math.floor(i/10)})}
+  loop(()=>{
+    const s=getState();
+    const x0=s.x0*W,y0=s.y0*H,x1=s.x1*W,y1=s.y1*H;
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle="#9bb5a5";ctx.lineWidth=2;ctx.strokeRect(x0,y0,x1-x0,y1-y0);
+    if(s.fill){ctx.fillStyle=s.fill;ctx.fillRect(x0,y0,x1-x0,y1-y0)}
+    const cols=10,rows=Math.ceil(N/cols);
+    for(const p of ps){
+      if(s.lattice){
+        const tx=x0+(p.c+.5)/cols*(x1-x0),ty=y0+(p.r+.5)/rows*(y1-y0);
+        p.x+=(tx-p.x)*.15+rnd(-1,1)*s.speed;p.y+=(ty-p.y)*.15+rnd(-1,1)*s.speed;
+      }else{
+        p.vx+=rnd(-.2,.2);p.vy+=rnd(-.2,.2);
+        const m=Math.hypot(p.vx,p.vy)||1;p.vx=p.vx/m;p.vy=p.vy/m;
+        p.x+=p.vx*s.speed;p.y+=p.vy*s.speed;
+        if(p.x<x0){p.x=x0;p.vx=Math.abs(p.vx)}if(p.x>x1){p.x=x1;p.vx=-Math.abs(p.vx)}
+        if(p.y<y0){p.y=y0;p.vy=Math.abs(p.vy)}if(p.y>y1){p.y=y1;p.vy=-Math.abs(p.vy)}
+      }
+      ctx.fillStyle=s.color||color;ctx.beginPath();ctx.arc(p.x,p.y,5,0,6.28);ctx.fill();
+    }
+  });
+}
+
+/* ---------- Simulyatsiyalar ---------- */
+const SIM={};
+
+SIM[1]=el=>{
+  const items=[["🌳 Daraxt",1],["🪨 Tosh",0],["🐟 Baliq",1],["💧 Suv",0],["🌬️ Havo",0],["🐱 Mushuk",1],["🌱 Maysa",1],["🏔️ Tuproq",0],["🐝 Asalari",1],["🧊 Muz",0]];
+  const sc=[["Yulduzlar va sayyoralar","Astronomiya"],["Tirik organizmlar","Biologiya"],["Harakat va energiya","Fizika"],["Moddalar va ularning tarkibi","Kimyo"],["Tog‘lar, daryolar, Yer yuzasi","Geografiya"],["Organizm va muhit munosabati","Ekologiya"]];
+  const fans=["Astronomiya","Biologiya","Fizika","Kimyo","Geografiya","Ekologiya"];
+  el.innerHTML=`<p><b>1-qism.</b> Obyektni tirik yoki jonsiz tabiatga ajrating.</p><div class="items">${items.map((it,i)=>`<div class="it" data-i="${i}"><span>${it[0]}</span><span><button class="b alt" data-a="1">Tirik</button><button class="b alt" data-a="0">Jonsiz</button></span></div>`).join("")}</div><p class="score" id="s1"></p>
+  <p><b>2-qism.</b> Qaysi fan nimani o‘rganadi?</p>${sc.map((s,i)=>`<div class="row" style="margin:4px 0"><span>${s[0]}</span><select data-s="${i}"><option value="">— tanlang —</option>${fans.map(f=>`<option>${f}</option>`).join("")}</select></div>`).join("")}<p class="score" id="s2"></p>`;
+  const ans={};
+  $$(".it button",el).forEach(b=>b.onclick=()=>{const r=b.closest(".it"),i=+r.dataset.i;ans[i]=1;r.classList.remove("ok","no");r.classList.add(+b.dataset.a===items[i][1]?"ok":"no");$("#s1",el).textContent="To‘g‘ri: "+$$(".it.ok",el).length+" / "+items.length});
+  $$("select",el).forEach(s=>s.onchange=()=>{const i=+s.dataset.s;s.style.background=s.value===sc[i][1]?"var(--ok)":"var(--bad)";$("#s2",el).textContent="To‘g‘ri: "+$$("select",el).filter(x=>x.value===sc[+x.dataset.s][1]).length+" / "+sc.length});
+};
+
+SIM[2]=el=>{
+  const steps=["Savol qo‘yish","Taxmin (gipoteza)","Tadqiqot rejasi","Kuzatish / tekshiruv","Xulosa chiqarish"];
+  let order=[],mix=shuffle(steps.map((s,i)=>i));
+  const draw=()=>{
+    el.innerHTML=`<p>Tadqiqot bosqichlarini <b>to‘g‘ri tartibda</b> bosing.</p><div>${mix.map(i=>`<button class="b alt" data-i="${i}" ${order.includes(i)?"disabled":""}>${steps[i]}</button>`).join("")}</div>
+    <p>Sizning tartibingiz:</p><ol>${order.map((i,k)=>`<li style="color:${i===k?"#1a7a3f":"#c0392b"}">${steps[i]}</li>`).join("")}</ol>
+    <div class="res ${order.length===5?(order.every((v,k)=>v===k)?"ok":"bad"):""}" >${order.length===5?(order.every((v,k)=>v===k)?"✅ To‘g‘ri! Tadqiqot savoldan boshlanadi, xulosa dalillarga asoslanadi.":"❌ Tartib noto‘g‘ri. Qayta urinib ko‘ring."):"Bosqichlarni tanlang..."}</div><button class="b" id="rs">Qayta boshlash</button>`;
+    $$("button[data-i]",el).forEach(b=>b.onclick=()=>{order.push(+b.dataset.i);draw()});
+    $("#rs",el).onclick=()=>{order=[];mix=shuffle(mix);draw()};
+  };draw();
+};
+
+SIM[3]=el=>{
+  let rows=[];
+  el.innerHTML=`<p>Issiq choy (taxminan 95 °C) xona haroratida soviydi. Termometrni har 2 daqiqada o‘qing va jadvalga yozing.</p>
+  <button class="b" id="m">🌡️ O‘lchash (+2 daqiqa)</button><button class="b alt" id="r">Tozalash</button>
+  <table><thead><tr><th>№</th><th>Vaqt (daqiqa)</th><th>Harorat (°C)</th></tr></thead><tbody id="tb"></tbody></table>
+  <canvas id="c" width="600" height="220"></canvas><div class="res" id="o">Kamida 5 ta o‘lchov yozing.</div>`;
+  const c=$("#c",el),ctx=c.getContext("2d");
+  const draw=()=>{
+    $("#tb",el).innerHTML=rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.t}</td><td>${r.T}</td></tr>`).join("");
+    ctx.clearRect(0,0,600,220);ctx.strokeStyle="#9bb5a5";ctx.beginPath();ctx.moveTo(40,10);ctx.lineTo(40,190);ctx.lineTo(590,190);ctx.stroke();
+    ctx.fillStyle="#555";ctx.font="12px sans-serif";ctx.fillText("°C",8,18);ctx.fillText("daqiqa",540,208);
+    ctx.strokeStyle="#c0392b";ctx.lineWidth=2;ctx.beginPath();
+    rows.forEach((r,i)=>{const x=40+r.t/30*540,y=190-(r.T-15)/85*175;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+    rows.forEach(r=>{const x=40+r.t/30*540,y=190-(r.T-15)/85*175;ctx.fillStyle="#c0392b";ctx.beginPath();ctx.arc(x,y,4,0,6.28);ctx.fill()});
+    if(rows.length>=5)$("#o",el).innerHTML="📋 <b>Xulosa:</b> harorat vaqt o‘tishi bilan pasaydi, dastlab tez, keyin sekinroq. Bu xulosa jadvaldagi dalillarga asoslanadi.";
+  };
+  $("#m",el).onclick=()=>{if(rows.length>=15)return;const t=rows.length*2;rows.push({t,T:Math.round(20+75*Math.exp(-t/10)+rnd(-.6,.6))});draw()};
+  $("#r",el).onclick=()=>{rows=[];draw()};draw();
+};
+
+SIM[4]=el=>{
+  el.innerHTML=`<p>Ikkita o‘simlik (A va B) ustida tajriba. <b>Faqat bitta sharoitni</b> o‘zgartirsangiz, taqqoslash adolatli bo‘ladi.</p>
+  <div class="row"><div><b>A o‘simlik</b><br>Yorug‘lik: <select id="al"><option value="1">bor</option><option value="0">yo‘q</option></select> Suv: <select id="aw"><option value="1">yetarli</option><option value="0">kam</option></select></div>
+  <div><b>B o‘simlik</b><br>Yorug‘lik: <select id="bl"><option value="1">bor</option><option value="0" selected>yo‘q</option></select> Suv: <select id="bw"><option value="1" selected>yetarli</option><option value="0">kam</option></select></div></div>
+  Kun: <b id="dv">7</b><input type="range" id="d" min="0" max="14" value="7"><canvas id="c" width="600" height="260"></canvas><div class="res" id="o"></div>`;
+  const ctx=$("#c",el).getContext("2d");
+  const h=(l,w,d)=>d*0.9*(l?1:.2)*(w?1:.5);
+  const plant=(x,hh,col,name)=>{
+    ctx.fillStyle="#8d5a2b";ctx.fillRect(x-30,225,60,30);
+    ctx.strokeStyle=col;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x,225);ctx.lineTo(x,225-hh*14);ctx.stroke();
+    for(let k=1;k<=Math.floor(hh/2);k++){ctx.fillStyle=col;ctx.beginPath();ctx.ellipse(x+(k%2?16:-16),225-k*28,14,6,0,0,6.28);ctx.fill()}
+    ctx.fillStyle="#333";ctx.font="14px sans-serif";ctx.fillText(name+": "+hh.toFixed(1)+" sm",x-40,20);
+  };
+  const upd=()=>{
+    const v=id=>+$("#"+id,el).value,d=v("d");$("#dv",el).textContent=d;
+    const a=h(v("al"),v("aw"),d),b=h(v("bl"),v("bw"),d);
+    ctx.clearRect(0,0,600,260);plant(150,a,"#2e8b57","A");plant(450,b,"#6aa84f","B");
+    const diff=(v("al")!==v("bl"))+(v("aw")!==v("bw"));
+    const o=$("#o",el);
+    if(diff===0){o.className="res part";o.textContent="Sharoitlar bir xil — farq yo‘q, taqqoslashga hojat yo‘q."}
+    else if(diff===1){o.className="res ok";o.textContent="✅ Adolatli taqqoslash: faqat bitta sharoit farq qiladi, demak o‘sish farqi shu sharoitga bog‘liq."}
+    else{o.className="res bad";o.textContent="⚠️ Ikkala sharoit ham farq qiladi — o‘sish farqi qaysi sababdan ekanini aniq aytib bo‘lmaydi."}
+  };
+  $$("select,input",el).forEach(x=>x.oninput=upd);upd();
+};
+
+SIM[5]=el=>{
+  let mode="s";
+  el.innerHTML=`<p>Modda holatini tanlang va zarrachalarni kuzating.</p><div id="bt"><button class="b" data-m="s">Qattiq</button><button class="b alt" data-m="l">Suyuq</button><button class="b alt" data-m="g">Gaz</button></div>
+  <canvas id="c" width="600" height="260"></canvas><div class="res" id="o"></div>`;
+  const txt={s:"Qattiq: zarrachalar zich va tartibli, asosan o‘z o‘rnida tebranadi.",l:"Suyuq: zarrachalar yaqin, lekin bir-birining yonidan siljiydi.",g:"Gaz: zarrachalar uzoq, erkin va tez harakatlanadi."};
+  const set=m=>{mode=m;$$("#bt button",el).forEach(b=>b.className="b "+(b.dataset.m===m?"":"alt"));$("#o",el).textContent=txt[m]};
+  $$("#bt button",el).forEach(b=>b.onclick=()=>set(b.dataset.m));set("s");
+  particleBox($("#c",el),()=>({s:{x0:.3,y0:.25,x1:.7,y1:.9,lattice:1,speed:1},l:{x0:.2,y0:.55,x1:.8,y1:.95,speed:1.6,fill:"rgba(70,140,220,.15)",color:"#1f6fb2"},g:{x0:.05,y0:.05,x1:.95,y1:.95,speed:4,color:"#c0392b"}}[mode]));
+};
+
+SIM[6]=el=>{
+  el.innerHTML=`<p>Suv haroratini o‘zgartiring (muz → suv → bug‘). Holat avtomatik yangilanadi.</p>Harorat: <b id="tv">-10</b> °C<input type="range" id="t" min="-20" max="130" value="-10">
+  <canvas id="c" width="600" height="260"></canvas><div class="res" id="o"></div>
+  <table><tr><th>Holat</th><th>Shakl</th><th>Hajm</th></tr><tr><td>Qattiq</td><td>saqlaydi</td><td>saqlaydi</td></tr><tr><td>Suyuq</td><td>idish shaklini oladi</td><td>saqlaydi</td></tr><tr><td>Gaz</td><td>yo‘q</td><td>yo‘q (bo‘shliqni to‘ldiradi)</td></tr></table>`;
+  let T=-10;const inp=$("#t",el);
+  const st=()=>T<=0?"s":T<100?"l":"g";
+  inp.oninput=()=>{T=+inp.value;$("#tv",el).textContent=T;const s=st();$("#o",el).textContent=s==="s"?"🧊 Qattiq (muz): shakl va hajmni saqlaydi.":s==="l"?"💧 Suyuq (suv): hajmini saqlaydi, idish shaklini oladi.":"♨️ Gaz (bug‘): bo‘shliqni to‘ldiradi."};inp.oninput();
+  particleBox($("#c",el),()=>{const s=st();return s==="s"?{x0:.35,y0:.4,x1:.65,y1:.85,lattice:1,speed:.8,fill:"rgba(160,210,240,.4)",color:"#4a90c2"}:s==="l"?{x0:.15,y0:.55,x1:.85,y1:.95,speed:1.6,fill:"rgba(70,140,220,.15)",color:"#1f6fb2"}:{x0:.05,y0:.05,x1:.95,y1:.95,speed:4,color:"#c0392b"}});
+};
+
+SIM[7]=el=>{
+  el.innerHTML=`<p>Shpritsdagi gaz: porshenni bosing (hajmni kamaytiring) — zarrachalar zichlashadi, bosim ortadi.</p>Hajm: <b id="vv">100</b> %<input type="range" id="v" min="25" max="100" value="100">
+  <canvas id="c" width="600" height="220"></canvas><div>Bosim (shartli): <b id="pv"></b></div><div class="res" id="o"></div>`;
+  let V=100;const inp=$("#v",el);
+  inp.oninput=()=>{V=+inp.value;$("#vv",el).textContent=V;$("#pv",el).textContent=(100/V).toFixed(1)+"×";$("#o",el).textContent=V<100?"Gaz siqildi: zarrachalar orasidagi masofa kamaydi, ammo gaz yo‘qolmadi.":"Gaz butun hajmni egallagan."};inp.oninput();
+  particleBox($("#c",el),()=>({x0:.05,y0:.15,x1:.05+.9*V/100,y1:.85,speed:3.5,color:"#c0392b",fill:"rgba(200,60,60,.06)"}),40);
+};
+
+SIM[8]=el=>{
+  el.innerHTML=`<p>Bir xil miqdordagi suvni turli idishlarga quying. Hajm o‘zgarmaydi, shakl esa idishga moslashadi.</p>Suv hajmi: <b id="vv">200</b> ml<input type="range" id="v" min="50" max="250" step="10" value="200">
+  <canvas id="c" width="600" height="260"></canvas><div class="res">Suyuqlik idish shaklini oladi, lekin hajmini saqlaydi.</div>`;
+  const ctx=$("#c",el).getContext("2d");
+  const cont=[{n:"Stakan",w:80,H:200},{n:"Piyola",w:140,H:120},{n:"Keng idish",w:200,H:80}];
+  const upd=()=>{
+    const V=+$("#v",el).value;$("#vv",el).textContent=V;ctx.clearRect(0,0,600,260);
+    cont.forEach((c,i)=>{
+      const cx=100+i*200,x=cx-c.w/2,y=230-c.H,hh=Math.min(c.H,V/250*c.H*(80/c.w)*1.6);
+      ctx.fillStyle="rgba(70,140,220,.6)";ctx.fillRect(x,230-hh,c.w,hh);
+      ctx.strokeStyle="#555";ctx.lineWidth=3;ctx.strokeRect(x,y,c.w,c.H);
+      ctx.fillStyle="#333";ctx.font="14px sans-serif";ctx.textAlign="center";ctx.fillText(c.n+" • "+V+" ml",cx,250);
+    });
+  };
+  $("#v",el).oninput=upd;upd();
+};
+
+SIM[9]=el=>{
+  el.innerHTML=`<p>Sovuq va iliq suvga bo‘yoq tomizildi. Zarrachalar tarqalishini taqqoslang (soddalashtirilgan model).</p><button class="b" id="r">▶ Qayta boshlash</button>
+  <div class="row"><div><b>❄️ Sovuq suv</b><canvas id="c1" width="300" height="220"></canvas><div id="p1"></div></div><div><b>🔥 Iliq suv</b><canvas id="c2" width="300" height="220"></canvas><div id="p2"></div></div></div>
+  <div class="res">Harorat yuqori bo‘lsa, zarrachalar tezroq harakatlanadi va diffuziya tezlashadi.</div>`;
+  const mk=(id,pid,step)=>{
+    const cv=$(id,el),ctx=cv.getContext("2d");let ps;
+    const init=()=>{ps=Array.from({length:80},()=>({x:rnd(130,170),y:rnd(100,120)}))};init();
+    cv._init=init;
+    loop(()=>{
+      ctx.fillStyle="rgba(190,225,250,.35)";ctx.fillRect(0,0,300,220);ctx.clearRect(0,0,300,220);ctx.fillStyle="#e3f1fb";ctx.fillRect(0,0,300,220);
+      let sp=0;
+      for(const p of ps){p.x+=rnd(-step,step);p.y+=rnd(-step,step);p.x=Math.max(5,Math.min(295,p.x));p.y=Math.max(5,Math.min(215,p.y));sp+=Math.hypot(p.x-150,p.y-110);ctx.fillStyle="#d63384";ctx.beginPath();ctx.arc(p.x,p.y,4,0,6.28);ctx.fill()}
+      $(pid,el).textContent="O‘rtacha tarqalish: "+Math.round(sp/ps.length)+" px";
+    });
+    return cv;
+  };
+  const a=mk("#c1","#p1",1),b=mk("#c2","#p2",4);
+  $("#r",el).onclick=()=>{a._init();b._init()};
+};
+
+SIM[10]=el=>{
+  el.innerHTML=`<p>Jismni tanlang va unga kuch bilan ta’sir qiling (xavfsiz modelda).</p><div id="bt"></div>Kuch: <b id="fv">0</b><input type="range" id="f" min="0" max="100" value="0">
+  <canvas id="c" width="600" height="220"></canvas><div class="res" id="o"></div>`;
+  const mats={"🪵 Yog‘och":{k:.25,br:80,pl:999,t:"Qattiq, ozgina egiladi, katta kuchda sinadi."},"🧽 Rezina":{k:.9,br:999,pl:999,t:"Egiluvchan: kuch olinsa, avvalgi shakliga qaytadi."},"🥛 Shisha":{k:.08,br:35,pl:999,t:"Mo‘rt: deyarli egilmaydi, lekin oson sinadi."},"🔩 Metall":{k:.3,br:999,pl:55,t:"Mustahkam: kuchli bosilsa doimiy egilib qoladi."}};
+  let cur="🪵 Yog‘och";const ctx=$("#c",el).getContext("2d");
+  $("#bt",el).innerHTML=Object.keys(mats).map(k=>`<button class="b alt" data-k="${k}">${k}</button>`).join("");
+  const upd=()=>{
+    const F=+$("#f",el).value,m=mats[cur];$("#fv",el).textContent=F;
+    $$("#bt button",el).forEach(b=>b.className="b "+(b.dataset.k===cur?"":"alt"));
+    ctx.clearRect(0,0,600,220);ctx.fillStyle="#777";ctx.fillRect(40,60,20,100);
+    const L=380,d=F*m.k*2.2,broken=F>=m.br;
+    ctx.strokeStyle="#8d5a2b";ctx.lineWidth=14;ctx.lineCap="round";ctx.beginPath();
+    const n=20;
+    for(let i=0;i<=n;i++){if(broken&&i>n/2)break;const x=60+L*i/n,y=110+d*Math.pow(i/n,2);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
+    if(broken){ctx.beginPath();for(let i=n/2+1;i<=n;i++){const x=60+L*i/n+10,y=150+i*3+F*.5;i>n/2+1?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke()}
+    const o=$("#o",el);o.className="res "+(broken?"bad":F>m.pl?"part":"");
+    o.textContent=broken?"💥 Jism sindi! "+m.t:F>m.pl?"Doimiy egilib qoldi. "+m.t:m.t;
+  };
+  $$("#bt button",el).forEach(b=>b.onclick=()=>{cur=b.dataset.k;upd()});$("#f",el).oninput=upd;upd();
+};
+
+SIM[11]=el=>{
+  const M={"Tuzli suv":{h:1,c:"#9cc9ee",t:"Bir jinsli: tuz suvda erib ketgan, alohida ko‘rinmaydi."},"Shakarli suv":{h:1,c:"#c5e0f5",t:"Bir jinsli: shakar suvda tarqalgan."},"Suv va qum":{h:0,g:"#a67c52",t:"Turli jinsli: qum donalari ko‘rinadi, tindirilsa cho‘kadi."},"Suv va yog‘":{h:0,l:"#f3d35b",t:"Turli jinsli: yog‘ suvning ustida alohida qavat hosil qiladi."},"Havo":{h:1,c:"#e8e8ff",t:"Bir jinsli: gazlar aralashmasi."}};
+  let cur="Tuzli suv",shaken=true;
+  el.innerHTML=`<div id="bt"></div><button class="b" id="sh">🥄 Chayqatish / Tindirish</button><canvas id="c" width="600" height="240"></canvas><div class="res" id="o"></div>`;
+  $("#bt",el).innerHTML=Object.keys(M).map(k=>`<button class="b alt" data-k="${k}">${k}</button>`).join("");
+  const ctx=$("#c",el).getContext("2d");
+  const draw=()=>{
+    $$("#bt button",el).forEach(b=>b.className="b "+(b.dataset.k===cur?"":"alt"));
+    const m=M[cur];ctx.clearRect(0,0,600,240);
+    ctx.fillStyle=m.h?m.c:"#bfe0f8";ctx.fillRect(200,40,200,180);
+    if(m.h){for(let i=0;i<120;i++){ctx.fillStyle="rgba(255,255,255,.6)";ctx.fillRect(rnd(205,395),rnd(45,215),2,2)}}
+    else if(m.g){for(let i=0;i<90;i++){ctx.fillStyle=m.g;const x=rnd(205,395),y=shaken?rnd(45,215):rnd(190,215);ctx.fillRect(x,y,5,5)}}
+    else{ctx.fillStyle=shaken?"#bfe0f8":m.l;if(!shaken){ctx.fillRect(200,40,200,70)}
+      if(shaken){for(let i=0;i<14;i++){ctx.fillStyle=m.l;ctx.beginPath();ctx.arc(rnd(215,385),rnd(55,205),rnd(6,14),0,6.28);ctx.fill()}}}
+    ctx.strokeStyle="#555";ctx.lineWidth=3;ctx.strokeRect(200,40,200,180);
+    $("#o",el).textContent=m.t;
+  };
+  $$("#bt button",el).forEach(b=>b.onclick=()=>{cur=b.dataset.k;shaken=true;draw()});
+  $("#sh",el).onclick=()=>{shaken=!shaken;draw()};draw();
+};
+
+SIM[12]=el=>{
+  const mix={"Suv va qum":0,"Tuzli suv":1,"Temir qipiqlari va qum":2,"Loyqa suv":3};
+  const meth=["Tindirish","Filtrlash","Bug‘latish","Magnit"];
+  const R=[
+   [["part","Qum tubiga cho‘kadi, ustidagi suvni ehtiyotkorlik bilan quyib olish mumkin (qisman ajraladi)."],["ok","Qum filtrda qoladi, toza suv o‘tadi."],["part","Suv bug‘lanib ketadi, qum qoladi — lekin suv yo‘qoladi."],["bad","Magnit qumni tortmaydi — bu usul mos emas."]],
+   [["bad","Tuz suvda erigan, tindirilganda cho‘kmaydi."],["bad","Erigan tuz filtrdan suv bilan o‘tib ketadi."],["ok","Suv bug‘lanadi, idishda tuz qoladi."],["bad","Magnit tuzni tortmaydi."]],
+   [["bad","Ikkalasi ham qattiq zarrachalar — tindirish ajratmaydi."],["bad","Suyuqlik yo‘q, filtrlash mos emas."],["bad","Bug‘latish bu aralashmaga kerak emas."],["ok","Magnit temir qipiqlarini tortib oladi, qum qoladi."]],
+   [["ok","Loy zarrachalari cho‘kadi, suv tiniqlashadi."],["ok","Filtr loy zarrachalarini ushlab qoladi."],["part","Suv bug‘lanadi, loy qoladi — suvni yo‘qotamiz."],["bad","Magnit loyni tortmaydi."]]];
+  el.innerHTML=`<div class="row"><div>Aralashma:<select id="m">${Object.keys(mix).map(k=>`<option>${k}</option>`).join("")}</select></div><div>Usul:<select id="u">${meth.map(k=>`<option>${k}</option>`).join("")}</select></div></div>
+  <button class="b" id="go">▶ Ajratish</button><div style="font-size:44px;text-align:center;margin:8px" id="v">🥤 ➜ ❓</div><div class="res" id="o">Aralashma va usulni tanlang.</div>`;
+  $("#go",el).onclick=()=>{
+    const r=R[mix[$("#m",el).value]][meth.indexOf($("#u",el).value)];
+    $("#o",el).className="res "+r[0];$("#o",el).textContent=({ok:"✅ ",part:"🟡 ",bad:"❌ "})[r[0]]+r[1];
+    $("#v",el).textContent=r[0]==="ok"?"🥤 ➜ 💧 + 🪨":r[0]==="part"?"🥤 ➜ 💧 ≈ 🪨":"🥤 ➜ 🥤 (ajralmadi)";
+  };
+};
+
+SIM[13]=el=>{
+  el.innerHTML=`<p>Suvni isiting: past haroratda sekin bug‘lanadi, 100 °C da qaynaydi. Qopqoq bug‘ni sovitib, kondensatsiya hosil qiladi.</p>
+  <button class="b" id="h">🔥 Isitish: o‘chiq</button><button class="b alt" id="l">Qopqoq: yo‘q</button><button class="b alt" id="rs">Qayta boshlash</button>
+  <canvas id="c" width="600" height="300"></canvas><div class="res" id="o"></div>`;
+  const cv=$("#c",el),ctx=cv.getContext("2d");
+  let T=20,heat=false,lid=false,vap=[],drops=[],bub=[],level=1;
+  $("#h",el).onclick=e=>{heat=!heat;e.target.textContent="🔥 Isitish: "+(heat?"yoqiq":"o‘chiq")};
+  $("#l",el).onclick=e=>{lid=!lid;e.target.textContent="Qopqoq: "+(lid?"bor":"yo‘q");drops=[]};
+  $("#rs",el).onclick=()=>{T=20;level=1;vap=[];drops=[];bub=[]};
+  loop(()=>{
+    if(heat&&T<100)T+=.35;if(!heat&&T>20)T-=.12;if(T>100)T=100;
+    const boil=T>=100,rate=boil?.5:(T-20)/80*.12;
+    if(heat&&boil&&level>0)level=Math.max(0,level-.0006);
+    if(Math.random()<rate*(level>0?1:0))vap.push({x:rnd(180,420),y:150,l:0});
+    if(boil&&heat&&level>0&&Math.random()<.6)bub.push({x:rnd(190,410),y:240,r:rnd(3,7)});
+    ctx.clearRect(0,0,600,300);
+    ctx.strokeStyle="#555";ctx.lineWidth=3;ctx.strokeRect(160,60,280,200);
+    const wy=260-170*level;ctx.fillStyle="rgba(70,140,220,.5)";ctx.fillRect(161,wy,278,260-wy);
+    ctx.fillStyle=heat?"#e8590c":"#999";ctx.fillRect(150,265,300,14);
+    if(lid){ctx.fillStyle="#888";ctx.fillRect(155,52,290,8)}
+    bub.forEach(b=>{b.y-=2.5;ctx.strokeStyle="#fff";ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,6.28);ctx.stroke()});bub=bub.filter(b=>b.y>wy);
+    vap.forEach(v=>{v.y-=1.4;v.x+=rnd(-1,1);ctx.fillStyle="rgba(150,150,150,.5)";ctx.beginPath();ctx.arc(v.x,v.y,4,0,6.28);ctx.fill()});
+    vap=vap.filter(v=>{const top=lid?64:0;if(v.y<top+4&&lid){drops.push({x:v.x,y:64,f:0});return false}return v.y>top});
+    drops.forEach(d=>{if(!d.f){d.y+=0}ctx.fillStyle="#1f6fb2";ctx.beginPath();ctx.arc(d.x,d.y,3,0,6.28);ctx.fill();if(Math.random()<.01)d.f=1;if(d.f)d.y+=2});
+    drops=drops.filter(d=>d.y<wy);if(drops.length>60)drops.shift();
+    ctx.fillStyle="#222";ctx.font="bold 18px sans-serif";ctx.fillText("T = "+T.toFixed(0)+" °C",470,100);
+    $("#o",el).textContent=boil?"♨️ Qaynash: suv butun hajmi bo‘ylab bug‘ga aylanadi (pufakchalar).":T>30?"Bug‘lanish: suv yuzasidan sekin bug‘ga aylanadi.":"Suv sovuq: bug‘lanish juda sekin.";
+    if(lid&&drops.length)$("#o",el).textContent+=" Qopqoqda kondensatsiya: bug‘ sovib, tomchi hosil qilmoqda 💧.";
+  });
+};
+
+SIM[14]=el=>{
+  el.innerHTML=`<p>Quyosh suvni isitadi, bug‘ ko‘tarilib sovib, bulut hosil qiladi. Bulutga maxsus reagent sepilsa, tomchilar tezroq yiriklashadi va yomg‘ir yog‘adi.</p>
+  Quyosh isitishi: <input type="range" id="s" min="1" max="10" value="5"><button class="b" id="rg">✈️ Reagent sepish: yo‘q</button>
+  <canvas id="c" width="600" height="320"></canvas><div>Bulut zichligi: <b id="cl">0</b> / 100</div><div class="res" id="o"></div>`;
+  const ctx=$("#c",el).getContext("2d");let cloud=0,v=[],rain=[],seed=false;
+  $("#rg",el).onclick=e=>{seed=!seed;e.target.textContent="✈️ Reagent sepish: "+(seed?"ha":"yo‘q")};
+  loop(()=>{
+    const s=+$("#s",el).value;
+    if(Math.random()<s*.06)v.push({x:rnd(40,560),y:290});
+    ctx.clearRect(0,0,600,320);ctx.fillStyle="#e9f5fb";ctx.fillRect(0,0,600,320);
+    ctx.fillStyle="#3b7dd8";ctx.fillRect(0,290,600,30);ctx.font="34px sans-serif";ctx.fillText("☀️",540,40);
+    v.forEach(p=>{p.y-=1.5;p.x+=rnd(-.8,.8);ctx.fillStyle="rgba(120,120,120,.6)";ctx.beginPath();ctx.arc(p.x,p.y,3,0,6.28);ctx.fill()});
+    v=v.filter(p=>{if(p.y<90){cloud=Math.min(100,cloud+.6);return false}return true});
+    const thr=seed?25:70;
+    cloud=Math.max(0,cloud-.04);
+    if(cloud>=thr&&Math.random()<(seed?.9:.3)){rain.push({x:rnd(120,480),y:110});cloud=Math.max(0,cloud-(seed?.5:.35))}
+    ctx.fillStyle="rgba(130,130,140,"+(.25+cloud/140)+")";
+    for(let i=0;i<7;i++){ctx.beginPath();ctx.arc(120+i*55,80+(i%2)*12,35+cloud/6,0,6.28);ctx.fill()}
+    rain.forEach(r=>{r.y+=6;ctx.strokeStyle="#1f6fb2";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(r.x,r.y);ctx.lineTo(r.x-2,r.y+10);ctx.stroke()});rain=rain.filter(r=>r.y<290);
+    $("#cl",el).textContent=Math.round(cloud);
+    $("#o",el).textContent=rain.length>4?"🌧️ Yomg‘ir yog‘moqda"+(seed?" — reagent jarayonni tezlashtirdi.":" — tabiiy sharoitda bulut yetarlicha to‘yindi."):cloud>thr*.6?"☁️ Bulut hosil bo‘lmoqda...":"Bug‘ ko‘tarilmoqda, bulut hali kam.";
+  });
+};
+
+SIM[15]=el=>{
+  el.innerHTML=`<p>Issiq suvda shakar eritiladi (kattalar nazoratida). Eritma to‘yingach, ipda kristallar o‘sadi.</p>
+  Shakar miqdori: <b id="sv">3</b> osh qoshiq / 1 stakan issiq suv<input type="range" id="s" min="0" max="12" value="3">
+  Kun: <b id="dv">0</b><input type="range" id="d" min="0" max="7" value="0">
+  <canvas id="c" width="600" height="280"></canvas><div class="res" id="o"></div>
+  <div class="safe">⚠️ Issiq suv va shakar eritmasi kuydiradi — tajribani faqat katta yoshli kishi bilan bajaring.</div>`;
+  const ctx=$("#c",el).getContext("2d");
+  const upd=()=>{
+    const sp=+$("#s",el).value,d=+$("#d",el).value;$("#sv",el).textContent=sp;$("#dv",el).textContent=d;
+    const dis=Math.min(sp,8),und=Math.max(0,sp-8),sat=sp>=7;
+    ctx.clearRect(0,0,600,280);
+    ctx.fillStyle="rgba(240,220,150,"+(.2+dis/14)+")";ctx.fillRect(220,70,160,180);
+    ctx.fillStyle="#fff";for(let i=0;i<und*12;i++)ctx.fillRect(rnd(225,375),rnd(235,247),4,4);
+    ctx.strokeStyle="#555";ctx.lineWidth=3;ctx.strokeRect(220,70,160,180);
+    ctx.strokeStyle="#8d5a2b";ctx.beginPath();ctx.moveTo(300,20);ctx.lineTo(300,200);ctx.stroke();
+    ctx.fillStyle="#8d5a2b";ctx.fillRect(250,15,100,8);
+    if(sat){const n=d*6;for(let i=0;i<n;i++){ctx.fillStyle="rgba(255,230,160,.95)";const a=i*2.4,r=3+d*1.2;ctx.fillRect(300+Math.cos(a)*(i%7)*1.5-r/2,120+(i*3.1)%80,r,r)}}
+    $("#o",el).className="res "+(sat?(d>=5?"ok":"part"):"bad");
+    $("#o",el).textContent=!sat?"Eritma yetarlicha to‘yinmagan — kristallar o‘smaydi. Ko‘proq shakar eriting.":d<2?"To‘yingan eritma tayyor. Kristallar hali sezilmaydi, sabr qiling.":d<5?"Ipda mayda kristallar paydo bo‘ldi.":"🍬 Novvot tayyor: kristallar yirik bo‘ldi.";
+  };
+  $$("input",el).forEach(x=>x.oninput=upd);upd();
+};
+
+/* ---------- Mavzular ---------- */
+const GRADE=`<table><tr><th>Faoliyat</th><th>Ball</th></tr><tr><td>Testlar</td><td>30</td></tr><tr><td>Simulyatsiya</td><td>20–25</td></tr><tr><td>Mustahkamlash savollari / amaliy ish</td><td>20–25</td></tr><tr><td>Mini-tadqiqot / xulosa</td><td>20</td></tr><tr><td>Faollik va xavfsizlik</td><td>10–20</td></tr><tr><th>Jami</th><th>100</th></tr></table><p class="tag">90–100: a’lo • 75–89: yaxshi • 60–74: qoniqarli • 0–59: qayta mustahkamlash tavsiya etiladi.</p>`;
+const SAFE="Tajribalarni o‘qituvchi yoki katta yoshli kishi nazoratida bajaring. Noma’lum moddalarni tatib ko‘rmang va xavfli jihozlardan mustaqil foydalanmang.";
+const REV5=["Mavzudagi eng muhim tushuncha qaysi?","Kundalik hayotdan ushbu hodisaga misol keltiring.","Kuzatuv yoki simulyatsiya sizga qanday xulosa chiqarishga yordam berdi?","Qaysi natijani yana tekshirish kerak bo‘lishi mumkin?","Bu bilimni qayerda qo‘llash mumkin?"];
+
+const T=[
+{ch:1,title:"Tabiiy fanlar va tabiatni o‘rganish",goal:"Tabiat obyektlari, tabiiy fanlar yo‘nalishlari va tabiatni o‘rganish usullarini bilish.",
+ plan:[["1. Tabiat obyektlari","Tabiat tirik va jonsiz obyektlardan iborat. O‘simlik va hayvonlar tirik tabiatga; suv, havo, tosh va tuproq jonsiz tabiatga kiradi."],["2. Tabiiy fanlar","Biologiya tirik organizmlarni, fizika harakat va energiyani, kimyo moddalarni, geografiya Yer yuzasini, astronomiya koinotni, ekologiya organizmlar va muhit munosabatlarini o‘rganadi."],["3. Tadqiqot usullari","Kuzatish — hodisani qayd etish; taqqoslash — o‘xshash va farqli tomonlarni topish; o‘lchash — kattalikni asbob bilan aniqlash; tajriba — savolni reja asosida tekshirish."]],
+ simT:"Tirik/jonsiz tabiat va fanlar",prac:"Atrofingizdagi 10 ta obyektni (maktab hovlisi yoki uy) tirik va jonsiz tabiatga ajratib yozing.",
+ quiz:[["Tabiiy fanlar nimani o‘rganadi?","Tabiat va hodisalarni","Faqat tarixni","Faqat sportni"],["Tirik organizmlarni qaysi fan o‘rganadi?","Biologiya","Fizika","Astronomiya"],["Yulduzlarni qaysi fan o‘rganadi?","Astronomiya","Kimyo","Ekologiya"],["Moddalarni qaysi fan o‘rganadi?","Kimyo","Geografiya","Biologiya"],["Haroratni termometr bilan aniqlash — bu…","O‘lchash","Taxmin","Xulosa"]],
+ rev:["Tabiiy fanlar nimani o‘rganadi?","Tirik va jonsiz tabiatga misollar keltiring.","Biologiya va astronomiya nimasi bilan farq qiladi?","Kuzatish va tajribani farqlang.","Tabiatni dalillar asosida o‘rganish nima uchun muhim?"]},
+{ch:1,title:"Ilmiy tadqiqotni rejalashtirish",goal:"Savol, taxmin, reja, tekshiruv va xulosa bosqichlarini qo‘llash.",
+ plan:[["1. Savol va taxmin","Tadqiqot savoli aniq va tekshiriladigan bo‘ladi. Gipoteza — tekshirish mumkin bo‘lgan dastlabki fikr."],["2. Tadqiqot rejasi","Maqsad, jihozlar, kuzatish muddati va o‘lchanadigan ko‘rsatkich belgilanadi. Adolatli taqqoslash uchun boshqa sharoitlar bir xil saqlanadi."],["3. Natija va xulosa","Kuzatishlar qayd etiladi va taqqoslanadi. Xulosa dalillarga asoslanadi; taxmin tasdiqlanmasa ham, bu foydali natijadir."]],
+ simT:"Tadqiqot bosqichlari tartibi",prac:"“Qaysi sharoitda o‘simlik tezroq o‘sadi?” savoli uchun taxmin va reja yozing.",
+ quiz:[["Gipoteza nima?","Tekshiriladigan taxmin","Yakuniy baho","O‘lchov asbobi"],["Tadqiqot nimadan boshlanadi?","Savol qo‘yishdan","Xulosa yozishdan","Baholashdan"],["Rejada nima belgilanadi?","Maqsad va tartib","Faqat baho","Faqat yakuniy javob"],["Xulosa nimaga asoslanadi?","Dalil va natijalarga","Istakka","Tasodifga"],["Xavfsiz tajriba uchun nima kerak?","Qoidalarga amal qilish","Moddani tatib ko‘rish","Jihozni ruxsatsiz ishlatish"]],
+ rev:["Gipoteza nima?","Nega tadqiqotdan oldin reja tuziladi?","Boshqa sharoitlarni bir xil saqlash nega muhim?","Xulosa nimaga asoslanadi?","Taxmin tasdiqlanmasa, nima qilish mumkin?"]},
+{ch:1,title:"Kuzatish va ma’lumotlarni qayd etish",goal:"Kuzatish natijalarini aniq yozish, jadvalda tartiblash va taqqoslash.",
+ plan:[["1. Kuzatish","Kuzatishda obyekt yoki hodisa diqqat bilan o‘rganiladi. Ko‘rilgan faktlar taxminlardan alohida qayd etiladi."],["2. Ma’lumotlarni yozish","Natijalar sana, o‘lchov birligi va sharoit bilan yoziladi. Jadval ma’lumotlarni tartiblaydi."],["3. Tahlil va xulosa","Qiymatlar taqqoslanadi, o‘zgarishlar aniqlanadi va savolga mos xulosa yoziladi. Ma’lumot yetarli bo‘lmasa, xulosa ehtiyotkorlik bilan tuziladi."]],
+ simT:"Termometr, jadval va grafik",prac:"Uch kun ketma-ket ertalab havo haroratini o‘lchab, jadvalga yozing.",
+ quiz:[["Kuzatish nima?","Hodisani ko‘rib qayd etish","Faqat taxmin qilish","Natijani yashirish"],["Jadval nima uchun kerak?","Ma’lumotni tartiblash","Ma’lumotni o‘chirish","Rasm chizish"],["Harorat qaysi birlikda beriladi?","Daraja Celsius","Santimetr","Kilogramm"],["O‘lchov birligi nima uchun kerak?","Qiymatni tushunish uchun","Bezak uchun","Natijani yashirish uchun"],["Xulosa nimaga tayanadi?","Dalillarga","Faqat istakka","Tasodifga"]],
+ rev:["Kuzatish nima?","Nega sana va o‘lchov birligi yoziladi?","Jadval qanday yordam beradi?","Fakt va taxminning farqi nima?","Ma’lumot yetarli bo‘lmasa, nima qilish kerak?"]},
+{ch:1,title:"Tajriba o‘tkazish va xulosa chiqarish",goal:"Tajriba maqsadi, xavfsiz bajarilishi, natijalarni taqqoslash va xulosani o‘rganish.",
+ plan:[["1. Maqsad va taxmin","Tajriba muayyan savolga javob topish uchun o‘tkaziladi. Avval maqsad va tekshiriladigan taxmin belgilanadi."],["2. Xavfsiz tajriba","Jihozlar va bajarish tartibi oldindan belgilanadi. Xavfsizlik qoidalariga amal qilinadi, ta’sir qiluvchi sharoitlar nazorat qilinadi."],["3. Natija va xulosa","O‘lchovlar jadvalga yoziladi, taqqoslanadi va dalilga asoslangan xulosa tuziladi. Xulosa tajriba ko‘rsatganidan ortiq da’vo qilmasligi kerak."]],
+ simT:"O‘simlik o‘sishi: adolatli tajriba",prac:"Ikki o‘simlikni faqat yorug‘lik bilan farqlanadigan sharoitda kuzating va natijani yozing.",
+ quiz:[["Tajriba nima uchun o‘tkaziladi?","Savolni tekshirish uchun","Vaqt o‘tkazish uchun","Natijani yashirish uchun"],["Tajriba oldidan nima belgilanadi?","Maqsad va tartib","Faqat baho","Faqat sarlavha"],["Xavfsizlik qoidalari nima uchun kerak?","Xavfni kamaytirish uchun","Natijani yashirish uchun","Tajriba bekor bo‘lishi uchun"],["Natijalar qayerga yoziladi?","Jadval yoki kundalikka","Faqat xotirada","Hech qayerga"],["Ilmiy xulosa nimaga asoslanadi?","Dalillarga","Xohishga","Tasodifga"]],
+ rev:["Tajriba nima maqsadda o‘tkaziladi?","Tajriba oldidan nimalar rejalashtiriladi?","Nega xavfsizlik qoidalari zarur?","Natijalar qanday qayd etiladi?","Yaxshi ilmiy xulosa qanday bo‘lishi kerak?"]},
+{ch:2,title:"Modda tuzilishi",goal:"Moddalar juda mayda zarrachalardan tashkil topishini va zarrachalarning joylashuvi hamda harakati moddaning xossalariga ta’sir qilishini tushuntirish.",
+ plan:[["Zarrachalar","Barcha moddalar juda mayda zarrachalardan tashkil topgan. Zarrachalar orasida bo‘shliq bo‘ladi va ular doimo harakatlanadi."],["Qattiq va suyuq","Qattiq jismlarda zarrachalar yaqin joylashib, asosan o‘z o‘rnida tebranadi. Suyuqliklarda yaqin turadi, lekin bir-birining yonidan siljiy oladi."],["Gaz","Gazlarda zarrachalar uzoqroq joylashib, erkin va tez harakatlanadi."]],
+ simT:"Zarrachalar modeli",prac:"Uchta shaffof idishga havo, suv va qum solingan deb tasavvur qiling. Ularning zarrachalari qanday joylashganini chizing va taqqoslang.",
+ quiz:[["Moddalar nimalardan tashkil topgan?","Juda mayda zarrachalardan","Faqat suvdan","Faqat havodan"],["Qattiq jism zarrachalari qanday harakatlanadi?","Asosan o‘z o‘rnida tebranadi","Mutlaqo harakatsiz","Idishdan chiqib ketadi"],["Gaz zarrachalari odatda qanday joylashadi?","Bir-biridan uzoqroq","Juda zich","Faqat qatorda"],["Suyuqlik zarrachalari nima qila oladi?","Bir-birining yonidan siljiydi","Harakat qilmaydi","Yo‘qolib ketadi"],["Modda holatiga nima ta’sir qiladi?","Zarrachalarning joylashuvi va harakati","Idishning rangi","Faqat yorug‘lik"]],rev:REV5},
+{ch:2,title:"Moddaning uch holatini kuzatish",goal:"Qattiq, suyuq va gaz holatlarini kuzatish hamda ularning shakl va hajm xususiyatlarini solishtirish.",
+ plan:[["Qattiq","Qattiq jismlar o‘z shakli va hajmini saqlaydi."],["Suyuqlik","Suyuqlik hajmini saqlaydi, ammo solingan idish shaklini oladi."],["Gaz","Gazning aniq shakli va hajmi bo‘lmaydi: u mavjud bo‘shliqni to‘ldirishga intiladi. Harorat o‘zgarishi moddaning holatini o‘zgartirishi mumkin."]],
+ simT:"Suvning uch holati",prac:"Muz bo‘lagi erishini kuzatish mumkin bo‘lgan xavfsiz tajriba: muzni idishga soling, vaqt oralig‘ida holatini qayd eting. Issiq idishlardan foydalanmang.",
+ quiz:[["Qaysi holat o‘z shaklini saqlaydi?","Qattiq","Gaz","Suyuqlik"],["Suyuqlikning shakli qanday bo‘ladi?","Idish shaklini oladi","Doim kub shaklida","Shakli bo‘lmaydi va hajmi ham yo‘q"],["Gaz idishda qanday tarqaladi?","Idish bo‘shlig‘ini egallaydi","Faqat pastda qoladi","Qattiq bo‘lib qoladi"],["Muz eriganda nima hosil bo‘ladi?","Suv","Tuz","Havo"],["Holat o‘zgarishiga nima sabab bo‘lishi mumkin?","Harorat o‘zgarishi","Idishning nomi","Yorliq rangi"]],rev:REV5},
+{ch:2,title:"Gazlar",goal:"Gazlarning siqiluvchanligi, tarqalishi va idish hajmini egallash xususiyatlarini misollar bilan izohlash.",
+ plan:[["Zarrachalar","Gaz zarrachalari bir-biridan nisbatan uzoq joylashgan va tartibsiz harakatlanadi."],["Xususiyatlar","Shu sababli gazlarni siqish mumkin va ular idishning mavjud bo‘shlig‘ini egallaydi."],["Havo","Havo gazlar aralashmasidir. Gazni ko‘rish qiyin, ammo ta’sirini sharni puflaganda yoki shamolda sezamiz."]],
+ simT:"Shpritsdagi gaz: siqilish",prac:"Bo‘sh plastik shpritsning uchini barmoq bilan berkitib, porshenni ehtiyotkorlik bilan sekin bosing. Kuch ishlatmang. Gaz siqilishi haqida xulosa yozing.",
+ quiz:[["Gaz zarrachalari qanday harakatlanadi?","Tartibsiz va erkin harakatlanadi","Faqat bir joyda turadi","Faqat aylana bo‘ylab bir xil"],["Havo qanday modda?","Gazlar aralashmasi","Qattiq jism","Suyuqlik"],["Gazning muhim xususiyati qaysi?","Siqilishi mumkin","Aniq shaklini saqlaydi","Faqat idish tubida turadi"],["Shar nimaga kattalashadi?","Ichiga gaz kirgani uchun","Rangi o‘zgargani uchun","Suv bug‘langani uchun"],["Gaz yopiq idishda nima qiladi?","Idish bo‘shlig‘ini egallaydi","Faqat burchakda turadi","Qattiqlashadi"]],rev:REV5},
+{ch:2,title:"Suyuqliklar",goal:"Suyuqliklarning oqishi, idish shaklini olishi va hajmini saqlashi xususiyatlarini tushuntirish.",
+ plan:[["Zarrachalar","Suyuqlik zarrachalari bir-biriga yaqin joylashadi, ammo o‘zaro siljishi mumkin. Shu sababli suyuqlik oqadi va idish shaklini oladi."],["Hajm","Ko‘p suyuqliklarning hajmi bir xil sharoitda deyarli o‘zgarmaydi."],["Misollar","Suv, sut va o‘simlik yog‘i. Taqqoslashda rang, oqish tezligi va hajm kabi belgilarni kuzatish mumkin."]],
+ simT:"Suv va idish shakli",prac:"Bir xil miqdordagi suvni navbat bilan turli shakldagi idishlarga quying. Suvning shakli va hajmi haqida kuzatuv yozing.",
+ quiz:[["Suyuqlikning shakli nimaga bog‘liq?","Idish shakliga","Faqat rangiga","Xona nomiga"],["Suyuqlik zarrachalari qanday joylashadi?","Bir-biriga yaqin, siljiy oladi","Bir-biridan juda uzoq","Harakatsiz qotib qoladi"],["Qaysi biri suyuqlik?","Sut","Kislorod gazi","Tosh"],["Suyuqlikning hajmi odatda qanday?","Idish shakli o‘zgarsa ham saqlanadi","Har doim yo‘qoladi","Faqat gazga aylanadi"],["Suyuqlikning kuzatiladigan xususiyati qaysi?","Oqishi","Yulduz bo‘lishi","Nur tarqatishi shart"]],rev:REV5},
+{ch:2,title:"Diffuziya hodisasini o‘rganish",goal:"Diffuziyani zarrachalarning o‘zaro aralashishi sifatida tushuntirish va unga harorat ta’sirini kuzatish.",
+ plan:[["Ta’rif","Diffuziya — bir modda zarrachalarining boshqa modda zarrachalari orasiga kirib, o‘zaro aralashish hodisasi."],["Misollar","Hidning xonaga tarqalishi yoki suvga solingan bo‘yoqning yoyilishi."],["Harorat","Odatda harorat yuqori bo‘lganda zarrachalar tezroq harakatlanadi va diffuziya tezlashadi."]],
+ simT:"Sovuq va iliq suvda diffuziya",prac:"O‘qituvchi nazoratida, ikkita shaffof idishga sovuq va iliq suv quying. Har biriga bir tomchidan oziq-ovqat bo‘yog‘i qo‘shing. Aralashtirmasdan tarqalishini kuzating; suvni ichmang.",
+ quiz:[["Diffuziya nima?","Zarrachalarning o‘zaro aralashishi","Jismning sinishi","Suvning muzlashi"],["Hidning xonaga tarqalishi nimaga misol?","Diffuziya","Magnitlanish","Qotish"],["Harorat oshganda diffuziya odatda qanday o‘zgaradi?","Tezlashadi","Butunlay to‘xtaydi","Har doim yo‘qoladi"],["Bo‘yoqning suvda yoyilishi nimani ko‘rsatadi?","Zarrachalar harakatlanishini","Suv qattiq ekanini","Zarrachalar yo‘qligini"],["Tajriba paytida nima qilish kerak?","Kuzatuvlarni qayd etish va xavfsizlikka rioya qilish","Suvni ichish","Idishlarni uloqtirish"]],rev:REV5},
+{ch:2,title:"Qattiq moddalar",goal:"Qattiq jismlarning shakl, hajm, qattiqlik va mo‘rtlik kabi xususiyatlarini misollar orqali solishtirish.",
+ plan:[["Shakl va hajm","Qattiq jismlar odatda o‘z shakli va hajmini saqlaydi."],["Xossalar","Ayrimlari qattiq va mustahkam, ayrimlari yumshoq, ba’zilari mo‘rt bo‘lishi mumkin."],["Misollar","Yog‘och, temir, shisha, tuz kristallari va muz. Xossa zarrachalar va ichki tuzilishga bog‘liq."]],
+ simT:"Material va kuch",prac:"Qalam, rezina o‘chirg‘ich va metall qoshiqni kuzating. Ularning shakli, egiluvchanligi va sirtini taqqoslang. Buyumlarni sindirmang va o‘tkir qirralar bilan ehtiyot bo‘ling.",
+ quiz:[["Qattiq jismlar odatda nimani saqlaydi?","Shakli va hajmini","Faqat rangini","Faqat haroratini"],["Qaysi biri qattiq modda?","Temir","Suv bug‘i","Havo"],["Mo‘rt modda qanday xususiyatga ega?","Oson sinishi mumkin","Doim oqadi","Gaz kabi tarqaladi"],["Qattiq moddalarning xossalari nimaga bog‘liq?","Ichki tuzilishi va zarrachalariga","Faqat nomiga","Idish rangiga"],["Qaysi ish xavfsiz kuzatuv hisoblanadi?","Sirt va shaklini ko‘zdan kechirish","Buyumlarni sindirish","Shishani qo‘l bilan urib ko‘rish"]],rev:REV5},
+{ch:2,title:"Aralashmalar",goal:"Sof modda va aralashma tushunchalarini farqlash, kundalik hayotdagi aralashmalarga misollar keltirish.",
+ plan:[["Aralashma","Aralashma ikki yoki undan ortiq moddaning bir joyda bo‘lishidan hosil bo‘ladi."],["Turlari","Bir jinsli (tuzli suv) yoki turli jinsli (suv va qum) bo‘lishi mumkin."],["Xususiyat","Aralashma tarkibidagi moddalar ko‘pincha o‘z xususiyatlarini saqlab qoladi."]],
+ simT:"Aralashma turlari",prac:"Shaffof idishdagi suvga ozroq tuz solib aralashtiring. Boshqa idishda suv va qumni aralashtiring. Qaysi aralashmada tarkibiy qismlar ko‘zga ko‘rinishini taqqoslang. Aralashmalarni tatib ko‘rmang.",
+ quiz:[["Aralashma qanday hosil bo‘ladi?","Ikki yoki undan ortiq modda birga bo‘lganda","Faqat bitta modda qolganda","Modda yo‘qolganda"],["Tuzli suv qanday aralashmaga misol?","Bir jinsli","Turli jinsli","Qattiq jism"],["Suv va qum aralashmasida nima kuzatiladi?","Qum ko‘rinishi mumkin","Qum gazga aylanadi","Aralashma doim shaffof bo‘ladi"],["Aralashma tarkibidagi moddalar ko‘pincha nima qiladi?","Xususiyatlarini saqlaydi","Butunlay yo‘qoladi","Har doim yangi elementga aylanadi"],["Qaysi biri aralashma?","Havo","Faqat bitta sof temir bo‘lagi","Bitta sof mis bo‘lagi"]],
+ rev:["Mavzudagi asosiy tushunchani o‘z so‘zingiz bilan izohlang.","Kundalik hayotdan ikkita misol keltiring.","Simulyatsiyadan qanday xulosa chiqardingiz?","Bu bilimni qayerda qo‘llash mumkin?"]},
+{ch:2,title:"Aralashmalarni ajratish usullari",goal:"Filtrlash, tindirish va bug‘latish kabi oddiy ajratish usullarini tushunish va mos vaziyatni tanlash.",
+ plan:[["Tindirish","Og‘irroq zarrachalar idish tubiga cho‘kadi."],["Filtrlash","Suyuqlik filtrdan o‘tadi, erimaydigan qattiq zarrachalar filtrda qoladi."],["Bug‘latish","Suyuqlik bug‘lanib, unda erigan modda qolishi mumkin. Usul aralashma tarkibiga bog‘liq."]],
+ simT:"Ajratish usulini tanlang",prac:"Suv va qum aralashmasini biroz tindiring, so‘ng o‘qituvchi nazoratida filtr qog‘ozi yordamida filtrlashni kuzating. Tuzli suvni bug‘latish faqat o‘qituvchi nazoratida va xavfsiz jihoz bilan namoyish qilinadi.",
+ quiz:[["Suv va qumni ajratishda qaysi usul mos?","Filtrlash","Magnit bilan har doim ajratish","Muzlatib yuborish"],["Tindirishda nima sodir bo‘ladi?","Og‘irroq zarrachalar tubiga cho‘kadi","Barcha moddalar gazga aylanadi","Aralashma yo‘qoladi"],["Filtrlashda filtrda nima qolishi mumkin?","Erimaydigan qattiq zarrachalar","Suvning barcha molekulalari","Faqat havo"],["Tuzli suvdan tuzni olish uchun qaysi usul ishlatilishi mumkin?","Bug‘latish","Oddiy magnit","Elakdan o‘tkazish"],["Ajratish usuli nimaga bog‘liq?","Aralashma tarkibi va moddalarning xususiyatlariga","Idish rangiga","Xonaning nomiga"]],
+ rev:["Mavzudagi asosiy tushunchani o‘z so‘zingiz bilan izohlang.","Kundalik hayotdan ikkita misol keltiring.","Simulyatsiyadan qanday xulosa chiqardingiz?","Bu bilimni qayerda qo‘llash mumkin?"]},
+{ch:2,title:"Qaynash, bug‘lanish va kondensatsiya",goal:"Bug‘lanish, qaynash va kondensatsiya hodisalarini farqlash va ularni kundalik hayotdagi misollar bilan bog‘lash.",note:"Bu mavzu PDFda yo‘q edi — mundarijadagi sarlavha asosida tuzilgan; darslik bilan solishtirib tekshiring.",
+ plan:[["Bug‘lanish","Suv yuzasidan har qanday haroratda sekin bug‘ga aylanishi mumkin."],["Qaynash","Ma’lum haroratda (suv uchun taxminan 100 °C) suyuqlikning butun hajmida bug‘ pufakchalari hosil bo‘ladi."],["Kondensatsiya","Bug‘ sovib, yana suyuq tomchilarga aylanadi: sovuq oyna yoki qopqoqda tomchilar paydo bo‘ladi."]],
+ simT:"Suvni isitish va qopqoqda kondensatsiya",prac:"Katta yoshli kishi nazoratida: choynak qaynayotganda ustiga sovuq qoshiq tutishni kuzating (qo‘lni bug‘ga yaqinlashtirmang!). Yoki sovuq stakan sirtida tomchilar paydo bo‘lishini kuzating.",
+ quiz:[["Suv taxminan qaysi haroratda qaynaydi?","100 °C","0 °C","50 °C"],["Bug‘ning sovib suyuqlikka aylanishi nima deyiladi?","Kondensatsiya","Qotish","Diffuziya"],["Bug‘lanish qayerda sodir bo‘ladi?","Suyuqlik yuzasida","Faqat idish tubida","Faqat muzda"],["Qaynashda nima kuzatiladi?","Butun hajmda bug‘ pufakchalari","Suv muzlaydi","Hech narsa o‘zgarmaydi"],["Sovuq stakan sirtidagi tomchilar nimadan hosil bo‘ladi?","Havodagi suv bug‘i sovishidan","Stakan erishidan","Shishaning o‘zidan"]],rev:REV5},
+{ch:2,title:"Sun’iy yomg‘ir hosil qilish",goal:"Tabiatda suvning aylanishi va bulutda tomchilar hosil bo‘lishi asosida sun’iy yomg‘ir g‘oyasini tushuntirish.",note:"Bu mavzu PDFda yo‘q edi — mundarijadagi sarlavha asosida tuzilgan; darslik bilan solishtirib tekshiring.",
+ plan:[["Suv aylanishi","Quyosh suvni isitadi, bug‘ ko‘tarilib sovigach, bulut hosil bo‘ladi."],["Tomchilar","Bulutda mayda tomchilar yiriklashgach, og‘irligidan yomg‘ir bo‘lib tushadi."],["Sun’iy ta’sir","Bulutga maxsus moddalar sepib, tomchilar hosil bo‘lishini tezlashtirish mumkin. Bu usul har doim ham natija bermaydi."]],
+ simT:"Bulut va yomg‘ir modeli",prac:"Xavfsiz model: shisha idishga iliq suv quyib, ustiga muz solingan likopcha qo‘ying va ichki sirtdagi tomchilarni kuzating (kattalar nazoratida).",
+ quiz:[["Bulut nimadan hosil bo‘ladi?","Sovigan suv bug‘idan","Faqat tuproqdan","Faqat shamoldan"],["Yomg‘ir qachon yog‘adi?","Tomchilar yirik va og‘ir bo‘lganda","Bulut yo‘q bo‘lganda","Havo gazga aylanganda"],["Suvni bug‘latuvchi asosiy tabiiy manba qaysi?","Quyosh","Oy","Tosh"],["Bug‘ ko‘tarilganda nima bo‘ladi?","Soviydi","Qotib qoladi","Magnitlanadi"],["Sun’iy yomg‘ir usuli haqida to‘g‘ri fikr qaysi?","Har doim ham natija bermaydi","Har doim kafolatlanadi","Bulutsiz ham ishlaydi"]],rev:REV5},
+{ch:2,title:"Novvot tayyorlash texnologiyasi",goal:"To‘yingan eritma va kristallanish asosida novvot tayyorlash texnologiyasini o‘rganish (loyiha ishi).",note:"Bu mavzu PDFda yo‘q edi — mundarijadagi sarlavha asosida tuzilgan; darslik bilan solishtirib tekshiring.",
+ plan:[["Eritma","Issiq suvda sovuq suvga qaraganda ko‘proq shakar eriydi. Boshqa erimay qolsa, eritma to‘yingan bo‘ladi."],["Kristallanish","Eritma sekin sovib, bug‘langanda shakar zarrachalari ip atrofida kristall hosil qiladi."],["Loyiha","Reja → tayyorlash → kunlik kuzatuv → xulosa. Natijalar jadvalga yoziladi."]],
+ simT:"To‘yingan eritma va kristallar o‘sishi",prac:"Loyiha: katta yoshli kishi nazoratida to‘yingan shakar eritmasi tayyorlanadi, ip o‘rnatiladi va 5–7 kun kristallar kuzatiladi. Eritma issiq bo‘lganda ehtiyot bo‘ling.",
+ quiz:[["To‘yingan eritma nima?","Boshqa modda erimay qoladigan eritma","Faqat sof suv","Faqat gaz"],["Novvot qaysi modda kristali?","Shakar","Tuz","Temir"],["Kristallar qachon yaxshi o‘sadi?","To‘yingan eritmada, sekin sovish/bug‘lanishda","Suvsiz idishda","Faqat muzda"],["Loyiha davomida nima qilinadi?","Kunlik kuzatuv va yozuv","Hech narsa","Eritmani ichish"],["Issiq eritma bilan ishlashda nima kerak?","Kattalar nazorati va ehtiyotkorlik","Qo‘l bilan aralashtirish","Bolalar yolg‘iz ishlashi"]],rev:REV5}
+];
+T.forEach((t,i)=>t.n=i+1);
+
+/* ---------- Render ---------- */
+const scores={};let cur=1;
+function render(n){
+  cleanups.forEach(f=>f());cleanups=[];cur=n;
+  const t=T[n-1],app=$("#app");
+  $$(".tp").forEach(c=>c.classList.toggle("on",+c.dataset.n===n));
+  app.innerHTML=`<div class="card"><div class="tag">${t.ch}-bob: ${t.ch===1?"Tabiatni o‘rganish":"Modda va uning xossalari"} • ${t.n}-mavzu</div><h2>${t.n}-mavzu. ${t.title}</h2>
+  ${t.note?`<div class="note">ℹ️ ${t.note}</div>`:""}
+  <h3 style="margin-top:12px">🎯 Dars maqsadi</h3><p>${t.goal}</p>
+  <div class="plan">${t.plan.map(p=>`<div><b>${p[0]}</b><br>${p[1]}</div>`).join("")}</div>
+  <div class="note"><b>Esda tuting:</b> kuzatish natijalarini aniq qayd eting va xulosani dalillar bilan asoslang.</div></div>
+  <div class="card"><h3>🧪 Interaktiv simulyatsiya — ${t.simT}</h3><div id="sim"></div><div class="safe">⚠️ ${SAFE}</div></div>
+  <div class="card"><h3>🛠 Amaliy mashg‘ulot</h3><p>${t.prac}</p><b>Kuzatuv kundaligi</b><p>1. Nima kuzatdim?</p><textarea placeholder="Kuzatuvingizni shu yerga yozing..."></textarea><p>2. Qanday xulosa chiqardim?</p><textarea placeholder="Xulosangizni yozing..."></textarea></div>
+  <div class="card"><h3>📝 Bilimingizni tekshiring — 5 ta test</h3><div id="quiz"></div><p class="score" id="qs">Natija: ${scores[n]!=null?scores[n]+" / 5":"—"}</p></div>
+  <div class="card"><h3>💬 Mustahkamlash uchun savollar</h3><ol class="rev">${t.rev.map(r=>`<li>${r}<textarea placeholder="Javobingiz..."></textarea></li>`).join("")}</ol></div>
+  <div class="card"><h3>🎲 Ta’limiy o‘yinlar va metodlar</h3><div class="plan"><div><b>Aqliy hujum</b><br>5 daqiqa: “Bu mavzuda nimalarni bilamiz?” savoliga fikrlar aytiladi.</div><div><b>Klaster</b><br>7 daqiqa: mavzu atamalarini markaziy tushuncha atrofida bog‘lang.</div><div><b>Juftlikda izohla</b><br>5 daqiqa: sherigingizga bir atamani tushuntiring va misol keltiring.</div><div><b>To‘g‘ri xulosani top</b><br>Bir o‘quvchi kuzatuvni aytadi, ikkinchisi ilmiy xulosa chiqaradi; keyin rollarni almashtiring.</div></div></div>
+  <div class="card"><h3>📊 Baholash mezoni — 100 ball</h3>${GRADE}</div>
+  <div class="nav"><button class="b alt" id="pv" ${n===1?"disabled":""}>← Oldingi</button><button class="b" id="nx" ${n===T.length?"disabled":""}>Keyingi →</button></div>`;
+  $("#pv").onclick=()=>go(n-1);$("#nx").onclick=()=>go(n+1);
+  SIM[n]($("#sim"));
+  // quiz
+  let done=0,ok=0;const q=$("#quiz");
+  q.innerHTML=t.quiz.map((x,i)=>{const o=shuffle(x.slice(1));return `<div class="q" data-i="${i}"><b>${i+1}. ${x[0]}</b><div class="opts">${o.map(v=>`<button data-c="${v===x[1]?1:0}">${v}</button>`).join("")}</div></div>`}).join("");
+  $$(".q",q).forEach(d=>$$("button",d).forEach(b=>b.onclick=()=>{
+    if(d.dataset.done)return;d.dataset.done=1;done++;
+    $$("button",d).forEach(x=>{if(x.dataset.c==="1")x.classList.add("ok")});
+    if(b.dataset.c==="1")ok++;else b.classList.add("no");
+    if(done===t.quiz.length){scores[n]=ok;$("#qs").textContent="Natija: "+ok+" / 5 "+(ok===5?"🏆":ok>=4?"👍":"— qayta urinib ko‘ring")}
+  }));
+  window.scrollTo(0,0);
+}
+function go(n){if(n>=1&&n<=T.length)render(n)}
+(function init(){
+  const c=$("#chips");let html=`<div class="ttl">📚 Mavzular</div>`;
+  T.forEach((t,i)=>{if(i===0)html+=`<div class="lbl">1-bob. Tabiatni o‘rganish</div>`;if(i===4)html+=`<div class="lbl">2-bob. Modda va uning xossalari</div>`;html+=`<button class="tp" data-n="${t.n}"><i>${t.n}.</i><span>${t.title}</span></button>`});
+  c.innerHTML=html;$$(".tp").forEach(b=>b.onclick=()=>go(+b.dataset.n));
+  render(1);
+})();
+</script>
+</body>
+</html>
