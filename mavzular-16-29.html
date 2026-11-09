@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>16–29-mavzular: alohida darslar</title>
+<style>
+:root{--bg:#EEF3EC;--sf:#fff;--fg:#14281A;--mu:#506656;--ln:#CCDACB;--ac:#2E7D32;--ai:#fff;--as:#DCEFD9;--ok:#1B7F4B;--oks:#D7EFE0;--bad:#B3342B;--bads:#F6DAD6}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1B12;--sf:#16281A;--fg:#E6F0E7;--mu:#9DB4A1;--ln:#2C4631;--ac:#6FD076;--ai:#06200A;--as:#1B3A20;--ok:#5FD08E;--oks:#173A29;--bad:#FF8A80;--bads:#47201E;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;padding:20px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.w{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3,p{margin:0}h1{font-size:clamp(1.8rem,8vw,2.4rem);line-height:1.1}h2{font-size:1.25rem}
+.ey{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);font-weight:700}.mu{color:var(--mu)}
+.nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+.chip{flex:none;font:inherit;font-size:.85rem;min-width:44px;min-height:44px;border-radius:999px;border:1px solid var(--ln);background:var(--sf);color:var(--fg);cursor:pointer}
+.chip.on{background:var(--ac);color:var(--ai);border-color:var(--ac)}
+.pn{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:5px}
+.btn,.opt{font:inherit;min-height:48px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);color:var(--fg);cursor:pointer;padding:8px 12px}
+.btn{font-weight:600;background:var(--sf)}.btn.p{background:var(--ac);color:var(--ai);border-color:var(--ac)}
+.opt{text-align:left}.opt.ok{background:var(--oks);border-color:var(--ok)}.opt.bad{background:var(--bads);border-color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.big{background:var(--as);border-radius:12px;padding:12px;text-align:center}.big b{display:block;font-size:1.25rem}.big small{color:var(--mu)}
+.fb{font-size:.92rem;border-left:3px solid var(--ac);padding-left:10px;min-height:1.5em}
+.em{font-size:2.6rem;text-align:center}
+input[type=range]{width:100%;height:40px;accent-color:var(--ac);margin:0}
+.sc{background:var(--ac);color:var(--ai);border-radius:12px;padding:12px;font-weight:700}
+.cwg{display:grid;gap:2px;width:max-content}.cell{position:relative;width:34px;height:34px}.cell input{width:100%;height:100%;text-align:center;font:inherit;font-weight:700;text-transform:uppercase;border:1px solid var(--ln);border-radius:6px;background:var(--bg);color:var(--fg);padding:0}.cell i{position:absolute;top:1px;left:3px;font-size:.6rem;font-style:normal;color:var(--mu);pointer-events:none}.cell input.ok{background:var(--oks)}.cell input.bad{background:var(--bads)}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+@keyframes shk{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+@keyframes fly{to{transform:translateY(-50px) scale(1.6);opacity:0}}
+@keyframes flow{0%{left:0;opacity:0}10%,90%{opacity:1}100%{left:calc(100% - 14px);opacity:0}}
+@keyframes br{50%{transform:scale(1.35)}}@keyframes hb{50%{transform:scale(1.3)}}
+.pop{animation:pop .4s}.shk{animation:shk .35s}.fly{animation:fly .8s forwards}
+.trk{position:relative;height:12px;background:var(--as);border-radius:6px;margin:8px 0}.tok{position:absolute;top:-5px;left:0;width:22px;height:22px;border-radius:50%;background:#D2571F;transition:left .8s ease}
+.flw{position:relative;height:20px;background:var(--as);border-radius:10px;overflow:hidden}.flw i{position:absolute;top:3px;left:0;width:14px;height:14px;border-radius:50%;background:var(--ac);animation:flow 1.5s linear infinite}
+.lung{width:100px;height:100px;margin:0 auto;border-radius:50%;background:radial-gradient(circle,#F29A9A,#C94F5A);animation:br 3s ease-in-out infinite}.heart{font-size:2rem;text-align:center;animation:hb 1s infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+canvas{display:block;width:100%;max-width:440px;aspect-ratio:340/400;margin:0 auto;border-radius:12px;background:var(--bg);border:1px solid var(--ln)}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+</style></head><body><div class="w">
+<header><div class="ey">3–4-boblar · alohida mavzular</div><h1 id="t">Mavzu</h1><p class="mu" id="g"></p></header>
+<div class="nav" id="nav" aria-label="Mavzular"></div>
+<section class="pn"><h2>Asosiy bilimlar</h2><ul id="pts"></ul></section>
+<section class="pn"><h2 id="shv">Simulyatsiya 1</h2><canvas id="cv" aria-label="Simulyatsiya"></canvas><input type="range" id="vs" min="0" max="100" value="0" aria-label="Slayder"><div class="grid" id="vb"></div><div class="grid" id="vr"></div><b>Kuzatish savollari</b><ol id="vo" style="margin:0;padding-left:1.3em"></ol><details><summary>Javoblar (o'qituvchi uchun)</summary><div id="va" style="padding:0 14px 12px"></div></details></section>
+<section class="pn"><h2 id="sh">Simulyatsiya 2</h2><div id="sim" style="display:flex;flex-direction:column;gap:10px"></div></section>
+<section class="pn" id="sec2" hidden><h2 id="sh2">Simulyatsiya 3</h2><div id="sim2" style="display:flex;flex-direction:column;gap:10px"></div></section>
+<section class="pn"><h2>Krossvord</h2><div id="cw" style="display:flex;flex-direction:column;gap:10px"></div></section>
+<section class="pn"><h2>O'yin: juftini top</h2><div id="gm" style="display:flex;flex-direction:column;gap:10px"></div></section>
+<section class="pn"><h2>Mini test</h2><div id="qz" style="display:flex;flex-direction:column;gap:12px"></div></section>
+</div>
+<script>
+var $=function(i){return document.getElementById(i)};
+/* tur: s=saralash, p=bosqichlar, c=solishtirish */
+var L=[
+{n:16,t:"Tirik organizmlar klassifikatsiyasi",g:"Organizmlarni o'xshashligiga qarab guruhlash.",pts:["Eng katta guruh — olam: hayvonlar, o'simliklar, zamburug'lar, bakteriyalar.","Kichrayish tartibi: olam, tip (bo'lim), sinf, oila, turkum, tur.","Tur — eng kichik guruh."],
+ s:{ty:"s",h:"Olamini top",c:["Hayvonlar","O'simliklar","Zamburug'lar","Bakteriyalar"],i:[["🐻","Ayiq",0,"Tayyor ozuqa bilan oziqlanadi."],["🌲","Archa",1,"Fotosintez qiladi."],["🍄","Qo'ziqorin",2,"Fotosintez qilmaydi, organik modda so'radi."],["🦠","Bakteriya",3,"Yadrosiz hujayra."],["🐟","Baliq",0,"Umurtqali hayvon."],["🍞","Non mog'ori",2,"Mikroskopik zamburug'."]]}, s2:{ty:"o",h:"Guruhlar tartibi",f:["Olam", "Tip", "Sinf", "Oila", "Tur"]},
+ q:[["Eng katta guruh qaysi?",["Tur","Olam","Sinf"],1,"Olam eng katta."],["Eng kichik guruh?",["Tur","Oila","Tip"],0,"Tur eng kichik guruh."]]},
+{n:17,t:"O'simliklar dunyosi",g:"O'simlik guruhlarini ajratish.",pts:["Suvo'tlarda ildiz, poya, barg yo'q.","Moxlar va paporotniklar sporadan ko'payadi.","Ochiq urug'lilar (archa) gul va mevasiz; yopiq urug'lilar (olma) gul va meva hosil qiladi."],
+ s:{ty:"s",h:"O'simlik guruhini top",c:["Suvo'tlar","Mox/paporotnik","Ochiq urug'li","Yopiq urug'li"],i:[["🟢","Spirogira",0,"Suvda yashaydigan suvo't."],["🌿","Paporotnik",1,"Sporadan ko'payadi."],["🌲","Qarag'ay",2,"Urug'i qoplanmagan, mevasi yo'q."],["🍎","Olma",3,"Gul va meva hosil qiladi."],["🌾","Bug'doy",3,"Yopiq urug'li, gulli."],["🌱","Mox",1,"Sporali o'simlik."]]}, s2:{ty:"t",h:"To'g'ri yoki noto'g'ri",i:[["Paporotnik urug' hosil qiladi", false, "Paporotnik sporadan ko'payadi."], ["Archa ochiq urug'li", true, "Archada gul va meva yo'q."], ["Suvo'tlarda ildiz bor", false, "Suvo'tlarda ildiz, poya, barg yo'q."], ["Olma yopiq urug'li", true, "Olma meva hosil qiladi."]]},
+ q:[["Qaysi o'simlik sporadan ko'payadi?",["Olma","Paporotnik","Archa"],1,"Paporotnik sporadan ko'payadi."],["Meva hosil qiladigan guruh?",["Yopiq urug'lilar","Suvo'tlar","Moxlar"],0,"Yopiq urug'lilar meva beradi."]]},
+{n:18,t:"Hayvonot dunyosi",g:"Hayvonlarni asosiy guruhlarga ajratish.",pts:["Umurtqasizlar: hasharotlar, chuvalchanglar, mollyuskalar.","Umurtqalilar: baliq, qushlar, sutemizuvchilar va boshqalar.","Sutemizuvchilar bolasini sut bilan boqadi."],
+ s:{ty:"s",h:"Hayvon sinfini top",c:["Hasharot","Baliq","Qush","Sutemizuvchi"],i:[["🐝","Asalari",0,"Olti oyoqli hasharot."],["🐟","Sazan",1,"Jabra bilan nafas oladi."],["🦅","Burgut",2,"Patli, tuxum qo'yadi."],["🐴","Ot",3,"Bolasini sut bilan boqadi."],["🐬","Delfin",3,"Suvda yashasa ham sutemizuvchi."],["🐓","Tovuq",2,"Qush, patli."]]}, s2:{ty:"t",h:"To'g'ri yoki noto'g'ri",i:[["Suvda yashovchi hamma hayvon baliq", false, "Delfin sutemizuvchi."], ["Hasharotlar umurtqasiz", true, "Hasharotlarda umurtqa yo'q."], ["Qushlar tuxum qo'yadi", true, "Ha, tuxum qo'yadi."], ["Ot sutemizuvchi", true, "Bolasini sut bilan boqadi."]]},
+ q:[["Delfin qaysi sinf?",["Baliq","Sutemizuvchi","Qush"],1,"Delfin bolasini sut bilan boqadi."],["Hasharotlar nechta oyoqli?",["4","6","8"],1,"Hasharotlar olti oyoqli."]]},
+{n:19,t:"Amaliy: o'simliklar sistematikasi",g:"Olma misolida guruhlar zanjirini tuzish.",pts:["Katta guruhdan kichigiga qarab o'tamiz.","Har bosqichda guruh kichrayadi, o'xshashlik ortadi.","Atlas va gerbariydan foydalaning."],
+ s:{ty:"p",h:"Olma sistematikasi",f:["Olam","Bo'lim","Sinf","Oila","Tur"],d:[["O'simliklar","Fotosintez qiladi."],["Yopiq urug'lilar","Gul va meva hosil qiladi."],["Ikki pallalilar","Urug'i ikki pallali."],["Atirgullar","Olma, nok, atirgul shu oilada."],["Uy olmasi","Eng kichik guruh."]]}, s2:{ty:"o",h:"Gerbariy tayyorlash",f:["O'simlikni yig'ish", "Qog'oz orasiga qo'yish", "Press ostida quritish", "Yorliq yozib yopishtirish"]},
+ q:[["Olma qaysi olamga kiradi?",["Hayvonlar","O'simliklar","Zamburug'lar"],1,"Olma o'simlik."],["Eng kichik bosqich?",["Tur","Olam","Oila"],0,"Tur eng kichik."]]},
+{n:20,t:"Amaliy: hayvonlar sistematikasi",g:"Uy mushugi misolida guruhlar zanjiri.",pts:["Hayvonlarda katta guruh tip deb ataladi.","Mushuk — xordalilar tipi, sutemizuvchilar sinfi.","Zanjir har doim kattadan kichikka boradi."],
+ s:{ty:"p",h:"Mushuk sistematikasi",f:["Olam","Tip","Sinf","Turkum","Oila","Tur"],d:[["Hayvonlar","Tayyor ozuqa bilan oziqlanadi."],["Xordalilar","Orqa miya o'qi bor."],["Sutemizuvchilar","Bolasini sut bilan boqadi."],["Yirtqichlar","Go'sht bilan oziqlanadi."],["Mushuksimonlar","Sher, yo'lbars, mushuk."],["Uy mushugi","Eng kichik guruh."]]}, s2:{ty:"t",h:"To'g'ri yoki noto'g'ri",i:[["Mushuk xordalilar tipiga kiradi", true, "Orqa miya o'qi bor."], ["Hasharotlar xordalilar tipida", false, "Hasharotlar umurtqasiz."], ["Sher va mushuk bir oilada", true, "Ikkalasi mushuksimonlar."], ["Qush sutemizuvchi", false, "Qush alohida sinf."]]},
+ q:[["Mushuk qaysi sinfga kiradi?",["Qushlar","Sutemizuvchilar","Baliqlar"],1,"Mushuk sutemizuvchi."],["Sher va mushuk umumiy…",["Oilada","Faqat olamda","Turda"],0,"Ikkalasi mushuksimonlar oilasida."]]},
+{n:21,t:"Tirik organizmlarning tuzilishi",g:"Hujayradan organizmgacha bo'lgan zanjir.",pts:["Hujayra — tirik organizmning asosiy birligi.","O'xshash hujayralar to'qimani hosil qiladi.","To'qimalar a'zoni, a'zolar sistemani hosil qiladi."],
+ s:{ty:"p",h:"Hujayradan organizmgacha",f:["Hujayra","To'qima","A'zo","Sistema","Organizm"],d:[["Mushak hujayrasi","Mikroskopda ko'rinadi."],["Mushak to'qimasi","Ko'p hujayralar birlashgan."],["Yurak","Bir necha to'qimadan iborat."],["Qon aylanish sistemasi","Yurak va qon tomirlari."],["Odam","Barcha sistemalar birgalikda."]]}, s2:{ty:"t",h:"To'g'ri yoki noto'g'ri",i:[["Hujayralar to'qimani hosil qiladi", true, "Ha."], ["Yurak — to'qima", false, "Yurak a'zo."], ["Sistemalar organizmni hosil qiladi", true, "Ha."], ["Hujayra a'zodan katta", false, "A'zo ko'p hujayradan iborat."]]},
+ q:[["Tirik organizmning asosiy birligi?",["A'zo","Hujayra","To'qima"],1,"Hujayra asosiy birlik."],["Yurak nima?",["To'qima","A'zo","Sistema"],1,"Yurak — a'zo."]]},
+{n:22,t:"Tirik organizmlarning oziqlanishi",g:"Ozuqa moddalar turlarini ajratish.",pts:["Asosiy ozuqa moddalar: oqsil, yog', uglevod.","Oqsil — qurilish materiali, uglevod — asosiy energiya manbai.","Hayvonlar tayyor oziqlanadi, o'simliklar o'zi hosil qiladi."],
+ s:{ty:"s",h:"Ko'p tutgan modda",c:["Oqsil","Yog'","Uglevod"],i:[["🥩","Go'sht",0,"Oqsilga boy."],["🧈","Sariyog'",1,"Yog'ga boy."],["🍞","Non",2,"Uglevodga boy."],["🥚","Tuxum",0,"Oqsilga boy."],["🥔","Kartoshka",2,"Kraxmal, ya'ni uglevod."],["🌻","Kungaboqar yog'i",1,"Deyarli sof yog'."]]}, s2:{ty:"o",h:"Oziq zanjiri",f:["O'simlik", "Quyon", "Tulki"]},
+ q:[["Asosiy energiya manbai?",["Uglevod","Vitamin","Suv"],0,"Uglevod tez energiya beradi."],["O'simlik ozuqani qanday oladi?",["Tayyor yeydi","Fotosintez bilan hosil qiladi","Hayvondan oladi"],1,"O'simlik o'zi hosil qiladi."]]},
+{n:23,t:"Odamning ovqat hazm qilish sistemasi",g:"Ovqatning hazm yo'lidagi safari.",pts:["Hazm — ovqatning mayda moddalarga parchalanishi.","Parchalangan moddalar ingichka ichakda qonga so'riladi.","Yo'g'on ichakda suv so'riladi."],
+ s:{ty:"p",h:"Ovqat sayohati",f:["Og'iz","Qizilo'ngach","Oshqozon","Ingichka ichak","Yo'g'on ichak"],d:[["So'lak","So'lak kraxmalni parchalay boshlaydi."],["Surilish","To'lqinsimon qisqarish bilan pastga suriladi."],["Shira","Oshqozon shirasi oqsilni parchalaydi."],["So'rilish","Ozuqa moddalar qonga o'tadi."],["Suv so'rilishi","Suv so'riladi, qoldiq chiqishga tayyorlanadi."]]}, s2:{ty:"o",h:"Hazm yo'li tartibi",f:["Og'iz", "Qizilo'ngach", "Oshqozon", "Ingichka ichak", "Yo'g'on ichak"]},
+ q:[["Ozuqa asosan qayerda so'riladi?",["Oshqozon","Ingichka ichak","Og'iz"],1,"Eng ko'p so'rilish ingichka ichakda."],["Kraxmalni nima parchalaydi?",["So'lak","Safro","Suv"],0,"So'lak og'izda boshlaydi."]]},
+{n:24,t:"Amaliy: kunlik ovqat ratsioni",g:"Ratsion sifatini baholash.",pts:["Ratsion energiya va xilma-xillik bo'yicha muvozanatli bo'lishi kerak.","Maktab yoshida kuniga taxminan 2200–2400 kkal kerak.","Meva va sabzavotni unutmang."],
+ s:{ty:"c",h:"Ratsionni baho",a:"Energiya",b:"Xilma-xillik",m:[["Non va shirinlik","~2600 kkal","Past","Energiya ko'p, vitamin va oqsil kam."],["Muvozanatli tushlik","~2300 kkal","Yuqori","Oqsil, uglevod, sabzavot va meva bor."],["Faqat go'sht","~2000 kkal","Past","Uglevod va vitaminlar yetishmaydi."]]}, s2:{ty:"t",h:"To'g'ri yoki noto'g'ri",i:[["Faqat shirinlik yeyish yetarli", false, "Oqsil va vitamin kerak."], ["Ratsionda sabzavot kerak", true, "Vitamin beradi."], ["Ortiqcha energiya yog'ga aylanadi", true, "Ha."], ["Nonushta muhim", true, "Kun uchun energiya beradi."]]},
+ q:[["Eng yaxshi ratsion qanday?",["Xilma-xil va muvozanatli","Faqat shirin","Faqat go'sht"],0,"Xilma-xillik muhim."],["Ortiqcha energiya nimaga aylanadi?",["Yog'ga","Oqsilga","Suvga"],0,"Yog' bo'lib to'planadi."]]},
+{n:25,t:"Tirik organizmning nafas olishi",g:"Faollik va nafas tezligi aloqasi.",pts:["Nafas olganda kislorod qonga o'tadi.","Karbonat angidrid nafas chiqarganda chiqadi.","Kislorod ozuqani 'yondirib' energiya beradi."],
+ s:{ty:"c",h:"Faollik va nafas",a:"Nafas/min",b:"Puls/min",m:[["Dam olish","18","80","Energiya kam sarflanadi."],["Tez yurish","26","105","Mushaklarga ko'proq kislorod kerak."],["Yugurish","40","160","Yurak qonni tez haydaydi."]]}, s2:{ty:"o",h:"Havo yo'li",f:["Burun", "Hiqildoq", "Kekirdak", "Bronx", "O'pka"]},
+ q:[["Nafas olganda qonga nima o'tadi?",["Kislorod","Azot","Karbonat angidrid"],0,"Kislorod o'tadi."],["Yugurganda nafas…",["Sekinlashadi","Tezlashadi","O'zgarmaydi"],1,"Kislorod ehtiyoji ortadi."]]},
+{n:26,t:"Tirik organizmda oziq moddalar transporti",g:"Qonning aylanish yo'li.",pts:["Qon kislorod va ozuqani hujayralarga tashiydi.","Arteriya yurakdan qon olib chiqadi, vena yurakka olib keladi.","Moddalar almashinuvi eng mayda tomirlar — kapillyarlarda bo'ladi."],
+ s:{ty:"p",h:"Qon yo'li",f:["Yurak","Arteriya","Kapillyar","Vena","O'pka"],d:[["Haydaydi","Yurak qonni tomirlarga haydaydi."],["Tarqatadi","Arteriya qonni a'zolarga olib boradi."],["Almashadi","Kislorod hujayraga, CO2 qonga o'tadi."],["Qaytadi","Vena qonni yurakka qaytaradi."],["Boyiydi","O'pkada qon kislorodga to'yinadi."]]}, s2:{ty:"o",h:"Qon aylanishi",f:["Yurak", "Arteriya", "Kapillyar", "Vena", "Yurakka qaytish"]},
+ q:[["Moddalar almashinuvi qayerda?",["Kapillyar","Arteriya","Vena"],0,"Kapillyar devori juda yupqa."],["Qonni yurakdan olib chiqadigan tomir?",["Vena","Arteriya","Kapillyar"],1,"Bu arteriya."]]},
+{n:27,t:"Tirik organizmlarning ayirishi",g:"Keraksiz moddalar qanday chiqariladi.",pts:["Almashinuv natijasida keraksiz moddalar hosil bo'ladi.","Buyrak qondan ortiqcha suv va tuzni ajratadi.","O'pka CO2 ni, teri ter orqali suv va tuzni chiqaradi."],
+ s:{ty:"s",h:"Qaysi a'zo chiqaradi?",c:["Buyrak","O'pka","Teri"],i:[["💧","Siydik",0,"Buyrak hosil qiladi."],["💨","Karbonat angidrid",1,"Nafas chiqarganda chiqadi."],["😓","Ter",2,"Teri ter bezlari orqali."],["🧂","Ortiqcha tuz (siydik)",0,"Buyrak ajratadi."],["🌫️","Nafasdagi suv bug'i",1,"O'pka orqali chiqadi."],["🔥","Issiqlik tashlash",2,"Ter bug'lanib sovutadi."]]}, s2:{ty:"t",h:"To'g'ri yoki noto'g'ri",i:[["Buyrak qonni tozalaydi", true, "Siydik hosil qiladi."], ["Teri ayirishda qatnashmaydi", false, "Ter chiqaradi."], ["O'pka CO2 chiqaradi", true, "Ha."], ["Ter faqat chiroy uchun", false, "Tanani sovutadi."]]},
+ q:[["Qondan siydikni ajratadigan a'zo?",["Buyrak","Jigar","Yurak"],0,"Buyrak."],["Karbonat angidrid qayerdan chiqadi?",["Teridan","O'pkadan","Buyrakdan"],1,"Nafas bilan."]]},
+{n:28,t:"Tirik organizmlarning ta'sirlanishi",g:"Ta'sir va javob reaksiyasi.",pts:["Tashqi ta'sirni sezgi a'zolari qabul qiladi.","Nerv sistemasi signalni qayta ishlab javob beradi.","Refleks — tez, ixtiyorsiz javob."],
+ s:{ty:"c",h:"Ta'sir va javob",a:"Qabul qiladi",b:"Javob",m:[["Yorqin nur","Ko'z","Qorachiq torayadi"],["Issiq narsa","Teri","Qo'l tez tortiladi"],["Olma hidi","Burun","So'lak ajraladi"]]}, s2:{ty:"o",h:"Refleks yoyi",f:["Qabul qiluvchi", "Sezuvchi nerv", "Orqa miya", "Harakat nervi", "Mushak qisqaradi"]},
+ q:[["Signalni qayta ishlaydi:",["Nerv sistemasi","Hazm yo'li","Teri"],0,"Nerv sistemasi."],["Refleks — bu…",["Ixtiyorsiz tez javob","Uzoq o'ylash","Ovqat hazmi"],0,"Ixtiyorsiz javob."]]},
+{n:29,t:"Amaliy: tirik organizm — yaxlit sistema",g:"Sistemalar birgalikda ishlashi.",pts:["Barcha a'zolar sistemasi bir-biriga bog'liq.","Bitta sistema o'zgarsa, boshqalari ham moslashadi.","Shu sababli organizmni yaxlit deymiz."],
+ s:{ty:"c",h:"Qaysi sistemalar ishlaydi?",a:"Faol sistemalar",b:"Natija",m:[["Yugurish","Mushak, nafas, qon aylanish","Kislorod mushaklarga yetadi"],["Ovqatlanish","Hazm, qon aylanish","Ozuqa hujayralarga boradi"],["Imtihon yozish","Nerv, ko'rish, qon aylanish","Miya kislorod va glyukoza oladi"]]}, s2:{ty:"t",h:"To'g'ri yoki noto'g'ri",i:[["Sistemalar mustaqil ishlaydi", false, "Ular bog'liq."], ["Yugurganda yurak tezlashadi", true, "Kislorod ko'p kerak."], ["Nerv sistemasi ishni muvofiqlashtiradi", true, "Ha."], ["Organizm — a'zolar yig'indisi xolos", false, "U yaxlit sistema."]]},
+ q:[["Yugurganda faqat mushak ishlaydimi?",["Ha","Yo'q, ko'p sistema birga ishlaydi"],1,"Organizm yaxlit."],["Sistemalarning aloqasi nimani ko'rsatadi?",["Yaxlitlikni","Mustaqillikni"],0,"Yaxlit sistema."]]}
+];
+function sim(s,B,hid){
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;B.appendChild(e);return e}
+  B.innerHTML='';$(hid).textContent=hid==='sh'?"Simulyatsiya 2: "+s.h:"Simulyatsiya 3: "+s.h;
+  if(s.ty==="t"){
+    var k=0,ok=0,st=el('div','em','❓'),tx=el('b'),bt=el('div','grid'),fb=el('div','fb'),sc=el('div','mu');tx.style.textAlign='center';
+    (function show(){if(k>=s.i.length){st.textContent='🏁';tx.textContent='';bt.innerHTML='';fb.textContent='';sc.textContent='Natija: '+ok+' / '+s.i.length;var r=el('button','btn p','Qayta boshlash');r.onclick=function(){sim(s,B,hid)};return}
+      var it=s.i[k];tx.textContent=it[0];st.textContent='❓';st.className='em pop';fb.textContent='';sc.textContent="To'g'ri: "+ok+' / '+k;bt.innerHTML='';var lock=false;
+      [["To'g'ri",true],["Noto'g'ri",false]].forEach(function(c){var b=document.createElement('button');b.className='btn';b.textContent=c[0];b.onclick=function(){if(lock)return;lock=true;var y=c[1]===it[1];if(y){ok++;b.classList.add('p')}st.textContent=y?'✅':'❌';st.className='em';void st.offsetWidth;st.className='em '+(y?'pop':'shk');fb.textContent=(y?"To'g'ri. ":"Xato. ")+it[2];k++;setTimeout(show,2200)};bt.appendChild(b)})})();
+  }else if(s.ty==="o"){
+    el('p','mu',"Bosqichlarni to'g'ri tartibda ketma-ket bosing.");var nx=0,er=0,bx=el('div','grid'),fb=el('div','fb'),ord=s.f.map(function(x,i){return[x,i]}).sort(function(){return Math.random()-.5});
+    ord.forEach(function(o){var b=document.createElement('button');b.className='btn';b.textContent=o[0];b.onclick=function(){if(b.disabled)return;if(o[1]===nx){nx++;b.disabled=true;b.classList.add('p','pop');b.textContent=nx+'. '+o[0];fb.textContent=nx===s.f.length?"Tayyor! Xato: "+er:''}else{er++;fb.textContent="Bu hozir emas. Xato: "+er;b.classList.remove("shk");void b.offsetWidth;b.classList.add("shk")}};bx.appendChild(b)});
+  }else if(s.ty==="s"){
+    var k=0,ok=0,em=el('div','em'),nm=el('b'),bt=el('div','grid'),fb=el('div','fb'),sc=el('div','mu');nm.style.textAlign='center';
+    (function show(){if(k>=s.i.length){em.textContent='🏁';nm.textContent='';bt.innerHTML='';fb.textContent='';sc.textContent='Natija: '+ok+' / '+s.i.length;var r=el('button','btn p','Qayta boshlash');r.onclick=function(){build(cur)};return}
+      var it=s.i[k];em.textContent=it[0];em.className='em';void em.offsetWidth;em.className='em pop';nm.textContent=it[1];fb.textContent='';sc.textContent='To\'g\'ri: '+ok+' / '+k;bt.innerHTML='';var lock=false;
+      s.c.forEach(function(c,ci){var b=document.createElement('button');b.className='btn';b.textContent=c;b.onclick=function(){if(lock)return;lock=true;if(ci===it[2]){ok++;b.classList.add('p')}fb.textContent=(ci===it[2]?"To'g'ri. ":"Noto'g'ri, to'g'ri javob: "+s.c[it[2]]+". ")+it[3];em.className='em '+(ci===it[2]?'fly':'shk');k++;setTimeout(show,1800)};bt.appendChild(b)})})();
+  }else if(s.ty==="p"){
+    var n=s.f.length;el('p','mu',"Slayderni surib bosqichlarni ko'ring.");var r=el('input');r.type='range';r.min=0;r.max=n-1;r.value=0;r.setAttribute('aria-label','Bosqich');var tk=el('div','trk'),tok=document.createElement('div');tok.className='tok';tk.appendChild(tok);var pb=el('button','btn p','▶ Animatsiya');B.insertBefore(tk,r);B.insertBefore(pb,r);
+    var bx=el('div','grid');var cards=s.f.map(function(f){var c=document.createElement('div');c.className='big';c.innerHTML='<small>'+f+'</small><b></b>';bx.appendChild(c);return c});
+    var info=el('div','fb');
+    function up(){var v=+r.value;cards.forEach(function(c,j){c.querySelector('b').textContent=j<=v?s.d[j][0]:'?';c.style.opacity=j<=v?1:.45});info.textContent=s.f[v]+': '+s.d[v][1];tok.style.left='calc('+(v/(n-1)*100)+'% - '+(v/(n-1)*22)+'px)'}
+    function stop(){clearInterval(window.TM);window.TM=0;pb.textContent='▶ Animatsiya'}
+    function start(){pb.textContent="⏸ To'xtat";window.TM=setInterval(function(){r.value=+r.value>=n-1?0:+r.value+1;up()},1500)}
+    pb.onclick=function(){window.TM?stop():start()};r.oninput=function(){stop();up()};up();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)start();
+  }else{
+    el('p','mu',"Variantni tanlang.");var bt2=el('div','grid'),rd=el('div','grid'),f2=el('div','fb');el('div','mu',s.a+' → '+s.b);var fl=el('div','flw'),dt=document.createElement('i');fl.appendChild(dt);var lg,hr;if(s.a==='Nafas/min'){lg=el('div','lung');hr=el('div','heart','♥')}
+    function sel(m,b){dt.style.animationDuration=(2.2-.7*s.m.indexOf(m))+'s';if(lg){lg.style.animationDuration=60/m[1]+'s';hr.style.animationDuration=60/m[2]+'s'}bt2.querySelectorAll('.btn').forEach(function(x){x.classList.toggle('p',x===b)});rd.innerHTML='<div class="big"><small>'+s.a+'</small><b>'+m[1]+'</b></div><div class="big"><small>'+s.b+'</small><b>'+m[2]+'</b></div>';f2.textContent=m[3]||''}
+    s.m.forEach(function(m,j){var b=document.createElement('button');b.className='btn';b.textContent=m[0];b.onclick=function(){sel(m,b)};bt2.appendChild(b);if(!j)sel(m,b)});
+    if(s.m[0].length<4)f2.textContent='';
+  }
+}
+var W={16:[["Olam","Eng katta guruh"],["Tip","Olamdan keyingi guruh"],["Oila","Turkumdan katta guruh"],["Turkum","Oiladan kichik guruh"]],
+17:[["Suvo't","Ildizi va poyasi yo'q o'simlik"],["Paporotnik","Sporadan ko'payadi"],["Archa","Ochiq urug'li daraxt"],["Olma","Yopiq urug'li, meva beradi"]],
+18:[["Hasharot","Olti oyoqli hayvon"],["Baliq","Jabra bilan nafas oladi"],["Qush","Patli hayvon"],["Sutemizuvchi","Bolasini sut bilan boqadi"]],
+19:[["Gerbariy","Quritilgan o'simliklar to'plami"],["Olma","Misol uchun olingan o'simlik"],["Oila","Turkumdan katta guruh"],["Bo'lim","O'simliklarda katta guruh"]],
+20:[["Xordali","Orqa miya o'qi bor hayvonlar tipi"],["Mushuk","Misol uchun olingan hayvon"],["Sinf","Tipdan keyingi guruh"],["Yirtqich","Go'sht bilan oziqlanuvchi turkum"]],
+21:[["Hujayra","Tirik organizmning asosiy birligi"],["To'qima","O'xshash hujayralar guruhi"],["Organizm","Butun tirik mavjudot"],["Sistema","A'zolar guruhi"]],
+22:[["Oqsil","Qurilish materiali"],["Uglevod","Tez energiya manbai"],["Ozuqa","Oziq modda"],["Fotosintez","O'simlik ozuqa hosil qilishi"]],
+23:[["Oshqozon","Shira oqsilni parchalaydi"],["Qizilo'ngach","Og'izdan oshqozonga yo'l"],["So'lak","Kraxmalni parchalay boshlaydi"],["Ichak","Ozuqa so'riladigan a'zo"]],
+24:[["Ratsion","Kunlik ovqat jadvali"],["Kaloriya","Energiya o'lchovi"],["Vitamin","Sabzavot va mevada ko'p"],["Sabzavot","Ratsionda kerakli oziq"]],
+25:[["Nafas","Havo olish va chiqarish"],["Kislorod","Qonga o'tadigan gaz"],["O'pka","Nafas a'zosi"],["Bronx","Kekirdakdan o'pkaga yo'l"]],
+26:[["Yurak","Qonni haydaydigan a'zo"],["Vena","Yurakka qon olib keladi"],["Arteriya","Yurakdan qon olib chiqadi"],["Kapillyar","Eng mayda qon tomir"]],
+27:[["Buyrak","Siydik hosil qiladi"],["Ter","Teri orqali chiqadi"],["Siydik","Buyrak ajratgan suyuqlik"],["Ayirish","Keraksizni chiqarish"]],
+28:[["Refleks","Ixtiyorsiz tez javob"],["Nerv","Signal o'tkazadi"],["Ko'z","Yorug'likni qabul qiladi"],["Mushak","Qisqarib harakat beradi"]],
+29:[["Sistema","A'zolar guruhi"],["Yaxlit","Bir butun"],["Moslashish","Muhitga o'zgarib ko'nikish"],["Miya","Nerv sistemasi markazi"]]};
+function nz(s){return s.replace(/['ʻ’]/g,'').toUpperCase()}
+function layout(ws){var G={},P=[];function g(x,y){return G[x+','+y]}
+function ok(w,x,y,d){var dx=d?0:1,dy=d?1:0,i,c,cr=0;if(g(x-dx,y-dy)||g(x+dx*w.length,y+dy*w.length))return -1;
+for(i=0;i<w.length;i++){var cx=x+dx*i,cy=y+dy*i;c=g(cx,cy);if(c){if(c!==w[i])return -1;cr++}else if(g(cx+dy,cy+dx)||g(cx-dy,cy-dx))return -1}return cr}
+function put(o){P.push(o);for(var i=0;i<o.w.length;i++)G[(o.x+(o.d?0:i))+','+(o.y+(o.d?i:0))]=o.w[i]}
+ws=ws.slice().sort(function(a,b){return b.w.length-a.w.length});put({w:ws[0].w,c:ws[0].c,x:0,y:0,d:0});
+ws.slice(1).forEach(function(q){for(var a=0;a<P.length;a++){var p=P[a];for(var i=0;i<q.w.length;i++)for(var j=0;j<p.w.length;j++){if(q.w[i]!==p.w[j])continue;
+var d=p.d?0:1,x=p.d?p.x-i:p.x+j,y=p.d?p.y+j:p.y-i;if(ok(q.w,x,y,d)===1){put({w:q.w,c:q.c,x:x,y:y,d:d});return}}}});return P}
+function cwBuild(n){var B=$('cw');B.innerHTML='';var P=layout(W[n].map(function(p){return{w:nz(p[0]),c:p[1]}}));
+var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;P.forEach(function(p){x0=Math.min(x0,p.x);y0=Math.min(y0,p.y);x1=Math.max(x1,p.x+(p.d?0:p.w.length-1));y1=Math.max(y1,p.y+(p.d?p.w.length-1:0))});
+var cells={};P.forEach(function(p,k){p.n=k+1;for(var i=0;i<p.w.length;i++){var key=(p.x+(p.d?0:i))+','+(p.y+(p.d?i:0));cells[key]=cells[key]||{l:p.w[i],n:0};if(!i)cells[key].n=p.n}});
+var sc=document.createElement('div');sc.style.overflowX='auto';var gr=document.createElement('div');gr.className='cwg';gr.style.gridTemplateColumns='repeat('+(x1-x0+1)+',34px)';
+for(var y=y0;y<=y1;y++)for(var x=x0;x<=x1;x++){var c=cells[x+','+y],d=document.createElement('div');d.className='cell';if(c){d.innerHTML=(c.n?'<i>'+c.n+'</i>':'')+'<input maxlength="1" data-l="'+c.l+'" aria-label="harf">'}gr.appendChild(d)}
+sc.appendChild(gr);B.appendChild(sc);
+var inp=gr.querySelectorAll('input');
+function row(t,d){var l=P.filter(function(p){return p.d===d});if(!l.length)return;var h3=document.createElement('b');h3.textContent=t;B.appendChild(h3);var u=document.createElement('ul');l.forEach(function(p){var li=document.createElement('li');li.textContent=p.n+'. '+p.c+' ('+p.w.length+' harf)';u.appendChild(li)});B.appendChild(u)}
+row('Gorizontal',0);row('Vertikal',1);
+var m=document.createElement('p');m.className='mu';m.style.fontSize='.85rem';m.textContent="Apostrof yozilmaydi (masalan, O'pka — OPKA).";B.appendChild(m);
+var bx=document.createElement('div');bx.className='grid';var b1=document.createElement('button');b1.className='btn p';b1.textContent='Tekshirish';var b2=document.createElement('button');b2.className='btn';b2.textContent='Javobni ko\'rsat';bx.appendChild(b1);bx.appendChild(b2);B.appendChild(bx);var fb=document.createElement('div');fb.className='fb';B.appendChild(fb);
+b1.onclick=function(){var r=0,t=0;inp.forEach(function(i){t++;var v=i.value.toUpperCase()===i.dataset.l;i.className=i.value?(v?'ok':'bad'):'';if(v)r++});fb.textContent=r===t?"Barakalla! Hammasi to'g'ri.":"To'g'ri harflar: "+r+" / "+t};
+b2.onclick=function(){inp.forEach(function(i){i.value=i.dataset.l;i.className='ok'});fb.textContent=''}}
+function gmBuild(n){var B=$('gm');B.innerHTML='';var pr=W[n],sel=null,f=0,er=0,lock=false;
+var st=document.createElement('div');st.className='mu';B.appendChild(st);function up(){st.textContent="Topildi: "+f+"/"+pr.length+" · Xato: "+er}up();
+var bd=document.createElement('div');bd.className='grid';bd.style.gridTemplateColumns='1fr 1fr';B.appendChild(bd);
+function sh(a){return a.slice().sort(function(){return Math.random()-.5})}
+var A=document.createElement('div'),C=document.createElement('div');[A,C].forEach(function(c){c.style.cssText='display:flex;flex-direction:column;gap:8px;min-width:0';bd.appendChild(c)});
+function mk(t,i,side,box){var b=document.createElement('button');b.className='btn';b.style.fontSize='.88rem';b.textContent=t;b.dataset.i=i;b.dataset.s=side;b.onclick=function(){if(lock||b.disabled)return;
+if(!sel){sel=b;b.classList.add('p');return}if(sel===b){b.classList.remove('p');sel=null;return}
+if(sel.dataset.s===b.dataset.s){sel.classList.remove('p');sel=b;b.classList.add('p');return}
+if(sel.dataset.i===b.dataset.i){sel.disabled=b.disabled=true;sel.style.background=b.style.background='var(--oks)';sel.classList.remove('p');sel=null;f++;up();if(f===pr.length)st.textContent+=" · Tayyor!"}
+else{er++;up();lock=true;var s0=sel;b.style.background=s0.style.background='var(--bads)';setTimeout(function(){b.style.background=s0.style.background='';s0.classList.remove('p');sel=null;lock=false},700)}};box.appendChild(b)}
+sh(pr.map(function(p,i){return[p[0],i]})).forEach(function(o){mk(o[0],o[1],'a',A)});sh(pr.map(function(p,i){return[p[1],i]})).forEach(function(o){mk(o[0],o[1],'b',C)});
+var r=document.createElement('button');r.className='btn';r.textContent='Qaytadan';r.onclick=function(){gmBuild(n)};B.appendChild(r)}
+var K={},P2=Math.PI*2,OR="#D2571F";
+var cl=function(x){return Math.max(0,Math.min(1,x))},lp=function(a,b,t){return a+(b-a)*t};
+function ez(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
+function cr(c,x,y,r,f,s,a){c.globalAlpha=a==null?1:a;c.beginPath();c.arc(x,y,r,0,P2);if(f){c.fillStyle=f;c.fill()}if(s){c.strokeStyle=s;c.lineWidth=2;c.stroke()}c.globalAlpha=1}
+function tx(c,s,x,y,sz,co,al){c.font=sz+"px system-ui,sans-serif";c.fillStyle=co||K.fg;c.textAlign=al||"center";c.fillText(s,x,y)}
+function em(c,s,x,y,sz){c.font=sz+"px system-ui,sans-serif";c.textAlign="center";c.fillStyle=K.fg;c.fillText(s,x,y+sz*.35)}
+function ln(c,p,co,w){c.beginPath();p.forEach(function(q,i){i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1])});c.strokeStyle=co;c.lineWidth=w||2;c.lineCap="round";c.lineJoin="round";c.stroke()}
+function along(p,u){var L=0,d=[],i;for(i=1;i<p.length;i++){d.push(Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]));L+=d[i-1]}var r=u*L;for(i=0;i<d.length;i++){if(r<=d[i]||i===d.length-1){var f=d[i]?Math.min(1,r/d[i]):0;return[lp(p[i][0],p[i+1][0],f),lp(p[i][1],p[i+1][1],f)]}r-=d[i]}}
+var I16=[["🐻",0],["🐟",0],["🐝",0],["🌲",1],["🌿",1],["🍎",1],["🍄",2],["🍞",2],["🦠",3],["🦠",3]],C16=[[85,110,"Hayvonlar"],[255,110,"O'simliklar"],[85,270,"Zamburug'lar"],[255,270,"Bakteriyalar"]],O16=[[-24,-8],[24,-8],[0,26]];
+function d16(c,t){var e=ez(t),n=[0,0,0,0];C16.forEach(function(k){cr(c,k[0],k[1],62,K.as,K.ln,e);c.globalAlpha=e;tx(c,k[2],k[0],k[1]-70,13);c.globalAlpha=1});
+I16.forEach(function(o,i){var k=C16[o[1]],j=n[o[1]]++,f=O16[j%3];em(c,o[0],lp(40+(i*97)%260,k[0]+f[0],e),lp(60+(i*151)%280,k[1]+f[1],e),30)})}
+var GN=["Suvo't","Mox","Paporotnik","Ochiq urug'li","Yopiq urug'li"];
+function d17(c,t,m){var g=Math.min(4,Math.floor(t*5)),G=330,i;tx(c,GN[g],170,36,16);
+if(g===0){c.fillStyle=K.as;c.fillRect(20,200,300,160);c.fillStyle="#3E9B4B";c.beginPath();c.ellipse(170,280+Math.sin(m*2)*6,50,16,0,0,P2);c.fill();return}
+var h=lp(60,200,cl((t-.2)/.7)),sw=Math.sin(m*1.5)*4*(h/200);ln(c,[[20,G],[320,G]],K.mu,3);
+if(g>=2){[-20,0,20].forEach(function(x){ln(c,[[170,G],[170+x,G+28]],"#8B5A2B",3)})}
+ln(c,[[170,G],[170+sw,G-h]],"#3E9B4B",g<2?2:5);
+var nl=Math.round(1+3*cl((t-.2)/.5));for(i=0;i<nl;i++){var y=G-h*(.3+.2*i),s=i%2?1:-1;c.fillStyle="#4CAF50";c.beginPath();c.ellipse(170+sw*.5+s*20,y,18,7,s*-.5,0,P2);c.fill()}
+if(g===3)cr(c,170+sw,G-h-8,10,"#8B5A2B");
+if(g===4){for(i=0;i<6;i++)cr(c,170+sw+14*Math.cos(i),G-h-8+14*Math.sin(i),7,"#F48FB1");cr(c,170+sw,G-h-8,6,"#F5C518");cr(c,200,G-h*.45,9,"#D32F2F")}}
+function d18(c,t,m){var sw=Math.sin(m*3)*5,a1=1-cl((t-.4)*5),a2=cl((t-.5)*5),p=[],i;
+c.globalAlpha=a1;for(i=0;i<=30;i++)p.push([40+i*8.5,200+Math.sin(i/3+m*3)*10]);ln(c,p,"#D98E8E",14);
+c.globalAlpha=a2;c.fillStyle="#6FA8DC";c.beginPath();c.ellipse(160,200+sw,90,45,0,0,P2);c.fill();c.beginPath();c.moveTo(245,200+sw);c.lineTo(300,160+sw);c.lineTo(300,240+sw);c.fill();cr(c,100,190+sw,5,"#fff");
+var n=Math.round(cl((t-.5)*2)*12);c.fillStyle=K.fg;for(i=0;i<n;i++)c.fillRect(85+i*13,196+sw,8,8);
+c.globalAlpha=1;tx(c,t<.5?"Umurtqasiz (chuvalchang)":"Umurtqali (baliq)",170,60,16)}
+function nest(f,d,e){return function(c,t){var n=f.length,L=Math.round(t*(n-1));for(var i=0;i<n;i++){var r=lp(150,26,i/(n-1)),on=i<=L;cr(c,170,215,r,i===L?K.as:null,on?K.ac:K.ln);tx(c,f[i],170,215-r+15,12,on?K.fg:K.mu)}em(c,e,170,234,26);tx(c,d[L],170,390,16)}}
+var F19=["Olam","Bo'lim","Sinf","Oila","Tur"],D19=["O'simliklar","Yopiq urug'lilar","Ikki pallalilar","Atirgullar","Uy olmasi"],F20=["Olam","Tip","Sinf","Turkum","Oila","Tur"],D20=["Hayvonlar","Xordalilar","Sutemizuvchilar","Yirtqichlar","Mushuksimonlar","Uy mushugi"];
+function lv21(t){return t<.2?"hujayra":t<.55?"to'qima":t<.8?"to'qimalar":"a'zo"}
+function d21(c,t){var k=Math.max(1,Math.round(lp(1,8,t))),s=240/k,i,j,co=["#D98E8E","#E0A24A","#6FA8DC"];tx(c,lv21(t),170,40,16);
+for(i=0;i<k;i++)for(j=0;j<k;j++){c.fillStyle=t>.5?co[Math.floor(i*3/k)]:K.as;c.fillRect(50+j*s+1,70+i*s+1,s-2,s-2)}
+if(t>.75){c.globalAlpha=cl((t-.75)*4);em(c,"❤️",170,190,110);c.globalAlpha=1}}
+function d22(c,t){var A=[.08,.12,.8],B=[.15,.3,.55],co=[OR,"#E0A24A",K.ac],nm=["Oqsil","Yog'","Uglevod"],a=-Math.PI/2;for(var i=0;i<3;i++){var v=lp(A[i],B[i],t),b=a+v*P2;c.beginPath();c.arc(170,170,95,a,b);c.lineWidth=44;c.strokeStyle=co[i];c.stroke();a=b;tx(c,nm[i]+" "+Math.round(v*100)+"%",170,310+i*24,14,co[i])}tx(c,"Energiya manbalari",170,175,13,K.mu)}
+var P23=[[170,50],[170,120],[100,160],[100,215],[240,215],[240,265],[90,265],[90,325],[250,325]],N23=["Og'iz","Qizilo'ngach","Oshqozon","Ingichka ichak","Yo'g'on ichak"],B23=[0,.1,.3,.5,.85];
+function g23(t){var g=4;while(B23[g]>t)g--;return g}
+function d23(c,t,m){ln(c,P23,K.ln,16);var r=lp(14,5,cl((t-.3)/.4)),p=along(P23,t),i;
+if(t>.5&&t<.9)for(i=0;i<6;i++){var u=(m*.6+i/6)%1,q=along(P23,lp(.5,.85,i/6));cr(c,q[0]+u*28,q[1]-u*12,3,"#C94F5A",null,1-u)}
+cr(c,p[0],p[1],r,OR);tx(c,N23[g23(t)],170,25,16)}
+function d24(c,t){var nm=["Non, guruch","Sabzavot, meva","Oqsil","Sut mahsuloti","Shirinlik"],A=[.9,.1,.15,.1,1],B=[.6,.7,.6,.5,.15];tx(c,"Kunlik ratsion tarkibi",170,36,16);
+nm.forEach(function(s,i){var y=70+i*60,v=lp(A[i],B[i],t);tx(c,s,30,y,13,K.fg,"left");c.fillStyle=K.as;c.fillRect(30,y+8,280,18);c.fillStyle=i===4?OR:K.ac;c.fillRect(30,y+8,280*v,18)})}
+function d25(c,t,m){var f=lp(18,40,t),ph=m*f/60,s=1+.25*(.5-.5*Math.cos(ph*P2)),i;ln(c,[[170,50],[170,130]],K.mu,10);ln(c,[[170,130],[130,160]],K.mu,6);ln(c,[[170,130],[210,160]],K.mu,6);
+[[120,230],[220,230]].forEach(function(l){c.fillStyle="#E58C95";c.beginPath();c.ellipse(l[0],l[1],42*s,70*s,0,0,P2);c.fill()});
+for(i=0;i<6;i++){var u=(ph+i/6)%1,w=(ph+i/6+.5)%1;cr(c,170+(i%2?-1:1)*lp(0,50,u),lp(50,200,u),4,"#3B82C4");cr(c,170+(i%2?1:-1)*lp(50,0,w),lp(200,50,w),4,K.mu)}
+tx(c,"Ko'k: kislorod, kulrang: CO₂",170,370,13,K.mu)}
+function d26(c,t,m){var b=lp(70,160,t),s=1+.15*Math.pow(Math.sin(m*b/60*Math.PI),2),i;c.beginPath();c.ellipse(170,210,105,125,0,0,P2);c.strokeStyle=K.ln;c.lineWidth=14;c.stroke();
+for(i=0;i<16;i++){var a=((i/16+m*b/60/8)%1)*P2;cr(c,170+105*Math.cos(a),210+125*Math.sin(a),6,a<Math.PI?"#C94F5A":"#3B6FC4")}
+em(c,"❤️",170,210,50*s);tx(c,"Qizil: arteriya, ko'k: vena",170,385,13,K.mu)}
+function d27(c,t,m){var r=lp(16,46,t),co="rgb("+Math.round(lp(217,243,t))+","+Math.round(lp(162,231,t))+","+Math.round(lp(26,160,t))+")",T=[[170,150],[170,200],[250,260]],i;
+c.strokeStyle=K.mu;c.lineWidth=3;c.strokeRect(50,250,60,100);c.fillStyle="#6FA8DC";c.fillRect(52,348-96*t,56,96*t);tx(c,"Ichilgan suv",80,372,12,K.mu);
+em(c,"🫘",170,120,56);tx(c,"Buyrak",170,70,13,K.mu);ln(c,T,K.ln,8);
+for(i=0;i<4;i++){var p=along(T,(m*(.3+.7*t)+i/4)%1);cr(c,p[0],p[1],4,co)}
+cr(c,250,285,r,co,K.mu);tx(c,"Siydik pufagi",250,355,12,K.mu)}
+var P28=[[50,330],[170,230],[290,330]];
+function s28(t){return t<.4?"sezuvchi nerv":t<.6?"orqa miya":t<.95?"harakat nervi":"mushak qisqardi"}
+function d28(c,t){ln(c,[[170,130],[170,260]],"#E0A24A",22);ln(c,P28,K.ln,6);var p=along(P28,t);em(c,"🔥",40,335,32);em(c,"💪",295,335,t>.9?46:32);cr(c,p[0],p[1],9,OR);
+tx(c,"Orqa miya",170,115,13);tx(c,"Teri",50,375,12,K.mu);tx(c,"Mushak",290,375,12,K.mu);tx(c,s28(t),170,40,16)}
+function d29(c,t,m){var nm=["💪","❤️","🫁","🍽️"],A=[.15,.25,.2,.7],B=[1,.95,.9,.15],i;tx(c,"Sistemalar faolligi",170,40,16);
+for(i=0;i<4;i++){var v=lp(A[i],B[i],t),x=55+i*70,s=i===1?1+.15*Math.pow(Math.sin(m*lp(70,160,t)/60*Math.PI),2):1;c.fillStyle=K.as;c.fillRect(x,70,36,220);c.fillStyle=i===3?"#E0A24A":K.ac;c.fillRect(x,290-220*v,36,220*v);em(c,nm[i],x+18,330,32*s)}}
+var pc=function(t){return Math.round(t*100)+"%"};
+var V={
+16:{h:"Tartibsizlikdan tasnifga",l0:"Aralash",l1:"Guruhlangan",d:d16,r:[["Tartib",pc],["Guruhlar",function(t){return t<.5?"aralash":"4 olam"}],["Hayvonlar",function(t){return t<.5?"?":"3 ta"}]],o:["Slayderni surganda organizmlar nima asosida guruhlandi?","Nega bakteriyalar alohida olamga ajratilgan?"],a:["O'xshash belgilari (oziqlanishi, tuzilishi) bo'yicha.","Ularning hujayrasida yadro yo'q, boshqalardan farq qiladi."]},
+17:{h:"Oddiydan murakkab o'simlikka",l0:"Suvo't",l1:"Gulli o'simlik",d:d17,r:[["Guruh",function(t){return GN[Math.min(4,Math.floor(t*5))]}],["A'zolar",function(t){return["yo'q","poya, barg","ildiz, poya, barg","urug' (mevasiz)","gul, meva"][Math.min(4,Math.floor(t*5))]}],["Ko'payish",function(t){return["bo'linish","spora","spora","urug'","urug' (meva ichida)"][Math.min(4,Math.floor(t*5))]}]],o:["Qaysi bosqichda ildiz paydo bo'ladi?","Ochiq va yopiq urug'lilar nimasi bilan farq qiladi?"],a:["Paporotnik bosqichidan boshlab.","Yopiq urug'lilar gul va meva hosil qiladi, urug'i meva ichida."]},
+18:{h:"Umurtqasizdan umurtqalige",l0:"Chuvalchang",l1:"Baliq",d:d18,r:[["Guruh",function(t){return t<.5?"umurtqasiz":"umurtqali"}],["Umurtqa",function(t){return Math.round(cl((t-.5)*2)*12)+" ta"}],["Misol",function(t){return t<.5?"chuvalchang":"baliq"}]],o:["Umurtqali hayvonlarda tanani nima qo'llab turadi?","Yana qaysi hayvonlar umurtqali?"],a:["Ichki skelet va umurtqa pog'onasi.","Amfibiyalar, sudralib yuruvchilar, qushlar, sutemizuvchilar."]},
+19:{h:"Olma: guruhlar ichida guruh",l0:"Olam",l1:"Tur",d:nest(F19,D19,"🍎"),r:[["Bosqich",function(t){return F19[Math.round(t*4)]}],["Guruh",function(t){return D19[Math.round(t*4)]}],["O'xshashlik",function(t){return Math.round(Math.round(t*4)/4*100)+"%"}]],o:["Guruh kichraygan sari organizmlar o'rtasidagi o'xshashlik qanday o'zgaradi?","Olmadan tashqari qaysi o'simlik Atirgullar oilasida?"],a:["Ortadi.","Nok, atirgul, olcha."]},
+20:{h:"Mushuk: guruhlar ichida guruh",l0:"Olam",l1:"Tur",d:nest(F20,D20,"🐱"),r:[["Bosqich",function(t){return F20[Math.round(t*5)]}],["Guruh",function(t){return D20[Math.round(t*5)]}],["O'xshashlik",function(t){return Math.round(Math.round(t*5)/5*100)+"%"}]],o:["Mushuk bilan sher qaysi bosqichgacha umumiy guruhda?","Nega mushuk xordalilar tipiga kiradi?"],a:["Oila (mushuksimonlar) darajasigacha.","Orqa miya o'qi (xorda) bor."]},
+21:{h:"Hujayradan a'zogacha",l0:"1 hujayra",l1:"A'zo",d:d21,r:[["Hujayralar",function(t){var k=Math.max(1,Math.round(lp(1,8,t)));return k*k}],["Daraja",lv21],["To'qima turi",function(t){return t>.5?"3 xil":"1 xil"}]],o:["Hujayralar soni ortganda nima hosil bo'ladi?","Rangi har xil hujayralar guruhi nimani bildiradi?"],a:["To'qima, keyin a'zo.","Har xil vazifali to'qimalarni."]},
+22:{h:"Muvozanatsiz va muvozanatli ovqat",l0:"Shirinlik ko'p",l1:"Muvozanatli",d:d22,r:[["Oqsil",function(t){return Math.round(lp(8,15,t))+"%"}],["Yog'",function(t){return Math.round(lp(12,30,t))+"%"}],["Uglevod",function(t){return Math.round(lp(80,55,t))+"%"}]],o:["Qaysi modda ko'payganda ovqat muvozanatsiz bo'ladi?","Oqsil organizmga nima uchun kerak?"],a:["Uglevod (shirinlik, un).","Qurilish materiali sifatida: mushak va hujayralar uchun."]},
+23:{h:"Ovqatning hazm yo'li bo'ylab safari",l0:"Og'iz",l1:"Yo'g'on ichak",d:d23,r:[["A'zo",function(t){return N23[g23(t)]}],["Vaqt (taxm.)",function(t){return["0 s","~10 s","3–4 soat","4–6 soat","10–20 soat"][g23(t)]}],["Bo'laklar",function(t){return t<.3?"yirik":t<.5?"maydalangan":"molekulalar"}]],o:["Qaysi a'zoda ovqat bo'lakchalari eng kichik bo'ladi?","Ozuqa moddalari qayerda qonga o'tadi?"],a:["Ingichka ichakda.","Ingichka ichak devori orqali."]},
+24:{h:"Ratsionni muvozanatlash",l0:"Muvozanatsiz",l1:"Muvozanatli",d:d24,r:[["Energiya",function(t){return Math.round(lp(2900,2300,t))+" kkal"}],["Xilma-xillik",function(t){return Math.round(lp(2,9,t))+"/10"}],["Baho",function(t){return t<.4?"yomon":t<.75?"o'rtacha":"yaxshi"}]],o:["Qaysi oziq ko'payganda ratsion yomonlashadi?","Muvozanatli ratsionda nima ortadi?"],a:["Shirinlik.","Sabzavot, meva, oqsil va sut mahsulotlari ulushi."]},
+25:{h:"Nafas olish tezligi",l0:"Dam olish",l1:"Yugurish",d:d25,r:[["Nafas",function(t){return Math.round(lp(18,40,t))+"/min"}],["Puls",function(t){return Math.round(lp(80,160,t))+"/min"}],["Faollik",pc]],o:["Faollik oshganda nafas nega tezlashadi?","Qaysi gaz nafas chiqarganda chiqib ketadi?"],a:["Mushaklarga ko'proq kislorod kerak.","Karbonat angidrid."]},
+26:{h:"Yurak urishi va qon oqimi",l0:"Dam olish",l1:"Yugurish",d:d26,r:[["Puls",function(t){return Math.round(lp(70,160,t))+"/min"}],["Qon oqimi",function(t){return t<.4?"sekin":t<.75?"tezroq":"juda tez"}],["Faollik",pc]],o:["Puls oshganda qon tezligi qanday o'zgardi?","Qizil va ko'k tomirlar nima deb ataladi?"],a:["Tezlashdi.","Arteriya (yurakdan) va vena (yurakka)."]},
+27:{h:"Suv ichish va siydik",l0:"Kam suv",l1:"Ko'p suv",d:d27,r:[["Ichilgan suv",function(t){return lp(.8,2.5,t).toFixed(1)+" l"}],["Siydik rangi",function(t){return t<.4?"to'q":t<.75?"sariq":"och"}],["Siydik (taxm.)",function(t){return lp(.6,1.8,t).toFixed(1)+" l"}]],o:["Ko'p suv ichganda siydik rangi nega ochlashadi?","Siydikni qaysi a'zo hosil qiladi?"],a:["Tuzlar suyuqroq bo'lib qoladi.","Buyrak."]},
+28:{h:"Refleks yoyi",l0:"Ta'sir",l1:"Javob",d:d28,r:[["Bosqich",s28],["Signal yo'li",function(t){return t<.5?"ta'sir → miya":"miya → mushak"}],["Turi",function(){return"refleks"}]],o:["Signal qaysi tartibda o'tdi?","Refleks nega tez bo'ladi?"],a:["Teri → sezuvchi nerv → orqa miya → harakat nervi → mushak.","Signal bosh miyagacha bormay, orqa miyadan qaytadi."]},
+29:{h:"Sistemalar birga ishlaydi",l0:"Dam olish",l1:"Yugurish",d:d29,r:[["Puls",function(t){return Math.round(lp(80,160,t))+"/min"}],["Nafas",function(t){return Math.round(lp(18,40,t))+"/min"}],["Hazm",function(t){return Math.round(lp(70,15,t))+"%"}]],o:["Yugurganda qaysi sistemalar faollashdi?","Nega hazm sistemasi sekinlashdi?"],a:["Mushak, yurak va nafas sistemalari.","Energiya va qon yugurish uchun mushaklarga yo'naldi."]}
+};
+function vbuild(n){cancelAnimationFrame(window.VR);var v=V[n],cv=$("cv"),c=cv.getContext("2d"),dpr=Math.min(devicePixelRatio||1,3),t=0,tg=null,last=performance.now(),t0=last,rd=false;
+try{rd=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+cv.width=340*dpr;cv.height=400*dpr;$("shv").textContent="Simulyatsiya 1: "+v.h;
+var sl=$("vs");sl.value=0;sl.oninput=function(){tg=null;t=sl.value/100};
+var bb=$("vb");bb.innerHTML="";function go(x){if(rd){t=x;tg=null;sl.value=t*100}else tg=x}
+[[v.l0,function(){go(0)}],["Animatsiya",function(){go(t<.5?1:0)}],[v.l1,function(){go(1)}]].forEach(function(b,i){var e=document.createElement("button");e.className="btn"+(i===1?" p":"");e.textContent=b[0];e.onclick=b[1];bb.appendChild(e)});
+var rr=$("vr");rr.innerHTML="";var rb=v.r.map(function(x){var d=document.createElement("div");d.className="big";d.innerHTML="<small>"+x[0]+"</small><b></b>";rr.appendChild(d);return d.querySelector("b")});
+$("vo").innerHTML="";v.o.forEach(function(q){var li=document.createElement("li");li.textContent=q;$("vo").appendChild(li)});
+$("va").innerHTML="";v.a.forEach(function(q,i){var p=document.createElement("p");p.textContent=(i+1)+". "+q;$("va").appendChild(p)});
+function frame(now){var dt=Math.min(.05,(now-last)/1000);last=now;
+if(tg!==null){var st=dt/3.2;if(Math.abs(t-tg)<=st){t=tg;tg=null}else t+=tg>t?st:-st;sl.value=t*100}
+var s=getComputedStyle(document.documentElement);["fg","mu","ln","as","ac"].forEach(function(k){K[k]=s.getPropertyValue("--"+k).trim()});
+c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,340,400);v.d(c,t,rd?0:(now-t0)/1000);
+v.r.forEach(function(x,i){rb[i].textContent=x[1](t)});window.VR=requestAnimationFrame(frame)}
+window.VR=requestAnimationFrame(frame)}
+var cur=0;
+function build(i){
+  cur=i;clearInterval(window.TM);window.TM=0;var d=L[i];$('t').textContent=d.n+"-mavzu. "+d.t;$('g').textContent=d.g;
+  document.querySelectorAll('.chip').forEach(function(c,k){c.classList.toggle('on',k===i)});
+  $('pts').innerHTML='';d.pts.forEach(function(p){var l=document.createElement('li');l.textContent=p;$('pts').appendChild(l)});
+  vbuild(d.n);sim(d.s,$('sim'),'sh');var S2=$('sec2');S2.hidden=!d.s2;if(d.s2)sim(d.s2,$('sim2'),'sh2');
+  var Z=$('qz');Z.innerHTML='';var sc2=0,an=0;
+  d.q.forEach(function(q,qi){var c=document.createElement('div');c.style.cssText='display:flex;flex-direction:column;gap:8px';var t=document.createElement('div');t.style.fontWeight='600';t.textContent=(qi+1)+'. '+q[0];c.appendChild(t);var dn=false;
+    q[1].forEach(function(o,oi){var b=document.createElement('button');b.className='opt';b.textContent=o;b.onclick=function(){if(dn)return;dn=true;an++;c.querySelectorAll('.opt')[q[2]].classList.add('ok');if(oi===q[2])sc2++;else b.classList.add('bad');var e=document.createElement('div');e.className='fb';e.textContent=q[3];c.appendChild(e);if(an===d.q.length){var r2=document.createElement('div');r2.className='sc';r2.textContent='Natija: '+sc2+' / '+an;Z.appendChild(r2)}};c.appendChild(b)});Z.appendChild(c)});
+  cwBuild(d.n);gmBuild(d.n);scrollTo(0,0);
+}
+L.forEach(function(d,i){var b=document.createElement('button');b.className='chip';b.textContent=d.n;b.setAttribute('aria-label',d.n+'-mavzu');b.onclick=function(){build(i)};$('nav').appendChild(b)});
+build(0);
+</script></body></html>
